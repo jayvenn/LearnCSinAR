@@ -21,27 +21,19 @@ class SubtitleTextView: UITextView {
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(frame: .zero, textContainer: nil)
-//        setInitialProperties()
-        setOrderingText()
+        setInitialProperties()
         setOffsets()
-    }
-    
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        roundCorners([.topLeft, .topRight], radius: 30.0)
     }
     
     func setInitialProperties() {
         isEditable = false
+        textContainerInset = UIEdgeInsets.zero
+        textContainer.lineFragmentPadding = 0
     }
     
     func setOffsets() {
-        let top: CGFloat = 32
         let side: CGFloat = 16
-        textContainerInset = UIEdgeInsetsMake(side, top, 0, side)
-        scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0)
-        contentOffset = .zero
+        scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -side)
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -59,8 +51,8 @@ class SubtitleTextView: UITextView {
 extension SubtitleTextView {
     func setOrderingText() {
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue)\n", attributes: titleTextAttributes)
+                                   NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
+        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
         // TYPE
         let typeSubtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
@@ -137,7 +129,7 @@ extension SubtitleTextView {
     func setOperationText() {
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Operations\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
         for operation in lesson.operations {
             // Subtitle

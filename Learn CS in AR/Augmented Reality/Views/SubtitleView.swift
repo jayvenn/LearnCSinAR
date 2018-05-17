@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-protocol SubtitleDelegate: class {
+protocol SubtitleViewDelegate: class {
     func closeButtonDidTouchUpInside()
 }
 
@@ -18,7 +18,8 @@ class SubtitleView: UIView {
     let titleLabel = UILabel()
     
     var lesson: Lesson
-    weak var delegate: SubtitleDelegate?
+    
+    weak var delegate: SubtitleViewDelegate?
     
     lazy var closeButton: UIButton = {
         let button = UIButton()
@@ -38,13 +39,20 @@ class SubtitleView: UIView {
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [topStackView, textView])
+        stackView.axis = .vertical
         return stackView
     }()
     
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(frame: .zero)
+        setUpLayout()
         setInitialProperties()
+    }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        roundCorners([.topLeft, .topRight], radius: 30.0)
     }
     
     func setInitialProperties() {
@@ -60,6 +68,7 @@ class SubtitleView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // MARK: SubtitleView - Layout
@@ -67,10 +76,47 @@ extension SubtitleView {
     func setUpLayout() {
         addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.leading.equalTo(snp.leading)
-            make.top.equalTo(snp.top)
-            make.trailing.equalTo(snp.trailing)
+            make.leading.equalTo(snp.leading).offset(24)
+            make.top.equalTo(snp.top).offset(32)
+            make.trailing.equalTo(snp.trailing).offset(-24)
             make.bottom.equalTo(snp.bottom)
         }
     }
+}
+
+// MARK: SubtitleView - Ordering
+extension SubtitleView {
+    func setOrdering() {
+        setOrderingTitleLabel()
+        textView.setOrderingText()
+    }
+    
+    func setOrderingTitleLabel() {
+        let titleColor = UIColor.black
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
+                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Ordering\n", attributes: titleTextAttributes)
+        titleLabel.attributedText = titleAttributedText
+    }
+}
+
+// MARK: SubtitleView - Operation
+extension SubtitleView {
+    func setOperation() {
+        setOrderingTitleLabel()
+        textView.setOperationText()
+    }
+    
+    func setOperationTitleLabel() {
+        let titleColor = UIColor.black
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
+                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Operation\n", attributes: titleTextAttributes)
+        titleLabel.attributedText = titleAttributedText
+    }
+}
+
+// MARK: SubtitleView - Big O
+extension SubtitleView {
+    
 }

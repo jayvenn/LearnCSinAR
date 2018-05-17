@@ -10,19 +10,17 @@ import UIKit
 import ARKit
 import SnapKit
 
-enum Operation: String {
-    case push =  "push(📦)"
-    case pop = "pop()"
-    case peek = "peek()"
-    case isEmpty = "isEmpty()"
-}
-
 // MARK: ARLessonViewController
 class ARLessonViewController: DefaultARViewController {
     
     lazy var stackView = ARStackView(viewController: self)
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
-    lazy var subtitleView = SubtitleView(lesson: lesson)
+    lazy var subtitleView: SubtitleView = {
+        let view = SubtitleView(lesson: lesson)
+        view.delegate = self
+        return view
+    }()
+    
     // MARK: ARLessonViewController - Properties
     let lesson: Lesson
     
@@ -43,10 +41,14 @@ class ARLessonViewController: DefaultARViewController {
     
     // MARK: ARLessonViewController - Button methods
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
-        
+        subtitleView.setOperation()
+        fadeOutBottomStackView {
+            self.runOrdering()
+        }
     }
     
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
+        subtitleView.setOrdering()
         fadeOutBottomStackView {
             self.runOrdering()
         }
@@ -78,7 +80,7 @@ extension ARLessonViewController {
 extension ARLessonViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        subtitleView.setContentOffset(.zero, animated: false)
+        subtitleView.textView.setContentOffset(.zero, animated: false)
     }
 }
 
@@ -134,7 +136,7 @@ extension ARLessonViewController {
     
     // Stack - Ordering
     func runOrdering() {
-        fadeInSubtitleTextView(completion: {})
+        fadeInSubtitleView(completion: {})
         switch lesson.name {
         case .stack:
             containerBoxNode.push(boxes: boxes)
@@ -184,7 +186,7 @@ extension ARLessonViewController {
     }
     
     // Subtitle Stack View
-    func fadeInSubtitleTextView(completion: @escaping () -> ()) {
+    func fadeInSubtitleView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn], animations: {
                 self.subtitleView.alpha = 1
@@ -192,7 +194,7 @@ extension ARLessonViewController {
         }
     }
     
-    func fadeOutSubtitleTextView(completion: @escaping () -> ()) {
+    func fadeOutSubtitleView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
                 self.subtitleView.alpha = 0
@@ -204,7 +206,14 @@ extension ARLessonViewController {
 // MARK: ARLessonViewController - ContainerBoxNodeDelegate
 extension ARLessonViewController: ContainerBoxNodeDelegate {
     func didFinishOrdering() {
-        fadeOutSubtitleTextView {
+        
+    }
+}
+
+// MARK: ARLessonViewController - Subtitle
+extension ARLessonViewController: SubtitleViewDelegate {
+    func closeButtonDidTouchUpInside() {
+        fadeOutSubtitleView {
             self.fadeInBottomStackView(completion: {})
         }
     }

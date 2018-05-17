@@ -13,6 +13,13 @@ enum LessonName: String {
     case queue = "Queue"
 }
 
+enum Operation: String {
+    case push =  "push(📦)"
+    case pop = "pop()"
+    case peek = "peek()"
+    case isEmpty = "isEmpty()"
+}
+
 struct Lesson {
     
     let name: LessonName
