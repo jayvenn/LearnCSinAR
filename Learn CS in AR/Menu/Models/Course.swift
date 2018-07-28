@@ -24,7 +24,8 @@ struct Course {
             name = "Data Structures"
             let lesson1 = Lesson(lessonName: .stack)
             let lesson2 = Lesson(lessonName: .queue)
-            lessons = [lesson1, lesson2]
+            let lesson3 = Lesson(lessonName: .singlyLinkedList)
+            lessons = [lesson1, lesson2, lesson3]
         case .algorithms:
             name = "Algorithms"
         case .sorting:

@@ -18,7 +18,7 @@ class CourseViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
-
+    
     init(course: Course) {
         self.course = course
         super.init(nibName: nil, bundle: nil)

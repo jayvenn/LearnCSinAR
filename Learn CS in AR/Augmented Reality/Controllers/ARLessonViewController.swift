@@ -40,22 +40,20 @@ class ARLessonViewController: DefaultARViewController {
     }
     
     // MARK: ARLessonViewController - Button methods
-    @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
-        subtitleView.setOperation()
-        fadeOutBottomStackView {
-            self.runOrdering()
-        }
+    @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
+        runOrdering()
+        subtitleView.setOrdering()
+        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
-    @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
-        subtitleView.setOrdering()
-        fadeOutBottomStackView {
-            self.runOrdering()
-        }
+    @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
+        subtitleView.setOperation()
+        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
-        
+        subtitleView.setBigO()
+        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func resetButtonDidTouchUpInside(_ sender: AlternateARButton) {
@@ -64,6 +62,12 @@ class ARLessonViewController: DefaultARViewController {
                 self.resetTrackingConfiguration()
             }
         })
+    }
+    
+    func fadeOutBottomStackViewAndFadeInSubTitleView() {
+        fadeOutBottomStackView {
+            self.fadeInSubtitleView(completion: {})
+        }
     }
     
 }
@@ -87,11 +91,14 @@ extension ARLessonViewController {
 // MARK: ARLessonViewController - Lesson
 extension ARLessonViewController {
     func beginLesson() {
+        mainNode.addChildNode(containerBoxNode)
         switch lesson.name {
         case .stack:
             runStackLesson()
         case .queue:
-            break
+            runQueueLesson()
+        case .singlyLinkedList:
+            runSinglyLinkedListLesson()
         }
     }
     
@@ -122,6 +129,39 @@ extension ARLessonViewController {
     }
 }
 
+// MARK: ARLessonViewController - Lesson Ordering, Operation, Big O
+extension ARLessonViewController {
+    // Ordering
+    func runOrdering() {
+        fadeInSubtitleView(completion: {})
+        switch lesson.name {
+        case .stack:
+            containerBoxNode.push(boxes: boxes)
+        case .queue:
+            break
+        case .singlyLinkedList:
+            let linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
+            linkedListNode.generateNode(basedOn: boxes)
+        }
+    }
+    
+    // Operation
+    func runStackOperation(_ operation: Operation, boxes: [SCNNode]) {
+        switch operation {
+        case .push:
+            break
+        case .pop:
+            break
+        case .peek:
+            break
+        case .isEmpty:
+            break
+        default:
+            break
+        }
+    }
+}
+
 // MARK: ARLessonViewController - Stack Lesson
 extension ARLessonViewController {
     func runStackLesson() {
@@ -133,37 +173,20 @@ extension ARLessonViewController {
         })
         mainNode.addChildNode(containerBoxNode)
     }
-    
-    // Stack - Ordering
-    func runOrdering() {
-        fadeInSubtitleView(completion: {})
-        switch lesson.name {
-        case .stack:
-            containerBoxNode.push(boxes: boxes)
-        case .queue:
-            break
-        }
+}
+
+// MARK: ARLessonViewController - Queue Lesson
+extension ARLessonViewController {
+    func runQueueLesson() {
+        runStackLesson()
     }
-    
-    // Stack - Operation
-    func runStackOperation(_ operation: Operation, boxes: [SCNNode]) {
-        switch operation {
-        case .push:
-            break
-        case .pop:
-            break
-        case .peek:
-            break
-        case .isEmpty:
-            break
-        }
+}
+
+// MARK: ARLessonViewController - Singly-Linked List Lesson
+extension ARLessonViewController {
+    func runSinglyLinkedListLesson() {
+        fadeInBottomStackView() { }
     }
-    
-    // Stack - Operation
-    func runStackBigO() {
-        
-    }
-    
 }
 
 // MARK: ARLessonViewController - Animation

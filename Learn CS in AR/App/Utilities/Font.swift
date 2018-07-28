@@ -17,7 +17,7 @@ struct Font {
     
     enum StandardSize: Double {
         case h1 = 36
-        case h2 = 16
+        case h2 = 18
         case h3 = 14
         case h4 = 10
     }
@@ -70,14 +70,16 @@ struct Font {
             type = FontType.system
             size = FontSize.standard(.h4)
         case .textViewTitle:
-            type = FontType.system
+            type = FontType.systemBold
             size = FontSize.standard(.h1)
         case .textViewSubtitle:
-            type = FontType.system
+            type = FontType.systemBold
             size = FontSize.standard(.h2)
         case .textViewBody:
-            type = FontType.system
-            size = FontSize.standard(.h3)
+//            type = FontType.system
+//            size = FontSize.standard(.h3)
+            type = FontType.systemBold
+            size = FontSize.standard(.h2)
         }
     }
     

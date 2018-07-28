@@ -15,7 +15,12 @@ protocol SubtitleViewDelegate: class {
 
 class SubtitleView: UIView {
     
-    let titleLabel = UILabel()
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 1
+        return label
+    }()
     
     var lesson: Lesson
     
@@ -32,10 +37,11 @@ class SubtitleView: UIView {
     
     lazy var topStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, closeButton])
+        stackView.spacing = 8
+        stackView.distribution = .fill
         stackView.axis = .horizontal
         return stackView
     }()
-    
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [topStackView, textView])
@@ -81,6 +87,10 @@ extension SubtitleView {
             make.trailing.equalTo(snp.trailing).offset(-24)
             make.bottom.equalTo(snp.bottom)
         }
+        
+        closeButton.snp.makeConstraints { (make) in
+            make.width.equalTo(44)
+        }
     }
 }
 
@@ -95,7 +105,7 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Ordering\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Ordering", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
     }
 }
@@ -103,7 +113,7 @@ extension SubtitleView {
 // MARK: SubtitleView - Operation
 extension SubtitleView {
     func setOperation() {
-        setOrderingTitleLabel()
+        setOperationTitleLabel()
         textView.setOperationText()
     }
     
@@ -113,10 +123,22 @@ extension SubtitleView {
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
         let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Operation\n", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
+        titleLabel.lineBreakMode = .byTruncatingTail
     }
 }
 
 // MARK: SubtitleView - Big O
 extension SubtitleView {
+    func setBigO() {
+        setBigOTitleLabel()
+        textView.setBigOText()
+    }
     
+    func setBigOTitleLabel() {
+        let titleColor = UIColor.black
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
+                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Big O\n", attributes: titleTextAttributes)
+        titleLabel.attributedText = titleAttributedText
+    }
 }

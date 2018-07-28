@@ -41,7 +41,7 @@ class LessonTableViewCell: UITableViewCell {
     fileprivate func setDescriptionLabelText() {
         let nameTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
                                   NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .bold)]
-        let nameAttributedText = NSMutableAttributedString(string: "\(lesson.name)\n", attributes: nameTextAttributes)
+        let nameAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue)\n", attributes: nameTextAttributes)
         
         let addressTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
                                      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .regular)]

@@ -9,12 +9,18 @@
 import UIKit
 import SnapKit
 
+enum BigOComplexity: String {
+    case constant = "constant"
+    case logarithmic = "O(logn)"
+    case linear = "O(n)"
+}
+
 // MARK: SubtitleTextView
 class SubtitleTextView: UITextView {
     
     let titleColor = UIColor.black
-    let subtitleColor = UIColor.darkGray
-    let bodyColor = UIColor.black
+    let subtitleColor = UIColor.black
+    let bodyColor = UIColor.darkGray
     
     var lesson: Lesson
     
@@ -51,15 +57,8 @@ class SubtitleTextView: UITextView {
 extension SubtitleTextView {
     func setOrderingText() {
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
+                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
-        
-        // TYPE
-        let typeSubtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                          NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-        let typeSubtitleAttributedText = NSMutableAttributedString(string: "Ordering Type" + "\n",
-                                                                   attributes: typeSubtitleTextAttributes)
-        titleAttributedText.append(typeSubtitleAttributedText)
         
         let typeBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
                                       NSAttributedStringKey.font: Font(object: .textViewBody).instance]
@@ -67,25 +66,11 @@ extension SubtitleTextView {
                                                                attributes: typeBodyTextAttributes)
         titleAttributedText.append(typeBodyAttributedText)
         
-        // FROM EXAMPLE
-        let fromExampleSubtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                                 NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-        let fromExampleSubtitleAttributedText = NSMutableAttributedString(string: "From Example" + "\n",
-                                                                          attributes: fromExampleSubtitleTextAttributes)
-        titleAttributedText.append(fromExampleSubtitleAttributedText)
-        
         let fromExampleBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
                                              NSAttributedStringKey.font: Font(object: .textViewBody).instance]
         let fromExampleBodyAttributedText = NSMutableAttributedString(string: getFromExampleBodyText() + "\n\n",
                                                                       attributes: fromExampleBodyTextAttributes)
         titleAttributedText.append(fromExampleBodyAttributedText)
-        
-        // PUT SIMPLY
-        let putSimplySubtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                               NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-        let putSimplySubtitleAttributedText = NSMutableAttributedString(string: "Put Simply" + "\n",
-                                                                        attributes: putSimplySubtitleTextAttributes)
-        titleAttributedText.append(putSimplySubtitleAttributedText)
         
         let putSimplyBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
                                            NSAttributedStringKey.font: Font(object: .textViewBody).instance]
@@ -99,18 +84,23 @@ extension SubtitleTextView {
     func getTypeBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "A stack uses the last-in-first-out ordering (also referred to as LIFO)."
+            return "A stack uses last-in-first-out (LIFO) ordering."
         case .queue:
-            return ""
+            return "A queue uses the first-in-first-out (FIFO) ordering."
+//            "Imagine lining up to get the latest Star Wars movie ticket, the first person in line to get the ticket is also the first person out."
+        case .singlyLinkedList:
+            return "A \(lesson.name.rawValue.lowercased()) uses a sequence of elements where each element has a reference to the next element."
         }
     }
     
     func getFromExampleBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "This means that the box that moves into the container first is the box that moves out of the container last. Conversely, the box that moves into the container last is the box that moves out of the container first."
+            return "If the box that moves into the container first wants to move out of the container, it will have to wait until every other boxes have moved out of the container before it can do the same. Conversely, the box that moves into the container last can move out of the container first."
         case .queue:
-            return ""
+            return "The box that moves into the container first is the box that can move out of the container first. Conversely, the box that moves into the container last is the box that can move out of the container last."
+        case .singlyLinkedList:
+            return "The first box has a reference to the second box. The second box has a reference to the third box. The third box’s next box reference is nothing or nil."
         }
     }
     
@@ -119,7 +109,9 @@ extension SubtitleTextView {
         case .stack:
             return "Go in first, get out last.\nGo in last, get out first."
         case .queue:
-            return ""
+            return "Go in first, get out first.\nGo in last, get out last."
+        case .singlyLinkedList:
+            return "First points second.\nSecond points third.\nAnd so on until there is no longer the next box to point to…"
         }
     }
 }
@@ -128,7 +120,7 @@ extension SubtitleTextView {
 extension SubtitleTextView {
     func setOperationText() {
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
         for operation in lesson.operations {
@@ -141,7 +133,7 @@ extension SubtitleTextView {
             
             let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
                                           NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-            let bodyAttributedText = NSMutableAttributedString(string: self.getDescriptionOf(operation) + "\n",
+            let bodyAttributedText = NSMutableAttributedString(string: self.getDescriptionOf(operation) + "\n\n",
                                                                    attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)
         }
@@ -152,14 +144,114 @@ extension SubtitleTextView {
     func getDescriptionOf(_ operation: Operation) -> String {
         switch operation {
         case .push:
-            return "Add a box by sliding the box from the container's opening until it either end of the container."
+            return "Add a box by sliding a box from the container's back to the container's front."
         case .pop:
-            return "Remove the last box you added to the container."
+            return "Remove the box closest to the container's back."
         case .peek:
-            return "Look at the box closest to the container's opening."
+            return "Look at the box closest to the container's back."
         case .isEmpty:
             return "Check whether the container contains any box."
+        case .enqueue:
+            return "Add a box by sliding a box from the container's back to the container's front, like a Stack's push(📦)."
+        case .dequeue:
+            return "Remove the box closest to the container's front."
+        case .append:
+            return "Add a box to the end of the collection."
+        case .remove:
+            return "Remove a box at a particular index."
+        case .nodeAtIndex:
+            return "Return the box at a particular index."
+        case .removeAll:
+            return "Remove everything from the collection."
         }
+    }
+    
+}
+
+// MARK: SubtitleTextView - Big O
+extension SubtitleTextView {
+    func setBigOText() {
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
+                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
+        
+        for operation in lesson.operations {
+            // Subtitle
+            let subtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
+                                          NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
+            let subtitleAttributedText = NSMutableAttributedString(string: getBigOSubtitleFor(operation) + "\n",
+                                                                   attributes: subtitleTextAttributes)
+            titleAttributedText.append(subtitleAttributedText)
+            
+            let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
+                                      NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
+            let bodyAttributedText = NSMutableAttributedString(string: self.getBigODescriptionOf(operation) + "\n\n",
+                                                               attributes: bodyTextAttributes)
+            titleAttributedText.append(bodyAttributedText)
+        }
+        
+        attributedText = titleAttributedText
+    }
+    
+    
+    func getBigOSubtitleFor(_ operation: Operation) -> String {
+        var text = operation.rawValue
+        text += " == "
+        switch operation {
+        case .nodeAtIndex:
+            text += BigOComplexity.linear.rawValue
+        default:
+            text += BigOComplexity.constant.rawValue
+        }
+        return text
+    }
+    
+    func getBigODescriptionOf(_ operation: Operation) -> String {
+        var text = ""
+        switch operation {
+        case .push:
+            text += "elements.append(element)"
+        case .pop:
+            text += "return elements.popLast()"
+        case .peek:
+            text += "return elements.last"
+        case .isEmpty:
+            switch lesson.name {
+            case .singlyLinkedList:
+                text += "return headNode == nil"
+            default:
+                text += "elements.isEmpty"
+            }
+        case .enqueue:
+            text += "elements.append(element)"
+        case .dequeue:
+            text += "elements.removeFirst()"
+        case .append:
+            text += """
+            guard !isEmpty else {
+            \(String.tab)push(value)
+            \(String.tab)return
+            }
+            tail.next = newNode
+            tail = tail.next
+            """
+        case .remove:
+            break
+        case .nodeAtIndex:
+            text += """
+            var currentNode = headNode\n
+            var currentIndex = 0\n
+            while currentNode != nil, currentIndex < index {\n
+            \(String.tab)currentNode = currentNode!.next\n
+            \(String.tab)currentIndex += 1\n
+            }
+            return currentNode
+            """
+        case .removeAll:
+            text += "headNode = nil"
+        }
+        
+        return text
     }
     
 }

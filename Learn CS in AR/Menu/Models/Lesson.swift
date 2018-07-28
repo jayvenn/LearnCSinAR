@@ -11,6 +11,7 @@ import UIKit
 enum LessonName: String {
     case stack = "Stack"
     case queue = "Queue"
+    case singlyLinkedList = "Singly-Linked List"
 }
 
 enum Operation: String {
@@ -18,6 +19,14 @@ enum Operation: String {
     case pop = "pop()"
     case peek = "peek()"
     case isEmpty = "isEmpty()"
+    
+    case enqueue = "enqueue(📦)"
+    case dequeue = "dequeue()"
+    
+    case append = "append(📦)"
+    case remove = "remove(📦)"
+    case nodeAtIndex = "elementAt(index: Int)"
+    case removeAll = "removeAll()"
 }
 
 struct Lesson {
@@ -30,7 +39,9 @@ struct Lesson {
         case .stack:
             operations = [.push, .pop, .peek, .isEmpty]
         case .queue:
-            break
+            operations = [.enqueue, .dequeue, .peek, .isEmpty]
+        case .singlyLinkedList:
+            operations = []
         }
         return operations
     }()

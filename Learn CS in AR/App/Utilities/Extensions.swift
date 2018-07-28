@@ -89,7 +89,7 @@ extension String  {
 }
 
 
-// float4x5 Extension
+// float4x4 Extension
 extension float4x4 {
     var translation: float3 {
         let translation = self.columns.3
@@ -202,5 +202,18 @@ extension UIView {
         animation.type = kCATransitionFade
         animation.duration = duration
         layer.add(animation, forKey: kCATransitionFade)
+    }
+}
+
+extension String {
+    public static var tab: String {
+        let numberOfSpaces = 4
+        var index = 0
+        var string = ""
+        while index < numberOfSpaces {
+            string += " "
+            index += 1
+        }
+        return string
     }
 }

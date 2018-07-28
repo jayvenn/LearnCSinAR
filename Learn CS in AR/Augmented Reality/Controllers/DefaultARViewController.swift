@@ -132,6 +132,14 @@ class DefaultARViewController: UIViewController {
         gameStarted = true
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = []
+//        configuration.environmentTexturing = .automatic
+        
+//        if #available(iOS 12.0, *) {
+//            configuration.environmentTexturing = .automatic
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        
         sceneView.session.run(configuration, options: [])
         gamePosition = mainNode.position
         gameEulerAngles = mainNode.eulerAngles
@@ -183,7 +191,7 @@ extension DefaultARViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resetTrackingConfiguration()
-//        addLight()
+        addLight()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -198,7 +206,7 @@ extension DefaultARViewController {
     func setUpSceneView() {
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
-
+        
         sceneView.session = ARSession()
         sceneView.delegate = self
         view.addSubview(sceneView)
@@ -219,6 +227,7 @@ extension DefaultARViewController {
     func setUpInstructionLabelLayouts() {
         view.addSubview(instructionLabel)
         view.addSubview(cancelButton)
+        
         instructionLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
             make.trailing.equalTo(cancelButton.snp.leading).offset(-8)
@@ -258,7 +267,7 @@ extension DefaultARViewController {
         
         DispatchQueue.main.asyncAfter(deadline: deadline) {
             let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
-            self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, .showSkeletons]
+//            self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, .showSkeletons]
             self.sceneView.session.run(configuration, options: options)
         }
     }
@@ -308,6 +317,10 @@ extension DefaultARViewController {
         DispatchQueue.main.async {
             self.handleSceneRendering()
         }
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
     }
     
     func handleSceneRendering() {
@@ -426,16 +439,17 @@ extension DefaultARViewController {
         spotLightNode.position.z = 0.5
 //        spotLightNode.position = SCNVector3(1,5,1)
         spotLightNode.look(at: mainNode.position)
+        
         mainNode.addChildNode(spotLightNode)
         lightNodes.append(spotLightNode)
         
-        omniLightNode.position.y = 2
-        mainNode.addChildNode(omniLightNode)
-        lightNodes.append(omniLightNode)
+//        omniLightNode.position.y = 2
+//        mainNode.addChildNode(omniLightNode)
+//        lightNodes.append(omniLightNode)
 
-        ambientLightNode.position.y = 20
-        mainNode.addChildNode(ambientLightNode)
-        lightNodes.append(ambientLightNode)
+//        ambientLightNode.position.y = 20
+//        mainNode.addChildNode(ambientLightNode)
+//        lightNodes.append(ambientLightNode)
     }
     
     func updateLightNodesLightEstimation() {

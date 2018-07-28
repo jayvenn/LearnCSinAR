@@ -22,11 +22,7 @@ protocol ContainerBoxNodeDelegate: class {
     func didFinishOrdering()
 }
 
-class ContainerBoxNode: SCNNode {
-    
-    let cubeLength: CGFloat
-    let cubeSpacing: CGFloat
-    let trackerNodeLength: CGFloat
+class ContainerBoxNode: BaseNode {
     
     let fadeInAction: SCNAction = {
         return SCNAction.sequence([SCNAction.fadeIn(duration: 0.3)])
@@ -39,6 +35,7 @@ class ContainerBoxNode: SCNNode {
         plane.firstMaterial?.isDoubleSided = true
         return plane
     }()
+    
     lazy var rightSquareNode = SCNNode(geometry: squarePlane)
     lazy var leftSquareNode = SCNNode(geometry: squarePlane)
     
@@ -69,11 +66,8 @@ class ContainerBoxNode: SCNNode {
         return plane
     }()
     
-    init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat) {
-        self.cubeLength = cubeLength
-        self.cubeSpacing = cubeSpacing
-        self.trackerNodeLength = trackerNodeLength
-        super.init()
+    override init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat) {
+        super.init(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
         opacity = 0
         generateNode()
     }
