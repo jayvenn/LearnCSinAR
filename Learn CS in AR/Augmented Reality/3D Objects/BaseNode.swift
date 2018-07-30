@@ -11,14 +11,16 @@ import ARKit
 
 class BaseNode: SCNNode {
     
+    let lesson: Lesson
     let cubeLength: CGFloat
     let cubeSpacing: CGFloat
     let trackerNodeLength: CGFloat
     
-    init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat) {
+    init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat, lesson: Lesson) {
         self.cubeLength = cubeLength
         self.cubeSpacing = cubeSpacing
         self.trackerNodeLength = trackerNodeLength
+        self.lesson = lesson
         super.init()
     }
     

@@ -118,7 +118,7 @@ class DefaultARViewController: UIViewController {
     var gameEulerAngles = SCNVector3(0,0,0)
     var gameStarted = false
     var foundSurface = false
-    var boxes = [SCNNode]()
+    var boxes = [CubeNode]()
     var lightNodes = [SCNNode]()
     var trackingReady = false
     var firstLoad = true
@@ -388,8 +388,6 @@ extension DefaultARViewController {
         
         let totalSpacing = (numberOfCubes - 1.0) * cubeSpacing
         cubeLength = (trackerNodeLength - totalSpacing) / numberOfCubes
-        let cube = SCNBox(width: cubeLength, height: cubeLength, length: cubeLength, chamferRadius: cubeLength/10)
-        cube.firstMaterial?.isDoubleSided = true
         
         let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
         let yInitial = Float((cubeLength / 2))
@@ -397,21 +395,17 @@ extension DefaultARViewController {
         let yEulerAngle = trackerNode.eulerAngles.y
         
         for index in 0..<Int(numberOfCubes) {
-            let boxNode = SCNNode(geometry: cube)
-            boxNode.opacity = 0
-            boxNode.eulerAngles.y = yEulerAngle
-            boxNode.position.x = Float(leadingX) + (Float(cubeSpacing + cubeLength) * Float(index))
-            boxNode.position.y = yInitial
-            boxNode.name = "box\(index)"
-            mainNode.addChildNode(boxNode)
-            boxes.append(boxNode)
+            let cubeNode = CubeNode(length: cubeLength, index: index, leadingX: leadingX)
+            cubeNode.eulerAngles.y = yEulerAngle
+            mainNode.addChildNode(cubeNode)
+            boxes.append(cubeNode)
         }
         
         completionHandler(true, CGFloat(yFinal), cubeLength)
     }
     
     
-    func move(boxes: [SCNNode], yPositionTo y: CGFloat, index: Int = 0, completion: @escaping ()->()) {
+    func move(boxes: [CubeNode], yPositionTo y: CGFloat, index: Int = 0, completion: @escaping ()->()) {
         guard boxes.count != index else {
             completion()
             return

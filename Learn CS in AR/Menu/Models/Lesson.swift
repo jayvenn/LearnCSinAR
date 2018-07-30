@@ -12,6 +12,7 @@ enum LessonName: String {
     case stack = "Stack"
     case queue = "Queue"
     case singlyLinkedList = "Singly-Linked List"
+    case doublyLinkedList = "Doubly-Linked List"
 }
 
 enum Operation: String {
@@ -27,6 +28,10 @@ enum Operation: String {
     case remove = "remove(📦)"
     case nodeAtIndex = "elementAt(index: Int)"
     case removeAll = "removeAll()"
+    
+    case insertAfter = "insertAfter(after:📦)"
+    case removeLast = "removeLast()"
+    case removeAfter = "remove(after:📦)"
 }
 
 struct Lesson {
@@ -41,6 +46,8 @@ struct Lesson {
         case .queue:
             operations = [.enqueue, .dequeue, .peek, .isEmpty]
         case .singlyLinkedList:
+            operations = []
+        case .doublyLinkedList:
             operations = []
         }
         return operations

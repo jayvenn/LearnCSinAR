@@ -36,6 +36,7 @@
 		639F14AE209EA7130074330F /* ContainerBoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639F14AD209EA7130074330F /* ContainerBoxNode.swift */; };
 		639F14B0209EEAAF0074330F /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639F14AF209EEAAF0074330F /* ARLabel.swift */; };
 		639F14B2209F09610074330F /* AlternateARButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639F14B1209F09610074330F /* AlternateARButton.swift */; };
+		63A2DC72210D4D7A0090EA52 /* CubeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2DC71210D4D7A0090EA52 /* CubeNode.swift */; };
 		63B459E220A2F7EA00E15798 /* SubtitleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B459E120A2F7EA00E15798 /* SubtitleTextView.swift */; };
 		63BA7DCD2099C0E3009D785A /* tracker.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 63BA7DCA2099C0E3009D785A /* tracker.mtl */; };
 		63BA7DCE2099C0E3009D785A /* tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 63BA7DCB2099C0E3009D785A /* tracker.png */; };
@@ -78,6 +79,7 @@
 		639F14AD209EA7130074330F /* ContainerBoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerBoxNode.swift; sourceTree = "<group>"; };
 		639F14AF209EEAAF0074330F /* ARLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
 		639F14B1209F09610074330F /* AlternateARButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateARButton.swift; sourceTree = "<group>"; };
+		63A2DC71210D4D7A0090EA52 /* CubeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeNode.swift; sourceTree = "<group>"; };
 		63B459E120A2F7EA00E15798 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
 		63BA7DCA2099C0E3009D785A /* tracker.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tracker.mtl; sourceTree = "<group>"; };
 		63BA7DCB2099C0E3009D785A /* tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracker.png; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				637E57E320AD700A000464D6 /* BaseNode.swift */,
 				6397C26D20AD93670053F93F /* SceneKit Scene.scn */,
 				63E6799F20C9A3DD00D35BC7 /* upgraded tracker.scn */,
+				63A2DC71210D4D7A0090EA52 /* CubeNode.swift */,
 			);
 			path = "3D Objects";
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				637E57E020AC4FB3000464D6 /* SubtitleView.swift in Sources */,
 				637078282091A19300CA5E80 /* Lesson.swift in Sources */,
 				6370782C2091B61100CA5E80 /* Constants.swift in Sources */,
+				63A2DC72210D4D7A0090EA52 /* CubeNode.swift in Sources */,
 				639F14B2209F09610074330F /* AlternateARButton.swift in Sources */,
 				6370783A2091E2B600CA5E80 /* ARLessonViewController.swift in Sources */,
 				637078262091A07C00CA5E80 /* Course.swift in Sources */,

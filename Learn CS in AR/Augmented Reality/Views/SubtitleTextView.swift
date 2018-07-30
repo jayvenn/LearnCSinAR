@@ -16,7 +16,7 @@ enum BigOComplexity: String {
 }
 
 // MARK: SubtitleTextView
-class SubtitleTextView: UITextView {
+final class SubtitleTextView: UITextView {
     
     let titleColor = UIColor.black
     let subtitleColor = UIColor.black
@@ -90,6 +90,8 @@ extension SubtitleTextView {
 //            "Imagine lining up to get the latest Star Wars movie ticket, the first person in line to get the ticket is also the first person out."
         case .singlyLinkedList:
             return "A \(lesson.name.rawValue.lowercased()) uses a sequence of elements where each element has a reference to the next element."
+        case .doublyLinkedList:
+            return "A \(lesson.name.rawValue.lowercased()) uses a sequnce of elements where each element references the next element with the next element referencing back to the first element."
         }
     }
     
@@ -101,6 +103,8 @@ extension SubtitleTextView {
             return "The box that moves into the container first is the box that can move out of the container first. Conversely, the box that moves into the container last is the box that can move out of the container last."
         case .singlyLinkedList:
             return "The first box has a reference to the second box. The second box has a reference to the third box. The third box’s next box reference is nothing or nil."
+        case .doublyLinkedList:
+            return "The first cube references the second cube. The second cube references the first cubes. The same referencing procedure occurs between the second and third cubes."
         }
     }
     
@@ -112,6 +116,8 @@ extension SubtitleTextView {
             return "Go in first, get out first.\nGo in last, get out last."
         case .singlyLinkedList:
             return "First points second.\nSecond points third.\nAnd so on until there is no longer the next box to point to…"
+        case .doublyLinkedList:
+            return "First points second. Second points first. Second points third. Third points second. And on and on."
         }
     }
 }
@@ -163,6 +169,12 @@ extension SubtitleTextView {
             return "Return the box at a particular index."
         case .removeAll:
             return "Remove everything from the collection."
+        case .insertAfter:
+            return "Insert a box after another box."
+        case .removeLast:
+            return "Remove the last box from the collection."
+        case .removeAfter:
+            return "Remove the box after the indicated box."
         }
     }
     
@@ -249,6 +261,12 @@ extension SubtitleTextView {
             """
         case .removeAll:
             text += "headNode = nil"
+        case .insertAfter:
+            text += ""
+        case .removeLast:
+            text += ""
+        case .removeAfter:
+            text += ""
         }
         
         return text

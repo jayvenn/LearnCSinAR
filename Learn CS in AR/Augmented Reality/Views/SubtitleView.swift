@@ -81,11 +81,11 @@ class SubtitleView: UIView {
 extension SubtitleView {
     func setUpLayout() {
         addSubview(stackView)
-        stackView.snp.makeConstraints { (make) in
-            make.leading.equalTo(snp.leading).offset(24)
-            make.top.equalTo(snp.top).offset(32)
-            make.trailing.equalTo(snp.trailing).offset(-24)
-            make.bottom.equalTo(snp.bottom)
+        stackView.snp.makeConstraints {
+            $0.leading.equalTo(snp.leading).offset(24)
+            $0.top.equalTo(snp.top).offset(32)
+            $0.trailing.equalTo(snp.trailing).offset(-24)
+            $0.bottom.equalTo(snp.bottom)
         }
         
         closeButton.snp.makeConstraints { (make) in
@@ -105,7 +105,7 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Ordering", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: "Ordering", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
     }
 }
@@ -121,7 +121,7 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Operation\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: "Operation", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail
     }
@@ -138,7 +138,7 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
-        let titleAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue) Big O\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: "Big O", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
     }
 }

@@ -14,12 +14,14 @@ import SnapKit
 class ARLessonViewController: DefaultARViewController {
     
     lazy var stackView = ARStackView(viewController: self)
-    lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
+    lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
         view.delegate = self
         return view
     }()
+    
+    lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
     // MARK: ARLessonViewController - Properties
     let lesson: Lesson
@@ -99,6 +101,8 @@ extension ARLessonViewController {
             runQueueLesson()
         case .singlyLinkedList:
             runSinglyLinkedListLesson()
+        case .doublyLinkedList:
+            fadeInBottomStackView { }
         }
     }
     
@@ -120,11 +124,11 @@ extension ARLessonViewController {
     
     func setUpTextView() {
         view.addSubview(subtitleView)
-        subtitleView.snp.makeConstraints { (make) in
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            make.bottom.equalTo(view.snp.bottom)
-            make.height.equalTo(view.frame.height/3)
+        subtitleView.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(view.snp.bottom)
+            $0.height.equalTo(view.frame.height/3)
         }
     }
 }
@@ -138,10 +142,13 @@ extension ARLessonViewController {
         case .stack:
             containerBoxNode.push(boxes: boxes)
         case .queue:
-            break
+            containerBoxNode.push(boxes: boxes)
         case .singlyLinkedList:
-            let linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
-            linkedListNode.generateNode(basedOn: boxes)
+            DispatchQueue.main.async {
+                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes)
+            }
+        case .doublyLinkedList:
+            break
         }
     }
     
@@ -165,7 +172,7 @@ extension ARLessonViewController {
 // MARK: ARLessonViewController - Stack Lesson
 extension ARLessonViewController {
     func runStackLesson() {
-        containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength)
+        containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
         containerBoxNode.delegate = self
         containerBoxNode.position = SCNVector3(0, 0.6, 0)
         containerBoxNode.runFadeInAction(completion: {
