@@ -46,7 +46,7 @@ struct Lesson {
         case .queue:
             operations = [.enqueue, .dequeue, .peek, .isEmpty]
         case .singlyLinkedList:
-            operations = []
+            operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
         case .doublyLinkedList:
             operations = []
         }

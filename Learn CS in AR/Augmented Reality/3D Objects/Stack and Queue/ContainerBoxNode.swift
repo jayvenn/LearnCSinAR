@@ -96,13 +96,6 @@ class ContainerBoxNode: BaseNode {
 
 // MARK: ContainerBoxNode - Action
 extension ContainerBoxNode {
-    func runFadeInAction(completion: @escaping () -> ()) {
-        runAction(fadeInAction) {
-            self.runAssembleSquareAction(completion: {
-                completion()
-            })
-        }
-    }
     
     func runAssembleSquareAction(completion: @escaping () -> ()) {
         let duration = TimeInterval(1)

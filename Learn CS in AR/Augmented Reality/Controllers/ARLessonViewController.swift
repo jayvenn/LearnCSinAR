@@ -148,7 +148,9 @@ extension ARLessonViewController {
                 self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes)
             }
         case .doublyLinkedList:
-            break
+            DispatchQueue.main.async {
+                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes, isDoubly: true)
+            }
         }
     }
     
@@ -176,7 +178,9 @@ extension ARLessonViewController {
         containerBoxNode.delegate = self
         containerBoxNode.position = SCNVector3(0, 0.6, 0)
         containerBoxNode.runFadeInAction(completion: {
-            self.fadeInBottomStackView() { }
+            self.containerBoxNode.runAssembleSquareAction(completion: {
+                self.fadeInBottomStackView() { }
+            })
         })
         mainNode.addChildNode(containerBoxNode)
     }

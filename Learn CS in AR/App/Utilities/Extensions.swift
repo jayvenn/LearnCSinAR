@@ -149,6 +149,20 @@ extension SCNNode {
         node.scale = SCNVector3(scaleFactor, scaleFactor, scaleFactor)
         return node
     }
+    
+    func runFadeInAction(completion: @escaping () -> ()) {
+        let fadeInAction = SCNAction.sequence([SCNAction.fadeIn(duration: animationDuration)])
+        runAction(fadeInAction) {
+            completion()
+        }
+    }
+    
+    func runFadeOutAction(completion: @escaping () -> ()) {
+        let fadeOutAction = SCNAction.sequence([SCNAction.fadeOut(duration: animationDuration)])
+        runAction(fadeOutAction) {
+            completion()
+        }
+    }
 }
 
 // SCNAction Extension
