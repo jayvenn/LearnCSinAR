@@ -9,7 +9,7 @@
 import UIKit
 import SceneKit
 
-class DirectionBallNode: SCNNode {
+final class DirectionBallNode: SCNNode {
 
     let radius: CGFloat
     let cylinderHeight: CGFloat

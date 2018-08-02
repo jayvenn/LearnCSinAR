@@ -92,6 +92,8 @@ extension SubtitleTextView {
             return "A \(lesson.name.rawValue.lowercased()) uses a sequence of elements where each element has a reference to the next element."
         case .doublyLinkedList:
             return "A \(lesson.name.rawValue.lowercased()) uses a sequnce of elements where each element references the next element with the next element referencing back to the first element."
+        case .binaryTree:
+            return "A \(lesson.name.rawValue.lowercased()) uses a sequence where the whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smaller or largest in number of the root node respectiively."
         }
     }
     
@@ -105,6 +107,8 @@ extension SubtitleTextView {
             return "The first box has a reference to the second box. The second box has a reference to the third box. The third box’s next box reference is nothing or nil."
         case .doublyLinkedList:
             return "The first cube references the second cube. The second cube references the first cubes. The same referencing procedure occurs between the second and third cubes."
+        case .binaryTree:
+            return "The first cube references a cube to the left and a cube to the right. The cube in the left is smaller than the cube to its right. The two cubes beneath the root node are called siblings."
         }
     }
     
@@ -118,6 +122,8 @@ extension SubtitleTextView {
             return "First points second.\nSecond points third.\nAnd so on until there is no longer the next box to point to…"
         case .doublyLinkedList:
             return "First points second. Second points first. Second points third. Third points second. And on and on."
+        case .binaryTree:
+            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children on the same hiearchy are called siblings. The node which a node references from is called a parent node."
         }
     }
 }

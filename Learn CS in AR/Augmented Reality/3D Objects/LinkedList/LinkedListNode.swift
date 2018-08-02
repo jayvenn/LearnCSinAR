@@ -9,7 +9,7 @@
 import UIKit
 import ARKit
 
-class LinkedListNode: BaseNode {
+final class LinkedListNode: BaseNode {
     
     var directionTubeNodes = [DirectionTubeNode]()
     

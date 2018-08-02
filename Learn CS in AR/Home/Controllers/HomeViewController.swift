@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 // MARK: HomeViewController
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     private let headerLabel: UILabel = {
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,

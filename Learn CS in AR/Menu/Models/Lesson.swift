@@ -13,6 +13,7 @@ enum LessonName: String {
     case queue = "Queue"
     case singlyLinkedList = "Singly-Linked List"
     case doublyLinkedList = "Doubly-Linked List"
+    case binaryTree = "Binary Tree"
 }
 
 enum Operation: String {
@@ -48,6 +49,8 @@ struct Lesson {
         case .singlyLinkedList:
             operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
         case .doublyLinkedList:
+            operations = []
+        case .binaryTree:
             operations = []
         }
         return operations

@@ -124,7 +124,7 @@ class DefaultARViewController: UIViewController {
     var firstLoad = true
     
     var cubeLength: CGFloat = 0
-    var cubeSpacing: CGFloat = 0.05
+    let cubeSpacing: CGFloat = 0.05
     var trackerNodeLength: CGFloat = 0
     
     // MARK: IBAction methods
@@ -132,13 +132,6 @@ class DefaultARViewController: UIViewController {
         gameStarted = true
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = []
-//        configuration.environmentTexturing = .automatic
-        
-//        if #available(iOS 12.0, *) {
-//            configuration.environmentTexturing = .automatic
-//        } else {
-//            // Fallback on earlier versions
-//        }
         
         sceneView.session.run(configuration, options: [])
         gamePosition = mainNode.position
@@ -228,28 +221,28 @@ extension DefaultARViewController {
         view.addSubview(instructionLabel)
         view.addSubview(cancelButton)
         
-        instructionLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
-            make.trailing.equalTo(cancelButton.snp.leading).offset(-8)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(66)
+        instructionLabel.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
+            $0.trailing.equalTo(cancelButton.snp.leading).offset(-8)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.height.equalTo(66)
         }
         
-        cancelButton.snp.makeConstraints { (make) in
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-8)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(66)
-            make.width.equalTo(44)
+        cancelButton.snp.makeConstraints {
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-8)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.height.equalTo(66)
+            $0.width.equalTo(44)
         }
     }
     
     func setUpPlantButtonLayouts() {
         view.addSubview(beginButton)
-        beginButton.snp.makeConstraints { (make) in
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-8)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
-            make.height.equalTo(44)
+        beginButton.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-8)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
+            $0.height.equalTo(44)
         }
     }
     
@@ -390,7 +383,7 @@ extension DefaultARViewController {
         cubeLength = (trackerNodeLength - totalSpacing) / numberOfCubes
         
         let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
-        let yInitial = Float((cubeLength / 2))
+//        let yInitial = Float((cubeLength / 2))
         let yFinal = Float((cubeLength / 2) + 0.2)
         let yEulerAngle = trackerNode.eulerAngles.y
         

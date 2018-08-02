@@ -15,6 +15,8 @@ class CubeNode: SCNNode {
     let initialPosition: (x: Float, y: Float)
     let leadingX: CGFloat
     let cubeSpacing: CGFloat = 0.05
+    var leftNode: CubeNode?
+    var rightNode: CubeNode?
     
     var airPosition: (x: Float, y: Float) {
         let x = initialPosition.x

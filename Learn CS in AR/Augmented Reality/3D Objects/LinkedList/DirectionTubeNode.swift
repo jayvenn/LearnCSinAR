@@ -9,12 +9,16 @@
 import UIKit
 import SceneKit
 
-class DirectionTubeNode: SCNNode {
+final class DirectionTubeNode: SCNNode {
     
     let cubeSpacing: CGFloat
     let cubeLength: CGFloat
     let index: Int
     let isDoubly: Bool
+    
+    var height: CGFloat {
+        return cubeSpacing
+    }
     
     lazy var radius = cubeSpacing / 4
     

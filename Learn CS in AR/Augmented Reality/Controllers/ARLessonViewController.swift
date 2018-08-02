@@ -23,6 +23,8 @@ class ARLessonViewController: DefaultARViewController {
     
     lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
+    lazy var binaryTreeNode = BinaryTreeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+    
     // MARK: ARLessonViewController - Properties
     let lesson: Lesson
     
@@ -71,7 +73,6 @@ class ARLessonViewController: DefaultARViewController {
             self.fadeInSubtitleView(completion: {})
         }
     }
-    
 }
 
 // MARK: ARLessonViewController - Life cycles
@@ -103,6 +104,8 @@ extension ARLessonViewController {
             runSinglyLinkedListLesson()
         case .doublyLinkedList:
             fadeInBottomStackView { }
+        case .binaryTree:
+            fadeInBottomStackView { }
         }
     }
     
@@ -115,10 +118,10 @@ extension ARLessonViewController {
         view.addSubviews(views: [
             stackView
             ])
-        stackView.snp.makeConstraints { (make) in
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(16)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(0)
+        stackView.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(16)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(0)
         }
     }
     
@@ -150,6 +153,10 @@ extension ARLessonViewController {
         case .doublyLinkedList:
             DispatchQueue.main.async {
                 self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes, isDoubly: true)
+            }
+        case .binaryTree:
+            DispatchQueue.main.async {
+                self.binaryTreeNode.animate(with: self.boxes)
             }
         }
     }

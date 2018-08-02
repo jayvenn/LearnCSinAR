@@ -22,7 +22,7 @@ protocol ContainerBoxNodeDelegate: class {
     func didFinishOrdering()
 }
 
-class ContainerBoxNode: BaseNode {
+final class ContainerBoxNode: BaseNode {
     
     let fadeInAction: SCNAction = {
         return SCNAction.sequence([SCNAction.fadeIn(duration: 0.3)])
