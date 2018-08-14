@@ -13,6 +13,7 @@ class LessonTableViewCell: UITableViewCell {
     let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
@@ -30,17 +31,17 @@ class LessonTableViewCell: UITableViewCell {
     
     fileprivate func setUpLayout() {
         addSubviews(views: [descriptionLabel])
-        descriptionLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(snp.topMargin)
-            make.leading.equalTo(snp.leadingMargin).offset(8)
-            make.trailing.equalTo(snp.trailing).offset(-8)
-            make.bottom.equalTo(snp.bottomMargin)
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(snp.topMargin)
+            $0.leading.equalTo(snp.leadingMargin).offset(8)
+            $0.trailing.equalTo(snp.trailingMargin).offset(-8)
+            $0.bottom.equalTo(snp.bottomMargin)
         }
     }
     
     fileprivate func setDescriptionLabelText() {
         let nameTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                                  NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .bold)]
+                                  NSAttributedStringKey.font: FontManager.shared.titleFont]
         let nameAttributedText = NSMutableAttributedString(string: "\(lesson.name.rawValue)\n", attributes: nameTextAttributes)
         
         let addressTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,

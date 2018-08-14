@@ -1,5 +1,5 @@
 //
-//  MenuViewController.swift
+//  CoursesViewController.swift
 //  Learn CS in AR
 //
 //  Created by Jayven Nhan on 4/26/18.
@@ -8,14 +8,17 @@
 
 import UIKit
 
-// MARK: MenuViewController
-class MenuViewController: UIViewController {
+// MARK: CoursesViewController
+class CoursesViewController: BaseMenuViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.accessibilityValue = "Courses"
+        tableView.accessibilityHint = "Select course"
         tableView.rowHeight = UITableViewAutomaticDimension
         return tableView
     }()
@@ -36,6 +39,7 @@ class MenuViewController: UIViewController {
     }()
     
     private var courses: [Course] {
+//        return [dataStructuresCourse]
         return [dataStructuresCourse, algorithmsCourse, sortingCourse]
     }
     
@@ -49,17 +53,22 @@ class MenuViewController: UIViewController {
     }
     
     private lazy var rightBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(MenuViewController.rightBarItemDidTouchUpInside))
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(CoursesViewController.rightBarItemDidTouchUpInside))
         return barButtonItem
     }()
     
     @objc func rightBarItemDidTouchUpInside(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    override func configureView() {
+        super.configureView()
+        tableView.reloadData()
+    }
 }
 
-// MARK: MenuViewController - Life cycles
-extension MenuViewController {
+// MARK: CoursesViewController - Life cycles
+extension CoursesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,10 +79,20 @@ extension MenuViewController {
         title = "Select a Course"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+    }
+    
 }
 
-// MARK: MenuViewController - UI, Layout, Overhead
-extension MenuViewController {
+// MARK: CoursesViewController - UI, Layout, Overhead
+extension CoursesViewController {
     
     private func registerTableViewCells() {
         tableView.register(MenuTableViewCell.self,
@@ -105,20 +124,21 @@ extension MenuViewController {
         }
         tableView.reloadRows(at: indexPaths, with: .automatic)
     }
+    
 }
 
-// MARK: MenuViewController - UITableViewDelegate
-extension MenuViewController: UITableViewDelegate {
+// MARK: CoursesViewController - UITableViewDelegate
+extension CoursesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let course = courses[indexPath.row]
-        let courseViewController = CourseViewController(course: course)
+        let courseViewController = LessonsViewController(course: course)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         show(courseViewController, sender: nil)
     }
 }
 
-// MARK: MenuViewController - UITableViewDataSource
-extension MenuViewController: UITableViewDataSource {
+// MARK: CoursesViewController - UITableViewDataSource
+extension CoursesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courses.count
@@ -132,7 +152,8 @@ extension MenuViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 88
+//        return 88
+        return UITableViewAutomaticDimension
     }
 }
 

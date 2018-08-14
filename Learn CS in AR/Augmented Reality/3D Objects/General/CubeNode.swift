@@ -20,7 +20,7 @@ class CubeNode: SCNNode {
     
     var airPosition: (x: Float, y: Float) {
         let x = initialPosition.x
-        let y = Float((length / 2) + 0.2)
+        let y = initialPosition.y + Float((length / 2) + 0.2)
         return (x, y)
     }
     
@@ -36,6 +36,7 @@ class CubeNode: SCNNode {
         setInitialPosition()
         opacity = 0
         name = "box\(index)"
+        accessibilityLabel = "Cube"
     }
     
     required init?(coder aDecoder: NSCoder) {

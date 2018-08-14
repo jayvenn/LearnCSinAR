@@ -21,7 +21,7 @@ class MenuNavigationController: UINavigationController {
     }
     
     convenience init() {
-        self.init(rootViewController: MenuViewController())
+        self.init(rootViewController: CoursesViewController())
         navigationBar.barTintColor = .white
     }
     

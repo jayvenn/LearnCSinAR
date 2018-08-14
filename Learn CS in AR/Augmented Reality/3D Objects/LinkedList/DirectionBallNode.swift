@@ -31,6 +31,7 @@ final class DirectionBallNode: SCNNode {
         super.init()
         setGeometry()
         setPosition()
+        accessibilityLabel = "Direction ball"
     }
     
     required init?(coder aDecoder: NSCoder) {

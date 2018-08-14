@@ -10,7 +10,7 @@ import UIKit
 import ARKit
 import SnapKit
 
-class DefaultARViewController: UIViewController {
+class DefaultARViewController: BaseMenuViewController {
     
     let sceneView = ARSCNView(frame: .zero)
     
@@ -55,6 +55,7 @@ class DefaultARViewController: UIViewController {
         plane.firstMaterial = material
         let node = SCNNode(geometry: plane)
         node.eulerAngles.x = Float(-90 * degreesToRadians)
+        node.accessibilityLabel = "Tracker"
         return node
     }()
     
@@ -85,6 +86,7 @@ class DefaultARViewController: UIViewController {
         label.backgroundColor = .transparentTextBackgroundWhite
         label.layer.cornerRadius = 10
         label.layer.masksToBounds = true
+        label.accessibilityLabel = "Instruction"
         return label
     }()
     
@@ -99,6 +101,8 @@ class DefaultARViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.backgroundColor = .plantButtonBackground
+        button.accessibilityLabel = "Begin lesson"
+        button.accessibilityHint = "Begin lesson"
         return button
     }()
     
@@ -110,6 +114,8 @@ class DefaultARViewController: UIViewController {
         button.alpha = 0
         button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         button.addTarget(self, action: #selector(DefaultARViewController.cancelButtonDidTouchUpInside(_:)), for: .touchUpInside)
+        button.accessibilityLabel = "Cancel"
+        button.accessibilityHint = "Cancel"
         return button
     }()
     
@@ -155,8 +161,8 @@ class DefaultARViewController: UIViewController {
             })
             action.timingMode = .easeIn
             self.trackerNode.runAction(action, completionHandler: {
-                self.generateBoxes(completionHandler: { (completed, yFinal, cubeLength)  in
-                    self.move(boxes: self.boxes, yPositionTo: yFinal, completion: {
+                self.generateBoxes(completionHandler: { (completed, cubeLength)  in
+                    self.move(boxes: self.boxes, completion: {
                     })
                 })
             })
@@ -375,7 +381,7 @@ extension DefaultARViewController: ARSessionDelegate {
 // MARK: DefaultARViewController - Introduction animation
 extension DefaultARViewController {
     
-    func generateBoxes(completionHandler: @escaping (Bool, CGFloat, _ cubeLength: CGFloat) -> Void) {
+    func generateBoxes(completionHandler: @escaping (Bool, _ cubeLength: CGFloat) -> Void) {
         let numberOfCubes: CGFloat = 3
         trackerNodeLength = CGFloat(40 * trackerNode.scale.x)
         
@@ -384,7 +390,7 @@ extension DefaultARViewController {
         
         let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
 //        let yInitial = Float((cubeLength / 2))
-        let yFinal = Float((cubeLength / 2) + 0.2)
+//        let yFinal = Float((cubeLength / 2) + 0.2)
         let yEulerAngle = trackerNode.eulerAngles.y
         
         for index in 0..<Int(numberOfCubes) {
@@ -394,23 +400,25 @@ extension DefaultARViewController {
             boxes.append(cubeNode)
         }
         
-        completionHandler(true, CGFloat(yFinal), cubeLength)
+        completionHandler(true, cubeLength)
     }
     
     
-    func move(boxes: [CubeNode], yPositionTo y: CGFloat, index: Int = 0, completion: @escaping ()->()) {
+    func move(boxes: [CubeNode], index: Int = 0, completion: @escaping ()->()) {
         guard boxes.count != index else {
             completion()
             return
         }
         let box = boxes[index]
+        let moveToVector = SCNVector3(box.position.x,box.airPosition.y,box.position.z)
         let action = SCNAction.sequence([
             SCNAction.fadeOpacity(to: 1, duration: 0.25),
-            SCNAction.moveBy(x: 0, y: y, z: 0, duration: 0.4),
+            SCNAction.move(to: moveToVector, duration: 0.4),
+//            SCNAction.moveBy(x: 0, y: CGFloat(box.airPosition.y), z: 0, duration: 0.4),
             SCNAction.wait(duration: 0.5)
             ])
         box.runAction(action) {
-            self.move(boxes: boxes, yPositionTo: y, index: index + 1, completion: {
+            self.move(boxes: boxes, index: index + 1, completion: {
                 print("Complete moving boxes")
                 self.finishedIntroductionAnimation()
             })

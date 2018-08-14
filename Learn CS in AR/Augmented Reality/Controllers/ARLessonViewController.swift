@@ -17,6 +17,7 @@ class ARLessonViewController: DefaultARViewController {
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
+        view.accessibilityLabel = "Lesson info"
         view.delegate = self
         return view
     }()
@@ -31,6 +32,7 @@ class ARLessonViewController: DefaultARViewController {
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
+        accessibilityLabel = "\(lesson.name) lesson"
     }
     
     required init?(coder aDecoder: NSCoder) {

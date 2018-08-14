@@ -10,15 +10,19 @@ import UIKit
 
 class ActionButton: UIButton {
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setFont()
         setColorScheme()
         setCornerRadius()
+        sizeToFit()
     }
     
     fileprivate func setFont() {
         titleLabel?.font = Font(object: .button).instance
+        titleLabel?.adjustsFontForContentSizeCategory = true
+        titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     fileprivate func setCornerRadius() {

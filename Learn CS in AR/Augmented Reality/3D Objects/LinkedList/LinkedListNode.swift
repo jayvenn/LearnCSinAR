@@ -23,6 +23,7 @@ final class LinkedListNode: BaseNode {
     override init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat, lesson: Lesson) {
         super.init(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
         opacity = 0
+        accessibilityLabel = "Linked list"
     }
     
     required init?(coder aDecoder: NSCoder) {

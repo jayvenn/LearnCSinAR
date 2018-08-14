@@ -21,6 +21,7 @@ final class BinaryTreeNode: BaseNode {
     
     override init(cubeLength: CGFloat, cubeSpacing: CGFloat, trackerNodeLength: CGFloat, lesson: Lesson) {
         super.init(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+        accessibilityLabel = "Binary tree"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,6 +32,7 @@ final class BinaryTreeNode: BaseNode {
         var cubeNodes = cubeNodes
         let middleNodeIndex = cubeNodes.count / 2
         let rootCubeNode = cubeNodes.remove(at: middleNodeIndex)
+        guard rootCubeNode.leftNode == nil, rootCubeNode.rightNode == nil else { return }
         self.rootCubeNode = rootCubeNode
         moveUp(cubeNode: rootCubeNode, completion: {
             var index = 0
@@ -38,27 +40,28 @@ final class BinaryTreeNode: BaseNode {
                 print("Index:", index)
                 let cubeNode = cubeNodes[index]
                 
-                if index % 2 != 0, let leftNode = rootCubeNode.leftNode {
-                    self.move(cubeNode: leftNode, relativeTo: rootCubeNode, nodeDirection: .left)
-                    self.addDirectionTubeNodeBetween(currentNode: leftNode, and: rootCubeNode, index: index, nodeDrection: .left)
-                } else if rootCubeNode.leftNode == nil {
-                    rootCubeNode.leftNode = cubeNode
+                if rootCubeNode.leftNode == nil, index % 2 == 0 {
                     self.move(cubeNode: cubeNode, relativeTo: rootCubeNode, nodeDirection: .left)
-                } else {
-                    
-//                    self.addDirectionTubeNodeBetween(currentNode: cubeNode, and: rootCubeNode, index: index, nodeDrection: .left)
+                    self.addDirectionTubeNodeBetween(currentNode: cubeNode, and: rootCubeNode, index: index, nodeDrection: .left, completion: {
+                        
+                    })
+                    rootCubeNode.leftNode = cubeNode
                 }
                 
-                if index % 2 == 0, let rightNode = rootCubeNode.rightNode {
-                    self.move(cubeNode: rightNode, relativeTo: rootCubeNode, nodeDirection: .right)
-//                    self.addDirectionTubeNodeBetween(currentNode: rightNode, and: rootCubeNode, index: index, nodeDrection: .right)
-                } else if rootCubeNode.rightNode == nil {
-                    rootCubeNode.rightNode = cubeNode
+                if rootCubeNode.rightNode == nil, index % 2 != 0 {
                     self.move(cubeNode: cubeNode, relativeTo: rootCubeNode, nodeDirection: .right)
-                    self.addDirectionTubeNodeBetween(currentNode: cubeNode, and: rootCubeNode, index: index, nodeDrection: .right)
-                } else {
-                    
+                    self.addDirectionTubeNodeBetween(currentNode: cubeNode, and: rootCubeNode, index: index, nodeDrection: .right, completion: {
+                        let vector = SCNVector3(rootCubeNode.airPosition.x, rootCubeNode.airPosition.y, 0)
+                        let action = SCNAction.move(to: vector, duration: animationDuration * 2)
+                        action.timingMode = SCNActionTimingMode.easeInEaseOut
+                        rootCubeNode.runAction(action) {
+                            rootCubeNode.leftNode = nil
+                            rootCubeNode.rightNode = nil
+                        }
+                    })
+                    rootCubeNode.rightNode = cubeNode
                 }
+                
                 index += 1
             }
         })
@@ -91,12 +94,12 @@ final class BinaryTreeNode: BaseNode {
         cubeNode.runAction(action)
     }
     
-    func addDirectionTubeNodeBetween(currentNode: CubeNode, and rootNode: CubeNode, index: Int, nodeDrection: NodeDirection) {
+    func addDirectionTubeNodeBetween(currentNode: CubeNode, and rootNode: CubeNode, index: Int, nodeDrection: NodeDirection, completion: @escaping () -> ()) {
         print("DIRECTION:", nodeDrection == .left ? "Left" : "Right")
         let multipler: CGFloat = nodeDrection == .left ? 1 : -1
         let directionTubeNode = DirectionTubeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, index: index)
-        directionTubeNode.opacity = 1
-        let zRotation = CGFloat(45 * 3 * degreesToRadians * -multipler)
+//        directionTubeNode.opacity = 1
+        let zRotation = CGFloat(45 * 3 * degreesToRadians * multipler)
         directionTubeNode.eulerAngles.z = Float(zRotation)
 //        let action = SCNAction.rotateTo(x: 0, y: 0, z: zRotation, duration: 1)
 //        directionTubeNode.runAction(action)
@@ -107,9 +110,9 @@ final class BinaryTreeNode: BaseNode {
         let position = SCNVector3(x,y,0)
         directionTubeNode.position = position
         
-//        directionTubeNode.animate {
-//
-//        }
+        directionTubeNode.animate {
+            completion()
+        }
         rootNode.addChildNode(directionTubeNode)
     }
     

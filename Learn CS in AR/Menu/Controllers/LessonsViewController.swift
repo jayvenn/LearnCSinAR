@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CourseViewController: UIViewController {
+class LessonsViewController: BaseMenuViewController {
     
     let course: Course
     
@@ -16,22 +16,33 @@ class CourseViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.accessibilityValue = "Lessons"
+        tableView.accessibilityHint = "Select a course"
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
         return tableView
     }()
     
     init(course: Course) {
         self.course = course
         super.init(nibName: nil, bundle: nil)
+        accessibilityValue = "\(course)"
+        accessibilityHint = "Begin lesson in AR."
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func configureView() {
+        super.configureView()
+        tableView.reloadData()
+    }
+    
 }
 
 // MARK: CourseViewController - Life cycles
-extension CourseViewController {
+extension LessonsViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +54,7 @@ extension CourseViewController {
 }
 
 // MARK: CourseViewController - UI, Layout, Overhead
-extension CourseViewController {
+extension LessonsViewController {
     
     private func registerTableViewCell() {
         tableView.register(LessonTableViewCell.self, forCellReuseIdentifier: TableViewCellReuseIdentifier.LessonTableViewCell.rawValue)
@@ -67,7 +78,7 @@ extension CourseViewController {
 }
 
 // MARK: CourseViewController - UITableViewDelegate
-extension CourseViewController: UITableViewDelegate {
+extension LessonsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lesson = course.lessons[indexPath.row]
         let viewController = ARLessonViewController(lesson: lesson)
@@ -76,7 +87,7 @@ extension CourseViewController: UITableViewDelegate {
 }
 
 // MARK: CourseViewController - UITableViewDataSource
-extension CourseViewController: UITableViewDataSource {
+extension LessonsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return course.lessons.count
     }
@@ -85,10 +96,11 @@ extension CourseViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellReuseIdentifier.LessonTableViewCell.rawValue, for: indexPath) as? LessonTableViewCell else { return UITableViewCell() }
         let lesson = course.lessons[indexPath.row]
         cell.configureCell(lesson: lesson)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 88
+        return UITableViewAutomaticDimension
     }
 }

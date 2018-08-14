@@ -24,7 +24,7 @@ final class DirectionTubeNode: SCNNode {
     
     lazy var cylinder: SCNCylinder = {
         let cylinder = SCNCylinder(radius: radius, height: cubeSpacing)
-        cylinder.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.7)
+        cylinder.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0) // 0.7
         return cylinder
     }()
     
@@ -43,6 +43,7 @@ final class DirectionTubeNode: SCNNode {
         setGeometry()
         setOrientation()
         addDirectionBall()
+        accessibilityLabel = "Direction tube"
     }
     
     required init?(coder aDecoder: NSCoder) {

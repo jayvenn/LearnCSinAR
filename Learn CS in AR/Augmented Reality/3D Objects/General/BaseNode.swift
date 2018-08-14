@@ -9,6 +9,10 @@
 import UIKit
 import ARKit
 
+protocol FullAccessibleProtocol {
+    var accessibilityLabel: String { get set }
+}
+
 class BaseNode: SCNNode {
     
     let lesson: Lesson
