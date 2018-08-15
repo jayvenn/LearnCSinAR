@@ -91,7 +91,7 @@ class DefaultARViewController: BaseMenuViewController {
     }()
     
     lazy var beginButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Begin Lesson".uppercased(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         button.titleLabel?.minimumScaleFactor = 0.5
@@ -107,7 +107,7 @@ class DefaultARViewController: BaseMenuViewController {
     }()
     
     lazy var cancelButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("X", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.sizeToFit()
@@ -190,7 +190,6 @@ extension DefaultARViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resetTrackingConfiguration()
-        addLight()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -269,6 +268,7 @@ extension DefaultARViewController {
 //            self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, .showSkeletons]
             self.sceneView.session.run(configuration, options: options)
         }
+        addLight()
     }
     
     func resetObjects() {
@@ -282,12 +282,12 @@ extension DefaultARViewController {
         boxes = []
         
         for node in mainNode.childNodes {
-            guard node != planeNode
-                else { continue }
+            guard node != planeNode else { continue }
+            node.childNodes.forEach { $0.removeFromParentNode() }
             node.removeFromParentNode()
         }
         mainNode.removeFromParentNode()
-        
+        spotLightNode.removeFromParentNode()
         mainNode.constraints = [yBillboardConstraint]
         
         mainNode.addChildNode(trackerNode)

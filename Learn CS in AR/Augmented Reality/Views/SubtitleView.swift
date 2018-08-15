@@ -11,9 +11,12 @@ import SnapKit
 
 protocol SubtitleViewDelegate: class {
     func closeButtonDidTouchUpInside()
+    func sliderButtonDidTouchUpInside()
+    func maximizeSubtitleView()
+    func minimizeSubtitleView()
 }
 
-class SubtitleView: UIView {
+final class SubtitleView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -27,8 +30,9 @@ class SubtitleView: UIView {
     weak var delegate: SubtitleViewDelegate?
     
     lazy var closeButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "arrow down"), for: .normal)
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "arrow down").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.backgroundColor = .white
         button.addTarget(self, action: #selector(SubtitleView.closeButtonDidTouchUpInside(_:)), for: .touchUpInside)
         return button
     }()
@@ -36,7 +40,7 @@ class SubtitleView: UIView {
     lazy var textView = SubtitleTextView(lesson: lesson)
     
     lazy var topStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, closeButton])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel])
         stackView.spacing = 8
         stackView.distribution = .fill
         stackView.axis = .horizontal
@@ -49,26 +53,66 @@ class SubtitleView: UIView {
         return stackView
     }()
     
+    lazy var sliderButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor(red:0.82, green:0.82, blue:0.85, alpha:1.00)
+        return button
+    }()
+    
+    lazy var expanderView: UIView = {
+        let view = UIView()
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(maximizeSubtitleView(_:)))
+        swipeUpGesture.direction = .up
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(minimizeSubtitleView(_:)))
+        swipeDownGesture.direction = .down
+        view.addGestureRecognizer(swipeUpGesture)
+        view.addGestureRecognizer(swipeDownGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderButtonDidTouchUpInside(_:)))
+        view.addGestureRecognizer(tapGesture)
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+//        view.roundCorners([.topLeft, .topRight], radius: 30.0)
+        return view
+    }()
+    
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(frame: .zero)
         setUpLayout()
         setInitialProperties()
+        textView.alwaysBounceVertical = true
     }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        roundCorners([.topLeft, .topRight], radius: 30.0)
+//        roundCorners([.topLeft, .topRight], radius: 30.0)
     }
     
     func setInitialProperties() {
         alpha = 0
-        backgroundColor = UIColor.white.withAlphaComponent(1)
     }
     
     // MARK: SubtitleView - Action methods
     @objc func closeButtonDidTouchUpInside(_ sender: UIButton) {
         delegate?.closeButtonDidTouchUpInside()
+    }
+    
+    @objc func sliderButtonDidTouchUpInside(_ sender: UIButton) {
+        delegate?.sliderButtonDidTouchUpInside()
+    }
+    
+    @objc func maximizeSubtitleView(_ sender: UIButton) {
+        delegate?.maximizeSubtitleView()
+    }
+    
+    @objc func minimizeSubtitleView(_ sender: UIButton) {
+        delegate?.minimizeSubtitleView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,16 +124,47 @@ class SubtitleView: UIView {
 // MARK: SubtitleView - Layout
 extension SubtitleView {
     func setUpLayout() {
-        addSubview(stackView)
+        addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.width.height.equalTo(30)
+            $0.leading.equalTo(32)
+            $0.top.equalToSuperview()
+        }
+        closeButton.layer.cornerRadius = 15
+        
+        addSubview(mainView)
+        mainView.snp.makeConstraints {
+            $0.leading.trailing.bottom.top.equalToSuperview()
+        }
+        mainView.layer.cornerRadius = 30
+        
+        mainView.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.leading.equalTo(snp.leading).offset(24)
-            $0.top.equalTo(snp.top).offset(32)
+            $0.top.equalToSuperview().offset(32)
             $0.trailing.equalTo(snp.trailing).offset(-24)
             $0.bottom.equalTo(snp.bottom)
         }
         
-        closeButton.snp.makeConstraints { (make) in
-            make.width.equalTo(44)
+        mainView.addSubview(sliderButton)
+        let height: CGFloat = 8
+        sliderButton.snp.makeConstraints {
+            $0.width.equalTo(32)
+            $0.height.equalTo(height)
+            $0.top.equalToSuperview().offset(height)
+            $0.centerX.equalToSuperview()
+        }
+        sliderButton.layer.cornerRadius = height / 2
+        
+        mainView.addSubview(expanderView)
+        expanderView.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview()
+            $0.bottom.equalTo(titleLabel.snp.bottom)
+        }
+        
+        mainView.addSubview(closeButton)
+        closeButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
         }
     }
 }

@@ -29,10 +29,17 @@ class ARLessonViewController: DefaultARViewController {
     // MARK: ARLessonViewController - Properties
     let lesson: Lesson
     
+    var subtitleViewTopConstraint: Constraint?
+    var subtitleViewMaximized = false
+    
+    lazy var subtitleViewHeight: CGFloat = view.frame.height/3
+    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight - 40
+    
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
         accessibilityLabel = "\(lesson.name) lesson"
+        addGestures()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,6 +82,21 @@ class ARLessonViewController: DefaultARViewController {
             self.fadeInSubtitleView(completion: {})
         }
     }
+    
+    override func configureView() {
+        super.configureView()
+//        updateButtons()
+    }
+    
+    func addGestures() {
+//        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(maximizeSubtitleView))
+//        swipeUpGesture.direction = .up
+//        subtitleView.addGestureRecognizer(swipeUpGesture)
+//        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(minimizeSubtitleView))
+//        swipeDownGesture.direction = .down
+//        subtitleView.addGestureRecognizer(swipeDownGesture)
+    }
+    
 }
 
 // MARK: ARLessonViewController - Life cycles
@@ -93,8 +115,35 @@ extension ARLessonViewController {
     }
 }
 
+// MARK: ARLessonViewController - Animation
+extension ARLessonViewController {
+    @objc func maximizeSubtitleView() {
+        subtitleViewTopConstraint?.update(offset: 0)
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        })
+        subtitleViewMaximized = !subtitleViewMaximized
+    }
+    
+    @objc func minimizeSubtitleView() {
+        if !subtitleViewMaximized {
+            fadeOutSubtitleView {
+                self.fadeInBottomStackView(completion: {})
+            }
+            return
+        }
+        
+        subtitleViewTopConstraint?.update(offset: subtitleViewTopOffset)
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        })
+        subtitleViewMaximized = !subtitleViewMaximized
+    }
+}
+
 // MARK: ARLessonViewController - Lesson
 extension ARLessonViewController {
+    
     func beginLesson() {
         mainNode.addChildNode(containerBoxNode)
         switch lesson.name {
@@ -133,8 +182,9 @@ extension ARLessonViewController {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.bottom.equalTo(view.snp.bottom)
-            $0.height.equalTo(view.frame.height/3)
+            subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
+        view.setNeedsLayout()
     }
 }
 
@@ -260,6 +310,14 @@ extension ARLessonViewController: SubtitleViewDelegate {
             self.fadeInBottomStackView(completion: {})
         }
     }
+    
+    func sliderButtonDidTouchUpInside() {
+        DispatchQueue.main.async {
+            !self.subtitleViewMaximized ? self.maximizeSubtitleView() : self.minimizeSubtitleView()
+            self.subtitleViewMaximized = !self.subtitleViewMaximized
+        }
+    }
+    
 }
 
 // MARK: ARLessonViewController - Subtitle

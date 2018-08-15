@@ -56,24 +56,35 @@ final class SubtitleTextView: UITextView {
 // MARK: SubtitleTextView - Ordering
 extension SubtitleTextView {
     func setOrderingText() {
+        let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
+        let titleTextFont: UIFont
+        let textViewBodyFont: UIFont
+        if preferredContentSizeCategory > .accessibilityMedium {
+            titleTextFont = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: UITraitCollection(displayScale: 36))
+            textViewBodyFont = UIFont.preferredFont(forTextStyle: .body)
+        } else {
+            titleTextFont = Font(object: .textViewBody).instance
+            textViewBodyFont = Font(object: .textViewBody).instance
+        }
+        
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                   NSAttributedStringKey.font: titleTextFont]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
         let typeBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                      NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                      NSAttributedStringKey.font: textViewBodyFont]
         let typeBodyAttributedText = NSMutableAttributedString(string: getTypeBodyText() + "\n\n",
                                                                attributes: typeBodyTextAttributes)
         titleAttributedText.append(typeBodyAttributedText)
         
         let fromExampleBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                             NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                             NSAttributedStringKey.font: textViewBodyFont]
         let fromExampleBodyAttributedText = NSMutableAttributedString(string: getFromExampleBodyText() + "\n\n",
                                                                       attributes: fromExampleBodyTextAttributes)
         titleAttributedText.append(fromExampleBodyAttributedText)
         
         let putSimplyBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                           NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                           NSAttributedStringKey.font: textViewBodyFont]
         let putSimplyBodyAttributedText = NSMutableAttributedString(string: getPutSimplyBodyText() + "\n\n",
                                                                     attributes: putSimplyBodyTextAttributes)
         titleAttributedText.append(putSimplyBodyAttributedText)

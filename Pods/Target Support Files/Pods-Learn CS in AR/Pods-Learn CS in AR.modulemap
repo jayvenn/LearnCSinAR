@@ -1,0 +1,6 @@
+framework module Pods_Learn_CS_in_AR {
+  umbrella header "Pods-Learn CS in AR-umbrella.h"
+
+  export *
+  module * { export * }
+}

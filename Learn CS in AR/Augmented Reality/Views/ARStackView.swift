@@ -22,7 +22,7 @@ class ARStackView: UIStackView {
     }()
     
     lazy var resetButton: AlternateARButton = {
-        let button = AlternateARButton(image: #imageLiteral(resourceName: "reset"))
+        let button = AlternateARButton(image: #imageLiteral(resourceName: "reset").withRenderingMode(.alwaysOriginal))
         button.addTarget(viewController, action: #selector(ARLessonViewController.resetButtonDidTouchUpInside(_:)), for: .touchUpInside)
         return button
     }()
