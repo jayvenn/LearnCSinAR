@@ -67,6 +67,7 @@ final class ContainerBoxNode: BaseNode {
     
     var moveInsideContainerActionArray = [SCNAction]()
     var reversedMoveInsideContainerActionArray = [SCNAction]()
+    var isAnimating = false
     
     weak var delegate: ContainerBoxNodeDelegate?
     
@@ -177,6 +178,9 @@ extension ContainerBoxNode {
     }
     
     func push(boxes: [CubeNode]) {
+        guard !isAnimating else { return }
+        isAnimating = true
+        
         openBoxEntrance()
         // BUG: Completion handler doesn't run with timing mode set to .easeInEaseOut
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + animationDuration * 3) {
@@ -246,6 +250,7 @@ extension ContainerBoxNode {
             default:
                 break
             }
+            self.isAnimating = false
             self.reversedMoveInsideContainerActionArray = []
         }
         

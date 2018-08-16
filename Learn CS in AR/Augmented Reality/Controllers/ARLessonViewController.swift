@@ -122,7 +122,7 @@ extension ARLessonViewController {
         UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         })
-        subtitleViewMaximized = !subtitleViewMaximized
+        subtitleViewMaximized = true
     }
     
     @objc func minimizeSubtitleView() {
@@ -137,7 +137,7 @@ extension ARLessonViewController {
         UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         })
-        subtitleViewMaximized = !subtitleViewMaximized
+        subtitleViewMaximized = false
     }
 }
 
@@ -181,7 +181,8 @@ extension ARLessonViewController {
         subtitleView.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.bottom.equalTo(view.snp.bottom)
+            $0.height.equalTo(view.frame.height)
+//            $0.bottom.equalTo(view.snp.bottom)
             subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
         view.setNeedsLayout()
@@ -306,6 +307,7 @@ extension ARLessonViewController: ContainerBoxNodeDelegate {
 // MARK: ARLessonViewController - Subtitle
 extension ARLessonViewController: SubtitleViewDelegate {
     func closeButtonDidTouchUpInside() {
+        minimizeSubtitleView()
         fadeOutSubtitleView {
             self.fadeInBottomStackView(completion: {})
         }
@@ -313,9 +315,13 @@ extension ARLessonViewController: SubtitleViewDelegate {
     
     func sliderButtonDidTouchUpInside() {
         DispatchQueue.main.async {
-            !self.subtitleViewMaximized ? self.maximizeSubtitleView() : self.minimizeSubtitleView()
-            self.subtitleViewMaximized = !self.subtitleViewMaximized
+            if !self.subtitleViewMaximized {
+                self.maximizeSubtitleView()
+            } else {
+                self.minimizeSubtitleView()
+            }
         }
+        
     }
     
 }
