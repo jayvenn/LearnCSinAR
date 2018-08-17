@@ -14,6 +14,7 @@ protocol SubtitleViewDelegate: class {
     func sliderButtonDidTouchUpInside()
     func maximizeSubtitleView()
     func minimizeSubtitleView()
+    func subtitleDidTranslate(y: CGFloat)
 }
 
 final class SubtitleView: UIView {
@@ -46,10 +47,12 @@ final class SubtitleView: UIView {
     lazy var topStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, titleLabelSpacerView])
         stackView.spacing = 8
-        stackView.distribution = .fill
+        stackView.distribution = .equalCentering
         stackView.axis = .horizontal
         return stackView
     }()
+    
+    let verticalSpacerView: UIView = UIView()
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [topStackView, textView])
@@ -65,13 +68,6 @@ final class SubtitleView: UIView {
     
     lazy var expanderView: UIView = {
         let view = UIView()
-        
-//        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(maximizeSubtitleView(_:)))
-//        swipeUpGesture.direction = .up
-//        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(minimizeSubtitleView(_:)))
-//        swipeDownGesture.direction = .down
-//        view.addGestureRecognizer(swipeUpGesture)
-//        view.addGestureRecognizer(swipeDownGesture)
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         view.addGestureRecognizer(panGesture)
@@ -99,7 +95,7 @@ final class SubtitleView: UIView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-//        roundCorners([.topLeft, .topRight], radius: 30.0)
+        roundCorners([.topLeft, .topRight], radius: 30.0)
     }
     
     func setInitialProperties() {
@@ -129,10 +125,13 @@ final class SubtitleView: UIView {
             break
         case .changed:
             let translation = gestureRecognizer.translation(in: self.superview)
-//            print("Translation:", translation.y)
+            print("Translation:", translation.y)
             let velocity = gestureRecognizer.velocity(in: self.superview)
             print("Velocity:", velocity.y)
-            transform = CGAffineTransform(translationX: 0, y: translation.y)
+            var transform = CGAffineTransform.identity
+            transform = transform.translatedBy(x: 0, y: translation.y)
+            self.delegate?.subtitleDidTranslate(y: translation.y)
+            self.transform = transform
         case .ended:
             let translation = gestureRecognizer.translation(in: self.superview)
             let velocity = gestureRecognizer.velocity(in: self.superview)
@@ -147,6 +146,7 @@ final class SubtitleView: UIView {
                 } else {
 //                    self.delegate?.minimizeSubtitleView()
                 }
+                self.setNeedsDisplay()
             }, completion: nil)
         default:
             break
@@ -162,19 +162,12 @@ final class SubtitleView: UIView {
 // MARK: SubtitleView - Layout
 extension SubtitleView {
     func setUpLayout() {
-        addSubview(closeButton)
-//        closeButton.snp.makeConstraints {
-//            $0.width.height.equalTo(30)
-//            $0.leading.equalTo(32)
-//            $0.top.equalToSuperview()
-//        }
-//        closeButton.layer.cornerRadius = 15
         
         addSubview(mainView)
         mainView.snp.makeConstraints {
             $0.leading.trailing.bottom.top.equalToSuperview()
         }
-        mainView.layer.cornerRadius = 30
+//        mainView.layer.cornerRadius = 30
         
         mainView.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -184,11 +177,12 @@ extension SubtitleView {
             $0.bottom.equalTo(snp.bottom)
         }
         
-        topStackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-        }
+//        topStackView.snp.makeConstraints {
+//            $0.height.equalTo(48)
+//        }
         
         mainView.addSubview(sliderButton)
+//        sliderButton.isHidden = true
         let height: CGFloat = 8
         sliderButton.snp.makeConstraints {
             $0.width.equalTo(32)
@@ -215,14 +209,14 @@ extension SubtitleView {
             $0.width.equalTo(closeButton)
         }
         
-        let separatorView = UIView()
-        separatorView.backgroundColor = sliderButton.backgroundColor
-        mainView.addSubview(separatorView)
-        separatorView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(expanderView)
-            $0.height.equalTo(0.5)
-        }
+//        let separatorView = UIView()
+//        separatorView.backgroundColor = sliderButton.backgroundColor
+//        mainView.addSubview(separatorView)
+//        separatorView.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalTo(expanderView)
+//            $0.height.equalTo(0.5)
+//        }
     }
 }
 

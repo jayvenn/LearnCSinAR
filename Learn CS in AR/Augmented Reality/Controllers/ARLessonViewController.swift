@@ -181,8 +181,8 @@ extension ARLessonViewController {
         subtitleView.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.height.equalTo(view.frame.height)
-//            $0.bottom.equalTo(view.snp.bottom)
+//            $0.height.equalTo(view.frame.height)
+            $0.bottom.equalTo(view.snp.bottom)
             subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
         view.setNeedsLayout()
@@ -306,6 +306,15 @@ extension ARLessonViewController: ContainerBoxNodeDelegate {
 
 // MARK: ARLessonViewController - Subtitle
 extension ARLessonViewController: SubtitleViewDelegate {
+    func subtitleDidTranslate(y: CGFloat) {
+//        var transform = CGAffineTransform.identity
+//        transform = transform.translatedBy(x: 0, y: y)
+//        whiteView.transform = transform
+        
+//        view.setNeedsLayout()
+    }
+    
+    
     func closeButtonDidTouchUpInside() {
         minimizeSubtitleView()
         fadeOutSubtitleView {
