@@ -39,7 +39,6 @@ class CoursesViewController: BaseMenuViewController {
     }()
     
     private var courses: [Course] {
-//        return [dataStructuresCourse]
         return [dataStructuresCourse, algorithmsCourse, sortingCourse]
     }
     
@@ -152,7 +151,6 @@ extension CoursesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 88
         return UITableViewAutomaticDimension
     }
 }

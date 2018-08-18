@@ -10,6 +10,7 @@ import UIKit
 import ARKit
 import SnapKit
 
+let minimumScaleFactor: CGFloat = 0.5
 class DefaultARViewController: BaseMenuViewController {
     
     let sceneView = ARSCNView(frame: .zero)
@@ -71,17 +72,18 @@ class DefaultARViewController: BaseMenuViewController {
         return node
     }()
     
-    lazy var instructionLabel: UILabel = {
+    private let instructionLabel: UILabel = {
         let label = UILabel()
         label.text = "Move around \nto find a surface".uppercased()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .lightGray
+//        label.textColor = .lightGray
+        label.textColor = .black
         label.alpha = 0
         label.adjustsFontSizeToFitWidth = true
         label.sizeToFit()
         label.numberOfLines = 2
-        label.minimumScaleFactor = 0.5
+        label.minimumScaleFactor = minimumScaleFactor
         label.backgroundColor = .white
         label.backgroundColor = .transparentTextBackgroundWhite
         label.layer.cornerRadius = 10
@@ -90,11 +92,11 @@ class DefaultARViewController: BaseMenuViewController {
         return label
     }()
     
-    lazy var beginButton: UIButton = {
+    private let beginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Begin Lesson".uppercased(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        button.titleLabel?.minimumScaleFactor = 0.5
+        button.titleLabel?.minimumScaleFactor = minimumScaleFactor
         button.addTarget(self, action: #selector(DefaultARViewController.beginButtonDidTouchUpInside), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
         button.alpha = 0
@@ -120,6 +122,8 @@ class DefaultARViewController: BaseMenuViewController {
     }()
     
     var instructionLabelHeightConstraint: ConstraintMakerEditable?
+    var beginButtonHeightConstraint: Constraint?
+    
     var gamePosition = SCNVector3(0,0,0)
     var gameEulerAngles = SCNVector3(0,0,0)
     var gameStarted = false
@@ -173,6 +177,11 @@ class DefaultARViewController: BaseMenuViewController {
         
     }
     
+    override func configureView() {
+        super.configureView()
+        setUIFonts()
+    }
+    
     @objc func cancelButtonDidTouchUpInside(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -215,7 +224,7 @@ extension DefaultARViewController {
     
     func setUpLayouts() {
         setUpInstructionLabelLayouts()
-        setUpPlantButtonLayouts()
+        setUpBeginButtonLayouts()
     }
     
     func setUpUI() {
@@ -241,14 +250,37 @@ extension DefaultARViewController {
         }
     }
     
-    func setUpPlantButtonLayouts() {
+    func setUpBeginButtonLayouts() {
+        let heightConstraint: CGFloat = 44
         view.addSubview(beginButton)
         beginButton.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(8)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-8)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
-            $0.height.equalTo(44)
+            self.beginButtonHeightConstraint = $0.height.equalTo(heightConstraint).constraint
         }
+    }
+    
+    func setUIFonts() {
+        let buttonFont: UIFont
+        let labelFont: UIFont
+        let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
+        if preferredContentSizeCategory <= .accessibilityMedium {
+            buttonFont = UIFont.systemFont(ofSize: 20, weight: .medium)
+            labelFont = UIFont.systemFont(ofSize: 18)
+            beginButtonHeightConstraint?.update(offset: 44)
+            instructionLabel.backgroundColor = .transparentTextBackgroundWhite
+            instructionLabel.textColor = .lightGray
+        } else {
+            buttonFont = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: UITraitCollection(displayScale: 20))
+            labelFont = UIFont.preferredFont(forTextStyle: .body, compatibleWith: UITraitCollection(displayScale: 18))
+            beginButtonHeightConstraint?.update(offset: 88)
+            instructionLabel.backgroundColor = .white
+            instructionLabel.textColor = .black
+        }
+        beginButton.titleLabel?.font = buttonFont
+        beginButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        instructionLabel.font = labelFont
     }
     
     func resetTrackingConfiguration() {
@@ -265,9 +297,9 @@ extension DefaultARViewController {
         
         DispatchQueue.main.asyncAfter(deadline: deadline) {
             let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
-//            self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, .showSkeletons]
             self.sceneView.session.run(configuration, options: options)
         }
+        
         addLight()
     }
     

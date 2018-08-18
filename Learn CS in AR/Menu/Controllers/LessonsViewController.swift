@@ -82,7 +82,9 @@ extension LessonsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lesson = course.lessons[indexPath.row]
         let viewController = ARLessonViewController(lesson: lesson)
-        present(viewController, animated: true)
+        DispatchQueue.main.async {
+            self.present(viewController, animated: true)
+        }
     }
 }
 

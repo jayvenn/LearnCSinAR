@@ -29,6 +29,7 @@ final class SubtitleTextView: UITextView {
         super.init(frame: .zero, textContainer: nil)
         setInitialProperties()
         setOffsets()
+        accessibilityLabel = "description"
     }
     
     func setInitialProperties() {
@@ -56,19 +57,12 @@ final class SubtitleTextView: UITextView {
 // MARK: SubtitleTextView - Ordering
 extension SubtitleTextView {
     func setOrderingText() {
-        let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
-        let titleTextFont: UIFont
-        let textViewBodyFont: UIFont
-        if preferredContentSizeCategory > .accessibilityMedium {
-            titleTextFont = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: UITraitCollection(displayScale: 36))
-            textViewBodyFont = UIFont.preferredFont(forTextStyle: .body)
-        } else {
-            titleTextFont = Font(object: .textViewBody).instance
-            textViewBodyFont = Font(object: .textViewBody).instance
-        }
+        let fonts = getTextViewFonts()
+        let textViewTitleFont: UIFont = fonts.textViewBodyFont
+        let textViewBodyFont: UIFont = fonts.textViewBodyFont
         
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: titleTextFont]
+                                   NSAttributedStringKey.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
         let typeBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
@@ -90,6 +84,7 @@ extension SubtitleTextView {
         titleAttributedText.append(putSimplyBodyAttributedText)
         
         attributedText = titleAttributedText
+        accessibilityValue = getTypeBodyText() + "\n" + getFromExampleBodyText() + "\n" + getPutSimplyBodyText()
     }
     
     func getTypeBodyText() -> String {
@@ -137,31 +132,55 @@ extension SubtitleTextView {
             return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children on the same hiearchy are called siblings. The node which a node references from is called a parent node."
         }
     }
+    
+    func getTextViewFonts() -> (textViewTitleFont: UIFont, textViewBodyFont: UIFont) {
+        let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
+        let textViewTitleFont: UIFont
+        let textViewBodyFont: UIFont
+        if preferredContentSizeCategory > .accessibilityMedium {
+            textViewTitleFont = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: UITraitCollection(displayScale: 36))
+            textViewBodyFont = UIFont.preferredFont(forTextStyle: .body)
+        } else {
+            textViewTitleFont = Font(object: .textViewBody).instance
+            textViewBodyFont = Font(object: .textViewBody).instance
+        }
+        return (textViewTitleFont, textViewBodyFont)
+    }
 }
 
 // MARK: SubtitleTextView - Operations
 extension SubtitleTextView {
     func setOperationText() {
+        let fonts = getTextViewFonts()
+        let textViewTitleFont: UIFont = fonts.textViewBodyFont
+        let textViewBodyFont: UIFont = fonts.textViewBodyFont
+        
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                   NSAttributedStringKey.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
+        var accessibilityValue = ""
         for operation in lesson.operations {
             // Subtitle
+            let subtitleStr = "\(operation.rawValue)" + "\n"
             let subtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                          NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-            let subtitleAttributedText = NSMutableAttributedString(string: "\(operation.rawValue)" + "\n",
+                                          NSAttributedStringKey.font: textViewBodyFont]
+            let subtitleAttributedText = NSMutableAttributedString(string: subtitleStr,
                                                                    attributes: subtitleTextAttributes)
             titleAttributedText.append(subtitleAttributedText)
+            accessibilityValue.append(subtitleStr)
             
+            let bodyTextStr = self.getDescriptionOf(operation) + "\n\n"
             let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                          NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
+                                          NSAttributedStringKey.font: textViewBodyFont]
             let bodyAttributedText = NSMutableAttributedString(string: self.getDescriptionOf(operation) + "\n\n",
                                                                    attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)
+            accessibilityValue.append(bodyTextStr)
         }
         
         attributedText = titleAttributedText
+        self.accessibilityValue = accessibilityValue
     }
     
     func getDescriptionOf(_ operation: Operation) -> String {
@@ -200,26 +219,34 @@ extension SubtitleTextView {
 // MARK: SubtitleTextView - Big O
 extension SubtitleTextView {
     func setBigOText() {
+        let fonts = getTextViewFonts()
+        let textViewTitleFont: UIFont = fonts.textViewBodyFont
+        let textViewBodyFont: UIFont = fonts.textViewBodyFont
+        
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewBody).instance]
+                                   NSAttributedStringKey.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
         
+        var accessibilityValue = ""
         for operation in lesson.operations {
             // Subtitle
+            let subtitleStr = getBigOSubtitleFor(operation) + "\n"
             let subtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                          NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-            let subtitleAttributedText = NSMutableAttributedString(string: getBigOSubtitleFor(operation) + "\n",
+                                          NSAttributedStringKey.font: textViewBodyFont]
+            let subtitleAttributedText = NSMutableAttributedString(string: subtitleStr,
                                                                    attributes: subtitleTextAttributes)
             titleAttributedText.append(subtitleAttributedText)
             
+            let bodyTextStr = getBigODescriptionOf(operation) + "\n\n"
             let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                      NSAttributedStringKey.font: Font(object: .textViewSubtitle).instance]
-            let bodyAttributedText = NSMutableAttributedString(string: self.getBigODescriptionOf(operation) + "\n\n",
+                                      NSAttributedStringKey.font: textViewBodyFont]
+            let bodyAttributedText = NSMutableAttributedString(string: bodyTextStr,
                                                                attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)
         }
         
         attributedText = titleAttributedText
+        self.accessibilityValue = accessibilityValue
     }
     
     

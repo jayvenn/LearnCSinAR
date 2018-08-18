@@ -10,8 +10,11 @@ import UIKit
 import ARKit
 import SnapKit
 
+let initialSpringVelocity: CGFloat = 1 // 1
+let springWithDaming: CGFloat = 0.9 // 0.7
+
 // MARK: ARLessonViewController
-class ARLessonViewController: DefaultARViewController {
+final class ARLessonViewController: DefaultARViewController {
     
     lazy var stackView = ARStackView(viewController: self)
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
@@ -30,6 +33,8 @@ class ARLessonViewController: DefaultARViewController {
     let lesson: Lesson
     
     var subtitleViewTopConstraint: Constraint?
+    var subtitleViewBottomConstraint: Constraint?
+    
     var subtitleViewMaximized = false
     
     lazy var subtitleViewHeight: CGFloat = view.frame.height/3
@@ -40,6 +45,10 @@ class ARLessonViewController: DefaultARViewController {
         super.init(nibName: nil, bundle: nil)
         accessibilityLabel = "\(lesson.name) lesson"
         addGestures()
+    }
+    
+    deinit {
+        print("ARLessonViewController did deinit")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -85,6 +94,8 @@ class ARLessonViewController: DefaultARViewController {
     
     override func configureView() {
         super.configureView()
+        // TODO: Update subtitle view with accessible fonts
+        
 //        updateButtons()
     }
     
@@ -118,26 +129,40 @@ extension ARLessonViewController {
 // MARK: ARLessonViewController - Animation
 extension ARLessonViewController {
     @objc func maximizeSubtitleView() {
-        subtitleViewTopConstraint?.update(offset: 0)
-        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        })
+        self.subtitleViewTopConstraint?.update(offset: 0)
+        self.subtitleViewBottomConstraint?.update(offset: self.subtitleViewTopOffset)
+        animateMaximizedSubtitleView()
         subtitleViewMaximized = true
+    }
+    
+    func animateMaximizedSubtitleView() {
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: springWithDaming, initialSpringVelocity: initialSpringVelocity, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.subtitleViewBottomConstraint?.update(offset: 0)
+        })
     }
     
     @objc func minimizeSubtitleView() {
         if !subtitleViewMaximized {
+            refreshSubtitleView()
             fadeOutSubtitleView {
                 self.fadeInBottomStackView(completion: {})
             }
             return
         }
-        
-        subtitleViewTopConstraint?.update(offset: subtitleViewTopOffset)
-        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        })
+        animateMinimizeSubtitleView()
         subtitleViewMaximized = false
+    }
+    
+    func animateMinimizeSubtitleView() {
+        self.subtitleViewTopConstraint?.update(offset: self.subtitleViewTopOffset)
+        self.subtitleViewBottomConstraint?.update(offset: self.subtitleViewTopOffset)
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: springWithDaming, initialSpringVelocity: initialSpringVelocity, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.subtitleViewBottomConstraint?.update(offset: 0)
+        })
     }
 }
 
@@ -182,7 +207,7 @@ extension ARLessonViewController {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
 //            $0.height.equalTo(view.frame.height)
-            $0.bottom.equalTo(view.snp.bottom)
+            subtitleViewBottomConstraint = $0.bottom.equalTo(view.snp.bottom).constraint
             subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
         view.setNeedsLayout()
@@ -307,18 +332,29 @@ extension ARLessonViewController: ContainerBoxNodeDelegate {
 // MARK: ARLessonViewController - Subtitle
 extension ARLessonViewController: SubtitleViewDelegate {
     func subtitleDidTranslate(y: CGFloat) {
-//        var transform = CGAffineTransform.identity
-//        transform = transform.translatedBy(x: 0, y: y)
-//        whiteView.transform = transform
-        
-//        view.setNeedsLayout()
+        self.subtitleViewBottomConstraint?.update(offset: -y)
+        UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: [], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            
+        })
+    }
+    
+    func refreshSubtitleView() {
+        if subtitleViewMaximized {
+            animateMaximizedSubtitleView()
+        } else {
+            animateMinimizeSubtitleView()
+        }
     }
     
     
     func closeButtonDidTouchUpInside() {
-        minimizeSubtitleView()
-        fadeOutSubtitleView {
-            self.fadeInBottomStackView(completion: {})
+        DispatchQueue.main.async {
+            self.minimizeSubtitleView()
+            self.fadeOutSubtitleView {
+                self.fadeInBottomStackView(completion: {})
+            }
         }
     }
     

@@ -14,6 +14,7 @@ protocol SubtitleViewDelegate: class {
     func sliderButtonDidTouchUpInside()
     func maximizeSubtitleView()
     func minimizeSubtitleView()
+    func refreshSubtitleView()
     func subtitleDidTranslate(y: CGFloat)
 }
 
@@ -23,6 +24,7 @@ final class SubtitleView: UIView {
         let label = UILabel()
         label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -81,7 +83,6 @@ final class SubtitleView: UIView {
     let mainView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-//        view.roundCorners([.topLeft, .topRight], radius: 30.0)
         return view
     }()
     
@@ -125,9 +126,7 @@ final class SubtitleView: UIView {
             break
         case .changed:
             let translation = gestureRecognizer.translation(in: self.superview)
-            print("Translation:", translation.y)
             let velocity = gestureRecognizer.velocity(in: self.superview)
-            print("Velocity:", velocity.y)
             var transform = CGAffineTransform.identity
             transform = transform.translatedBy(x: 0, y: translation.y)
             self.delegate?.subtitleDidTranslate(y: translation.y)
@@ -135,19 +134,22 @@ final class SubtitleView: UIView {
         case .ended:
             let translation = gestureRecognizer.translation(in: self.superview)
             let velocity = gestureRecognizer.velocity(in: self.superview)
-            print("Velocity:", velocity.y)
-            print("Translation:", translation.y)
-            UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: springWithDaming, initialSpringVelocity: initialSpringVelocity, options: .curveEaseOut, animations: {
                 self.transform = .identity
                 if translation.y < -150 || velocity.y < -500 {
                     self.delegate?.maximizeSubtitleView()
                 } else if translation.y > 100 || velocity.y > 500 {
                     self.delegate?.minimizeSubtitleView()
                 } else {
-//                    self.delegate?.minimizeSubtitleView()
+                    self.delegate?.refreshSubtitleView()
                 }
-                self.setNeedsDisplay()
-            }, completion: nil)
+                self.layoutIfNeeded()
+//                self.layoutSubviews()
+            }, completion: { _ in
+                
+            })
+            
+            
         default:
             break
         }
@@ -209,14 +211,18 @@ extension SubtitleView {
             $0.width.equalTo(closeButton)
         }
         
-//        let separatorView = UIView()
-//        separatorView.backgroundColor = sliderButton.backgroundColor
-//        mainView.addSubview(separatorView)
-//        separatorView.snp.makeConstraints {
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(expanderView)
-//            $0.height.equalTo(0.5)
-//        }
+        
+    }
+    
+    func getTitleLabelFont() -> UIFont {
+        let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
+        let titleLabelFont: UIFont
+        if preferredContentSizeCategory > .accessibilityMedium {
+            titleLabelFont = UIFont.preferredFont(forTextStyle: .largeTitle, compatibleWith: UITraitCollection(displayScale: 36))
+        } else {
+            titleLabelFont = Font(object: .textViewTitle).instance
+        }
+        return titleLabelFont
     }
 }
 
@@ -230,9 +236,10 @@ extension SubtitleView {
     func setOrderingTitleLabel() {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+                                   NSAttributedStringKey.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: "Ordering", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
+        titleLabel.accessibilityLabel = "Ordering"
     }
 }
 
@@ -246,10 +253,11 @@ extension SubtitleView {
     func setOperationTitleLabel() {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+                                   NSAttributedStringKey.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: "Operation", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.accessibilityLabel = "Operation"
     }
 }
 
@@ -258,12 +266,13 @@ extension SubtitleView {
     func setBigO() {
         setBigOTitleLabel()
         textView.setBigOText()
+        titleLabel.accessibilityLabel = "Big O"
     }
     
     func setBigOTitleLabel() {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: Font(object: .textViewTitle).instance]
+                                   NSAttributedStringKey.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: "Big O", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
     }
