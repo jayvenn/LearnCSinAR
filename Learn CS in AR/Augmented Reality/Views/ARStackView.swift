@@ -12,7 +12,7 @@ import SnapKit
 class ARStackView: UIStackView {
 
     let labelButtonSpacing: CGFloat = 2
-    let viewController: UIViewController
+    weak var viewController: UIViewController?
     
     // MARK: ARLessonViewController - Reset Objects
     let resetLabel: ARLabel = {

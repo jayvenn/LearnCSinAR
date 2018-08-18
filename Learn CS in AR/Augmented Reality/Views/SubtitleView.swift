@@ -126,7 +126,6 @@ final class SubtitleView: UIView {
             break
         case .changed:
             let translation = gestureRecognizer.translation(in: self.superview)
-            let velocity = gestureRecognizer.velocity(in: self.superview)
             var transform = CGAffineTransform.identity
             transform = transform.translatedBy(x: 0, y: translation.y)
             self.delegate?.subtitleDidTranslate(y: translation.y)
@@ -144,12 +143,9 @@ final class SubtitleView: UIView {
                     self.delegate?.refreshSubtitleView()
                 }
                 self.layoutIfNeeded()
-//                self.layoutSubviews()
             }, completion: { _ in
                 
             })
-            
-            
         default:
             break
         }
@@ -210,8 +206,6 @@ extension SubtitleView {
         titleLabelSpacerView.snp.makeConstraints {
             $0.width.equalTo(closeButton)
         }
-        
-        
     }
     
     func getTitleLabelFont() -> UIFont {

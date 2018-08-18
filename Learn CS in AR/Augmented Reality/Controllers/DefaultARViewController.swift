@@ -142,8 +142,8 @@ class DefaultARViewController: BaseMenuViewController {
         gameStarted = true
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = []
-        
         sceneView.session.run(configuration, options: [])
+        
         gamePosition = mainNode.position
         gameEulerAngles = mainNode.eulerAngles
         
