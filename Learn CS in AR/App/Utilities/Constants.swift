@@ -18,7 +18,7 @@ let degreesToRadians = CGFloat.pi / 180
 let radiansToDegrees = 180 / CGFloat.pi
 
 
-let animationDuration: TimeInterval = 0.3
+let animationDuration: TimeInterval = 0.3 // 0.5
 
 enum TableViewCellReuseIdentifier: String {
     case MenuTableViewCell = "MenuTableViewCell"

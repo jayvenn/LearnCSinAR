@@ -327,14 +327,14 @@ extension DefaultARViewController {
     }
 
     func fadeInTopObjects() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn], animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
             self.instructionLabel.alpha = 1
             self.cancelButton.alpha = 1
         })
     }
     
     func fadeInBeginButton() {
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: [.curveEaseIn], animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0.5, options: [.curveEaseIn], animations: {
             self.beginButton.alpha = 1
         })
     }
