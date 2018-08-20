@@ -17,6 +17,7 @@ let springWithDaming: CGFloat = 0.9 // 0.7
 final class ARLessonViewController: DefaultARViewController {
     
     lazy var stackView = ARStackView(viewController: self)
+    
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
@@ -40,6 +41,8 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var subtitleViewHeight: CGFloat = view.frame.height/3
     lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight - 40
     
+    let synthesizer = SpeechSynthesizer.shared
+    
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
@@ -61,8 +64,16 @@ final class ARLessonViewController: DefaultARViewController {
         beginLesson()
     }
     
+    private func speak() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+            guard let text = self.subtitleView.textView.accessibilityValue else { return }
+            self.synthesizer.speak(text)
+        }
+    }
+    
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
+        speak()
         runOrdering()
         subtitleView.setOrdering()
         fadeOutBottomStackViewAndFadeInSubTitleView()
@@ -145,9 +156,10 @@ extension ARLessonViewController {
     
     @objc func minimizeSubtitleView() {
         if !subtitleViewMaximized {
+            SpeechSynthesizer.shared.stopSpeaking()
             refreshSubtitleView()
             fadeOutSubtitleView {
-                self.fadeInBottomStackView(completion: {})
+                self.fadeInBottomStackView(completion: { })
             }
             return
         }
@@ -351,6 +363,7 @@ extension ARLessonViewController: SubtitleViewDelegate {
     
     func closeButtonDidTouchUpInside() {
         DispatchQueue.main.async {
+            SpeechSynthesizer.shared.stopSpeaking()
             self.minimizeSubtitleView()
             self.fadeOutSubtitleView {
                 self.fadeInBottomStackView(completion: {})

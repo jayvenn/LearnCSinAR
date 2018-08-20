@@ -49,6 +49,7 @@
 		FA86ABCE2122B11B00F7ABE0 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA86ABCD2122B11B00F7ABE0 /* FontManager.swift */; };
 		FA86ABD02122B3D400F7ABE0 /* BaseMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA86ABCF2122B3D400F7ABE0 /* BaseMenuViewController.swift */; };
 		FADDE8F021228F930027CCF2 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADDE8EF21228F930027CCF2 /* EmptyView.swift */; };
+		FAFA188C212A4C0100D41A70 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA188B212A4C0100D41A70 /* SpeechSynthesizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		FA86ABCD2122B11B00F7ABE0 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		FA86ABCF2122B3D400F7ABE0 /* BaseMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMenuViewController.swift; sourceTree = "<group>"; };
 		FADDE8EF21228F930027CCF2 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		FAFA188B212A4C0100D41A70 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				63707816209193D400CA5E80 /* Font.swift */,
 				FA86ABCD2122B11B00F7ABE0 /* FontManager.swift */,
 				637078332091C5BB00CA5E80 /* StyleKit.swift */,
+				FAFA188B212A4C0100D41A70 /* SpeechSynthesizer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				637078382091D38600CA5E80 /* LessonTableViewCell.swift in Sources */,
 				63B459E220A2F7EA00E15798 /* SubtitleTextView.swift in Sources */,
 				6370782420919F2000CA5E80 /* CoursesViewController.swift in Sources */,
+				FAFA188C212A4C0100D41A70 /* SpeechSynthesizer.swift in Sources */,
 				63707819209195D200CA5E80 /* Extensions.swift in Sources */,
 				FADDE8F021228F930027CCF2 /* EmptyView.swift in Sources */,
 				6370781D2091976200CA5E80 /* AlternateActionButton.swift in Sources */,

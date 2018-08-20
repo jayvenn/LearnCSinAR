@@ -8,12 +8,17 @@
 
 import UIKit
 import SnapKit
+import AVFoundation
 
 enum BigOComplexity: String {
     case constant = "constant"
     case logarithmic = "O(logn)"
     case linear = "O(n)"
 }
+
+let elementName = "cube"
+let elementNamePlural = "cubes"
+let elementSymbol = "cube"
 
 // MARK: SubtitleTextView
 final class SubtitleTextView: UITextView {
@@ -84,33 +89,36 @@ extension SubtitleTextView {
         titleAttributedText.append(putSimplyBodyAttributedText)
         
         attributedText = titleAttributedText
-        accessibilityValue = getTypeBodyText() + "\n" + getFromExampleBodyText() + "\n" + getPutSimplyBodyText()
+        let accessibilityValue = getTypeBodyText() + "\n" + getFromExampleBodyText() + "\n" + getPutSimplyBodyText()
+        self.accessibilityValue = accessibilityValue
+        
+//        speak(accessibilityValue)
     }
     
     func getTypeBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "A stack uses last-in-first-out (LIFO) ordering."
+            return "A stack data structure uses the last-in-first-out (LIFO) ordering."
         case .queue:
-            return "A queue uses the first-in-first-out (FIFO) ordering."
+            return "A queue data structure uses the first-in-first-out (FIFO) ordering."
 //            "Imagine lining up to get the latest Star Wars movie ticket, the first person in line to get the ticket is also the first person out."
         case .singlyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) uses a sequence of elements where each element has a reference to the next element."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each element references the next element if the next element exists."
         case .doublyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) uses a sequnce of elements where each element references the next element with the next element referencing back to the first element."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each element references the next element if the next element exists. In addition, the next element that is being referenced will also references back to the element that references it."
         case .binaryTree:
-            return "A \(lesson.name.rawValue.lowercased()) uses a sequence where the whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smaller or largest in number of the root node respectiively."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smallest or largest number of the root node respectiively."
         }
     }
     
     func getFromExampleBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "If the box that moves into the container first wants to move out of the container, it will have to wait until every other boxes have moved out of the container before it can do the same. Conversely, the box that moves into the container last can move out of the container first."
+            return "If the \(elementName) that moves into the container first wants to move out of the container, it will have to wait until every other \(elementNamePlural) have moved out of the container before it can do the same. Conversely, the \(elementName) that moves into the container last can move out of the container first."
         case .queue:
-            return "The box that moves into the container first is the box that can move out of the container first. Conversely, the box that moves into the container last is the box that can move out of the container last."
+            return "The \(elementName) that moves into the container first is the \(elementName) that can move out of the container first. Conversely, the \(elementName) that moves into the container last is the \(elementName) that can move out of the container last."
         case .singlyLinkedList:
-            return "The first box has a reference to the second box. The second box has a reference to the third box. The third box’s next box reference is nothing or nil."
+            return "The first \(elementName) has a reference to the second \(elementName). The second \(elementName) has a reference to the third \(elementName). The third \(elementName)’s next \(elementName) reference is nothing or nil."
         case .doublyLinkedList:
             return "The first cube references the second cube. The second cube references the first cubes. The same referencing procedure occurs between the second and third cubes."
         case .binaryTree:
@@ -125,9 +133,9 @@ extension SubtitleTextView {
         case .queue:
             return "Go in first, get out first.\nGo in last, get out last."
         case .singlyLinkedList:
-            return "First points second.\nSecond points third.\nAnd so on until there is no longer the next box to point to…"
+            return "First references second. \nSecond references third. \nAnd so on until there is no longer the next \(elementName) to reference to…"
         case .doublyLinkedList:
-            return "First points second. Second points first. Second points third. Third points second. And on and on."
+            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
         case .binaryTree:
             return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children on the same hiearchy are called siblings. The node which a node references from is called a parent node."
         }
@@ -181,36 +189,37 @@ extension SubtitleTextView {
         
         attributedText = titleAttributedText
         self.accessibilityValue = accessibilityValue
+//        speak(accessibilityValue)
     }
     
     func getDescriptionOf(_ operation: Operation) -> String {
         switch operation {
         case .push:
-            return "Add a box by sliding a box from the container's back to the container's front."
+            return "Add a \(elementName) by sliding a cube from the container's back to the container's front."
         case .pop:
-            return "Remove the box closest to the container's back."
+            return "Remove the \(elementName) closest to the container's back."
         case .peek:
-            return "Look at the box closest to the container's back."
+            return "Look at the \(elementName) closest to the container's back."
         case .isEmpty:
-            return "Check whether the container contains any box."
+            return "Check whether the container contains any \(elementName)."
         case .enqueue:
-            return "Add a box by sliding a box from the container's back to the container's front, like a Stack's push(📦)."
+            return "Add a \(elementName) by sliding a \(elementName) from the container's back to the container's front, like a Stack's push(\(elementSymbol))."
         case .dequeue:
-            return "Remove the box closest to the container's front."
+            return "Remove the \(elementName) closest to the container's front."
         case .append:
-            return "Add a box to the end of the collection."
+            return "Add a \(elementName) to the end of the collection."
         case .remove:
-            return "Remove a box at a particular index."
+            return "Remove a \(elementName) at a particular index."
         case .nodeAtIndex:
-            return "Return the box at a particular index."
+            return "Return the \(elementName) at a particular index."
         case .removeAll:
             return "Remove everything from the collection."
         case .insertAfter:
-            return "Insert a box after another box."
+            return "Insert a \(elementName) after another \(elementName)."
         case .removeLast:
-            return "Remove the last box from the collection."
+            return "Remove the last \(elementName) from the collection."
         case .removeAfter:
-            return "Remove the box after the indicated box."
+            return "Remove the \(elementName) after the indicated \(elementName)."
         }
     }
     
@@ -236,6 +245,7 @@ extension SubtitleTextView {
             let subtitleAttributedText = NSMutableAttributedString(string: subtitleStr,
                                                                    attributes: subtitleTextAttributes)
             titleAttributedText.append(subtitleAttributedText)
+            accessibilityValue.append(subtitleStr)
             
             let bodyTextStr = getBigODescriptionOf(operation) + "\n\n"
             let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
@@ -243,10 +253,12 @@ extension SubtitleTextView {
             let bodyAttributedText = NSMutableAttributedString(string: bodyTextStr,
                                                                attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)
+            accessibilityValue.append(bodyTextStr)
         }
         
         attributedText = titleAttributedText
         self.accessibilityValue = accessibilityValue
+//        speak(accessibilityValue)
     }
     
     

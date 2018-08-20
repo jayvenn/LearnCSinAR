@@ -17,22 +17,22 @@ enum LessonName: String {
 }
 
 enum Operation: String {
-    case push =  "push(📦)"
+    case push =  "push(cube)"
     case pop = "pop()"
     case peek = "peek()"
     case isEmpty = "isEmpty()"
     
-    case enqueue = "enqueue(📦)"
+    case enqueue = "enqueue(cube)"
     case dequeue = "dequeue()"
     
-    case append = "append(📦)"
-    case remove = "remove(📦)"
+    case append = "append(cube)"
+    case remove = "remove(cube)"
     case nodeAtIndex = "elementAt(index: Int)"
     case removeAll = "removeAll()"
     
-    case insertAfter = "insertAfter(after:📦)"
+    case insertAfter = "insert(after: cube)"
     case removeLast = "removeLast()"
-    case removeAfter = "remove(after:📦)"
+    case removeAfter = "remove(after: cube)"
 }
 
 struct Lesson {

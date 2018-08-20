@@ -110,6 +110,7 @@ class DefaultARViewController: BaseMenuViewController {
     
     lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
+//        button.setImage(#imageLiteral(resourceName: "cancelButton").withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("X", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.sizeToFit()
@@ -368,7 +369,12 @@ extension DefaultARViewController {
             trackerNode.opacity = 1
         }
         
-        mainNode.position = vector(from: hitTestResult.worldTransform.translation)
+        let position = vector(from: hitTestResult.worldTransform.translation)
+        let action = SCNAction.move(to: position, duration: animationDuration)
+        mainNode.runAction(action)
+//        UIView.animate(withDuration: 1) {
+//            self.mainNode.position = self.vector(from: hitTestResult.worldTransform.translation)
+//        }
     }
     
     func fadeOutAndRemove(node: SCNNode) {
