@@ -11,7 +11,11 @@ import SnapKit
 import AVFoundation
 
 enum BigOComplexity: String {
-    case constant = "constant"
+//    case constant = "O(1) - constant"
+//    case logarithmic = "O(logn) - logarithmic"
+//    case linear = "O(n) - linear"
+    
+    case constant = "O(1)"
     case logarithmic = "O(logn)"
     case linear = "O(n)"
 }
@@ -133,9 +137,11 @@ extension SubtitleTextView {
         case .queue:
             return "Go in first, get out first.\nGo in last, get out last."
         case .singlyLinkedList:
-            return "First references second. \nSecond references third. \nAnd so on until there is no longer the next \(elementName) to reference to…"
+            return "First references second. \nSecond references third. \nThis pattern continues until you reach the last \(elementName)."
+//            return "First references second. \nSecond references third. \nAnd so on until there is no longer the next \(elementName) to reference to…"
         case .doublyLinkedList:
-            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
+            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last \(elementName)."
+//            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
         case .binaryTree:
             return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children on the same hiearchy are called siblings. The node which a node references from is called a parent node."
         }
@@ -263,69 +269,71 @@ extension SubtitleTextView {
     
     
     func getBigOSubtitleFor(_ operation: Operation) -> String {
-        var text = operation.rawValue
-        text += " == "
-        switch operation {
-        case .nodeAtIndex:
-            text += BigOComplexity.linear.rawValue
-        default:
-            text += BigOComplexity.constant.rawValue
-        }
+        let text = operation.rawValue
         return text
     }
     
     func getBigODescriptionOf(_ operation: Operation) -> String {
-        var text = ""
+        let text: String
         switch operation {
-        case .push:
-            text += "elements.append(element)"
-        case .pop:
-            text += "return elements.popLast()"
-        case .peek:
-            text += "return elements.last"
-        case .isEmpty:
-            switch lesson.name {
-            case .singlyLinkedList:
-                text += "return headNode == nil"
-            default:
-                text += "elements.isEmpty"
-            }
-        case .enqueue:
-            text += "elements.append(element)"
-        case .dequeue:
-            text += "elements.removeFirst()"
-        case .append:
-            text += """
-            guard !isEmpty else {
-            \(String.tab)push(value)
-            \(String.tab)return
-            }
-            tail.next = newNode
-            tail = tail.next
-            """
-        case .remove:
-            break
         case .nodeAtIndex:
-            text += """
-            var currentNode = headNode\n
-            var currentIndex = 0\n
-            while currentNode != nil, currentIndex < index {\n
-            \(String.tab)currentNode = currentNode!.next\n
-            \(String.tab)currentIndex += 1\n
-            }
-            return currentNode
-            """
-        case .removeAll:
-            text += "headNode = nil"
-        case .insertAfter:
-            text += ""
-        case .removeLast:
-            text += ""
-        case .removeAfter:
-            text += ""
+            text = BigOComplexity.linear.rawValue
+        default:
+            text = BigOComplexity.constant.rawValue
         }
-        
         return text
+        
+//        var text = ""
+//        switch operation {
+//        case .push:
+//            text += "elements.append(element)"
+//        case .pop:
+//            text += "return elements.popLast()"
+//        case .peek:
+//            text += "return elements.last"
+//        case .isEmpty:
+//            switch lesson.name {
+//            case .singlyLinkedList:
+//                text += "return headNode == nil"
+//            default:
+//                text += "elements.isEmpty"
+//            }
+//        case .enqueue:
+//            text += "elements.append(element)"
+//        case .dequeue:
+//            text += "elements.removeFirst()"
+//        case .append:
+//            text += """
+//            guard !isEmpty else {
+//            \(String.tab)push(value)
+//            \(String.tab)return
+//            }
+//            tail.next = newNode
+//            tail = tail.next
+//            """
+//        case .remove:
+//            break
+//        case .nodeAtIndex:
+//            text += """
+//            var currentNode = headNode\n
+//            var currentIndex = 0\n
+//            while currentNode != nil, currentIndex < index {\n
+//            \(String.tab)currentNode = currentNode!.next\n
+//            \(String.tab)currentIndex += 1\n
+//            }
+//            return currentNode
+//            """
+//        case .removeAll:
+//            text += "headNode = nil"
+//        case .insertAfter:
+//            text += ""
+//        case .removeLast:
+//            text += ""
+//        case .removeAfter:
+//            text += ""
+//        }
+//
+//        return text
     }
     
 }
