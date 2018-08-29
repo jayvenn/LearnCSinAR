@@ -74,14 +74,24 @@ final class ARLessonViewController: DefaultARViewController {
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
         speak()
-        runOrdering()
-        subtitleView.setOrdering()
-        fadeOutBottomStackViewAndFadeInSubTitleView()
+        setCubeNodes()
+        //
+        containerBoxNode.pushCubeNode()
+        //
+        
+//        runOrdering()
+//        subtitleView.setOrdering()
+//        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
-        subtitleView.setOperation()
-        fadeOutBottomStackViewAndFadeInSubTitleView()
+        setCubeNodes()
+        //
+        containerBoxNode.popCubeNode()
+        //
+        
+//        subtitleView.setOperation()
+//        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
@@ -167,6 +177,22 @@ extension ARLessonViewController {
     }
 }
 
+// MARK: ARLessonViewController - Set cube nodes
+extension ARLessonViewController {
+    func setCubeNodes() {
+        switch lesson.name {
+        case .stack, .queue :
+            containerBoxNode.cubeNodes = boxes
+        case .singlyLinkedList:
+            runSinglyLinkedListLesson()
+        case .doublyLinkedList:
+            fadeInBottomStackView { }
+        case .binaryTree:
+            fadeInBottomStackView { }
+        }
+    }
+}
+
 // MARK: ARLessonViewController - Lesson
 extension ARLessonViewController {
     
@@ -219,12 +245,11 @@ extension ARLessonViewController {
 extension ARLessonViewController {
     // Ordering
     func runOrdering() {
+        
         fadeInSubtitleView(completion: {})
         switch lesson.name {
-        case .stack:
-            containerBoxNode.push(boxes: boxes)
-        case .queue:
-            containerBoxNode.push(boxes: boxes)
+        case .stack, .queue:
+            containerBoxNode.pushCubeNodes()
         case .singlyLinkedList:
             DispatchQueue.main.async {
                 self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes)

@@ -167,6 +167,7 @@ class DefaultARViewController: BaseMenuViewController {
             action.timingMode = .easeIn
             self.trackerNode.runAction(action, completionHandler: {
                 self.generateBoxes(completionHandler: { (completed, cubeLength)  in
+                    
                     self.move(boxes: self.boxes, completion: {
                     })
                 })

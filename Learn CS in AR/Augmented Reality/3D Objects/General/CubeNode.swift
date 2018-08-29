@@ -53,6 +53,27 @@ class CubeNode: SCNNode {
         position.x = initialPosition.x
         position.y = initialPosition.y
     }
+    
+    
+}
+
+// - Queue
+extension CubeNode {
+    func getPopQueueAction() -> SCNAction {
+        var position = self.position
+        position.x += (Float(cubeSpacing + length) * Float(index + 1))
+        var secondPosition = position
+        secondPosition.y = airPosition.y
+        var finalPosition = secondPosition
+        finalPosition.x = airPosition.x
+        
+        let action = SCNAction.sequence([SCNAction.move(to: position, duration: animationDuration),
+                                     SCNAction.wait(duration: animationDuration),
+                                     SCNAction.move(to: secondPosition, duration: animationDuration),
+                                     SCNAction.move(to: finalPosition, duration: animationDuration)
+            ])
+        return action
+    }
 }
 
 // - Singly Linked List
