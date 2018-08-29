@@ -61,8 +61,11 @@ final class HomeViewController: BaseMenuViewController {
     var aboutButtonHeightConstraint: Constraint?
     
     @objc private func beginButtonDidTouchUpInside(_ sender: UIButton) {
-        let viewController = MenuNavigationController()
-        present(viewController, animated: true)
+        let navigationController = MenuNavigationController()
+//        let viewController = LessonsViewController(course: Course(courseSubject: .dataStructures))
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        navigationController.navigationBar.barTintColor = .white
+        present(navigationController, animated: true)
     }
     
     @objc private func aboutButtonDidTouchUpInside(_ sender: UIButton) {

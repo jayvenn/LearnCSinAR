@@ -246,7 +246,11 @@ extension ContainerBoxNode {
                 self.closeLeftDoorMoveDown(node: self.leftSquareNode, completion: {
                     self.delegate?.didFinishOrdering()
                 })
-                self.closeRightDoorMoveDown(node: self.rightSquareNode, completion: {})
+                // Repeat action
+                self.closeRightDoorMoveDown(node: self.rightSquareNode, completion: {
+//                    self.moveIn(nodes)
+                    self.push(boxes: nodes)
+                })
             default:
                 break
             }

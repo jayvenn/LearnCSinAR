@@ -128,6 +128,7 @@ final class SubtitleView: UIView {
         case .changed:
             let translation = gestureRecognizer.translation(in: self.superview)
             var transform = CGAffineTransform.identity
+            print("Translation:", translation.y)
             transform = transform.translatedBy(x: 0, y: translation.y)
             self.delegate?.subtitleDidTranslate(y: translation.y)
             self.transform = transform
@@ -136,9 +137,9 @@ final class SubtitleView: UIView {
             let velocity = gestureRecognizer.velocity(in: self.superview)
             UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: springWithDaming, initialSpringVelocity: initialSpringVelocity, options: .curveEaseOut, animations: {
                 self.transform = .identity
-                if translation.y < -150 || velocity.y < -500 {
+                if translation.y < -350 || velocity.y < -500 {  // left: 150
                     self.delegate?.maximizeSubtitleView()
-                } else if translation.y > 100 || velocity.y > 500 {
+                } else if translation.y > 45 || velocity.y > 500 { // left: 100
                     self.delegate?.minimizeSubtitleView()
                 } else {
                     self.delegate?.refreshSubtitleView()
@@ -161,12 +162,10 @@ final class SubtitleView: UIView {
 // MARK: SubtitleView - Layout
 extension SubtitleView {
     func setUpLayout() {
-        
         addSubview(mainView)
         mainView.snp.makeConstraints {
             $0.leading.trailing.bottom.top.equalToSuperview()
         }
-//        mainView.layer.cornerRadius = 30
         
         mainView.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -175,10 +174,6 @@ extension SubtitleView {
             $0.trailing.equalTo(snp.trailing).offset(-24)
             $0.bottom.equalTo(snp.bottom)
         }
-        
-//        topStackView.snp.makeConstraints {
-//            $0.height.equalTo(48)
-//        }
         
         mainView.addSubview(sliderButton)
 //        sliderButton.isHidden = true

@@ -50,10 +50,10 @@ extension LessonsViewController {
         setUpLayout()
         setUpUI()
     }
-
+    
 }
 
-// MARK: CourseViewController - UI, Layout, Overhead
+// MARK: LessonsViewController - UI, Layout, Overhead
 extension LessonsViewController {
     
     private func registerTableViewCell() {
@@ -77,7 +77,7 @@ extension LessonsViewController {
     
 }
 
-// MARK: CourseViewController - UITableViewDelegate
+// MARK: LessonsViewController - UITableViewDelegate
 extension LessonsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lesson = course.lessons[indexPath.row]
@@ -88,7 +88,7 @@ extension LessonsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: CourseViewController - UITableViewDataSource
+// MARK: LessonsViewController - UITableViewDataSource
 extension LessonsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return course.lessons.count

@@ -33,6 +33,8 @@ final class SubtitleTextView: UITextView {
     
     var lesson: Lesson
     
+    let initialSpacerText = "\n\n"
+    
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(frame: .zero, textContainer: nil)
@@ -72,7 +74,7 @@ extension SubtitleTextView {
         
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: textViewTitleFont]
-        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
         let typeBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
                                       NSAttributedStringKey.font: textViewBodyFont]
@@ -171,7 +173,7 @@ extension SubtitleTextView {
         
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: textViewTitleFont]
-        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
         var accessibilityValue = ""
         for operation in lesson.operations {
@@ -240,7 +242,7 @@ extension SubtitleTextView {
         
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: textViewTitleFont]
-        let titleAttributedText = NSMutableAttributedString(string: "\n", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
         var accessibilityValue = ""
         for operation in lesson.operations {

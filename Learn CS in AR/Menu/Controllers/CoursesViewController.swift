@@ -39,7 +39,8 @@ class CoursesViewController: BaseMenuViewController {
     }()
     
     private var courses: [Course] {
-        return [dataStructuresCourse, algorithmsCourse, sortingCourse]
+//        return [dataStructuresCourse, algorithmsCourse, sortingCourse]
+        return [dataStructuresCourse]
     }
     
     private var indexPaths: [IndexPath] {

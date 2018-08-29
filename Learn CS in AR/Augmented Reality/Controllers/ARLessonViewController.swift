@@ -39,7 +39,8 @@ final class ARLessonViewController: DefaultARViewController {
     var subtitleViewMaximized = false
     
     lazy var subtitleViewHeight: CGFloat = view.frame.height/3
-    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight - 40
+//    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight - 40
+    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
     
     let synthesizer = SpeechSynthesizer.shared
     
@@ -47,7 +48,6 @@ final class ARLessonViewController: DefaultARViewController {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
         accessibilityLabel = "\(lesson.name) lesson"
-        addGestures()
     }
     
     deinit {
@@ -107,18 +107,7 @@ final class ARLessonViewController: DefaultARViewController {
         super.configureView()
         // TODO: Update subtitle view with accessible fonts
         
-//        updateButtons()
     }
-    
-    func addGestures() {
-//        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(maximizeSubtitleView))
-//        swipeUpGesture.direction = .up
-//        subtitleView.addGestureRecognizer(swipeUpGesture)
-//        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(minimizeSubtitleView))
-//        swipeDownGesture.direction = .down
-//        subtitleView.addGestureRecognizer(swipeDownGesture)
-    }
-    
 }
 
 // MARK: ARLessonViewController - Life cycles
