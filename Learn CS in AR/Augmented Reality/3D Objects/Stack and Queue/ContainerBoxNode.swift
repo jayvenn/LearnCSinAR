@@ -74,6 +74,7 @@ final class ContainerBoxNode: BaseNode {
     var rightDoorOpen = false
     
     var cubeNodes = [CubeNode]()
+    var index = 0
     
     weak var delegate: ContainerBoxNodeDelegate?
     
@@ -199,7 +200,6 @@ extension ContainerBoxNode {
     func pushCubeNode() {
         guard !isAnimating else { return } // Refactore: Repeated code
         
-        let index = moveInsideContainerActionArray.count
         guard index != cubeNodes.count else { return }
         
         let cubeNode = cubeNodes[index]
@@ -208,6 +208,7 @@ extension ContainerBoxNode {
         openSideDoors {
             cubeNode.runAction(action)
         }
+        index += 1
     }
     
     // - Pop cube nodes
@@ -227,16 +228,15 @@ extension ContainerBoxNode {
      **/
     
     func popCubeNode() {
-        moveInsideContainerActionArray.count -
-        let index = lesson.name == .stack ? moveInsideContainerActionArray.count - 1 : cubeNodes.count - moveInsideContainerActionArray.count
-        print("Move Inside Action Count:", moveInsideContainerActionArray.count)
-        print("INDEX:", index)
+        index -= 1
         guard index >= 0 else {
             self.moveInsideContainerActionArray = []
             return
         }
         
-        let cubeNode = cubeNodes[index]
+        let cubeNode = lesson.name == .stack ? cubeNodes[index] : cubeNodes[cubeNodes.count - index - 1]
+//        print("Move Inside Action Count:", moveInsideContainerActionArray.count)
+        print("INDEX:", index)
         let action = getMoveOutsideContainerAction(withNode: cubeNode, index: index)
         cubeNode.runAction(action) {
             
@@ -276,7 +276,7 @@ extension ContainerBoxNode {
                 
                 self.closeRightDoorMoveDown(node: self.rightSquareNode, completion: {
                     // Repeat action
-                    self.pushCubeNodes()
+//                    self.pushCubeNodes()
                 })
             default:
                 break
@@ -388,28 +388,13 @@ extension ContainerBoxNode {
         switch lesson.name {
         case .stack:
             action = reversedMoveInsideContainerActionArray[index]
-            moveInsideContainerActionArray.removeFirst()
-            reversedMoveInsideContainerActionArray.removeFirst()
         case .queue:
             action = node.getPopQueueAction()
-//            var position = node.position
-//            position.x += (Float(cubeSpacing + cubeLength) * Float(cubeNodes.count - index))
-////            position.x += (Float(cubeSpacing + cubeLength) * Float(index + 1))
-//            var secondPosition = position
-//            secondPosition.y = node.airPosition.y
-//            var finalPosition = secondPosition
-//            finalPosition.x = node.airPosition.x
-//
-//            action = SCNAction.sequence([SCNAction.move(to: position, duration: animationDuration),
-//                                             SCNAction.wait(duration: animationDuration),
-//                                             SCNAction.move(to: secondPosition, duration: animationDuration),
-//                                             SCNAction.move(to: finalPosition, duration: animationDuration)
-//                ])
-            moveInsideContainerActionArray.removeLast()
-            reversedMoveInsideContainerActionArray.removeLast()
         default:
             fatalError()
         }
+//        moveInsideContainerActionArray.remove(at: index)
+//        reversedMoveInsideContainerActionArray.remove(at: index)
         return action
     }
     

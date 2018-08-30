@@ -76,22 +76,22 @@ final class ARLessonViewController: DefaultARViewController {
         speak()
         setCubeNodes()
         //
-        containerBoxNode.pushCubeNode()
+//        containerBoxNode.pushCubeNode()
         //
         
-//        runOrdering()
-//        subtitleView.setOrdering()
-//        fadeOutBottomStackViewAndFadeInSubTitleView()
+        runOrdering()
+        subtitleView.setOrdering()
+        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
         //
-        containerBoxNode.popCubeNode()
+//        containerBoxNode.popCubeNode()
         //
         
-//        subtitleView.setOperation()
-//        fadeOutBottomStackViewAndFadeInSubTitleView()
+        subtitleView.setOperation()
+        fadeOutBottomStackViewAndFadeInSubTitleView()
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
