@@ -70,7 +70,7 @@ final class ContainerBoxNode: BaseNode {
     var reversedMoveInsideContainerActionArray = [SCNAction]()
     var isAnimating = false
     
-    var leftSideDoorOpen = false
+    var leftDoorOpen = false
     var rightDoorOpen = false
     
     var cubeNodes = [CubeNode]()
@@ -268,7 +268,9 @@ extension ContainerBoxNode {
             guard index - 1 == 0 else { return }
             switch self.lesson.name {
             case .stack:
-                self.closeLeftDoor()
+                self.closeLeftDoorMoveDown(node: self.leftSquareNode, completion: {
+                    self.delegate?.didFinishOrdering()
+                })
             case .queue:
                 self.closeLeftDoorMoveDown(node: self.leftSquareNode, completion: {
                     self.delegate?.didFinishOrdering()
@@ -293,9 +295,10 @@ extension ContainerBoxNode {
     // - Doors
     
     func openSideDoors(completion: @escaping () -> ()) {
-        guard !leftSideDoorOpen else { return completion() }
+        guard !leftDoorOpen else { return completion() }
         switch lesson.name {
         case .stack:
+            
             openLeftDoor {
                 completion()
             }
@@ -311,7 +314,7 @@ extension ContainerBoxNode {
     
     func openLeftDoor(completion: @escaping () -> ()) {
         leftSquareNode.runAction(openLeftDoorAction) {
-            self.leftSideDoorOpen = true
+            self.leftDoorOpen = true
             completion()
         }
     }
@@ -340,18 +343,14 @@ extension ContainerBoxNode {
     
     func closeLeftDoorMoveDown(node: SCNNode, completion: @escaping () -> ()) {
         node.runAction(openLeftDoorAction.reversed()) {
+            self.leftDoorOpen = false
             completion()
-        }
-    }
-    
-    func closeLeftDoor() {
-        leftSquareNode.runAction(openLeftDoorAction.reversed()) {
-            self.delegate?.didFinishOrdering()
         }
     }
     
     func closeRightDoorMoveDown(node: SCNNode, completion: @escaping () -> ()) {
         node.runAction(openRightDoorAction.reversed()) {
+            self.rightDoorOpen = false
             completion()
         }
     }

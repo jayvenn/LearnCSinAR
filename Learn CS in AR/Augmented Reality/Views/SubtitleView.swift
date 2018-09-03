@@ -17,6 +17,7 @@ protocol SubtitleViewDelegate: class {
     func minimizeSubtitleView()
     func refreshSubtitleView()
     func subtitleDidTranslate(y: CGFloat)
+    func speakerButtonDidTouchUpInside()
 }
 
 final class SubtitleView: UIView {
@@ -87,6 +88,14 @@ final class SubtitleView: UIView {
         return view
     }()
     
+    lazy var speakerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "speaker").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(speakerButtonDidTouchUpInside(_:)), for: .touchUpInside)
+        button.alpha = 0
+        return button
+    }()
+    
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(frame: .zero)
@@ -119,6 +128,10 @@ final class SubtitleView: UIView {
     
     @objc func minimizeSubtitleView(_ sender: UIButton) {
         delegate?.minimizeSubtitleView()
+    }
+    
+    @objc func speakerButtonDidTouchUpInside(_ sender: UIButton) {
+        delegate?.speakerButtonDidTouchUpInside()
     }
     
     @objc func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -202,6 +215,13 @@ extension SubtitleView {
         titleLabelSpacerView.snp.makeConstraints {
             $0.width.equalTo(closeButton)
         }
+        
+        mainView.addSubview(speakerButton)
+        speakerButton.snp.makeConstraints {
+            $0.size.equalTo(58)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-32)
+        }
     }
     
     func getTitleLabelFont() -> UIFont {
@@ -213,6 +233,22 @@ extension SubtitleView {
             titleLabelFont = Font(object: .textViewTitle).instance
         }
         return titleLabelFont
+    }
+    
+    func fadeInSpeakerButton() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: animationDuration) {
+                self.speakerButton.alpha = 1
+            }
+        }
+    }
+    
+    func fadeOutSpeakerButton() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: animationDuration) {
+                self.speakerButton.alpha = 0
+            }
+        }
     }
 }
 

@@ -73,7 +73,6 @@ final class ARLessonViewController: DefaultARViewController {
     
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
-        speak()
         setCubeNodes()
         //
 //        containerBoxNode.pushCubeNode()
@@ -139,6 +138,7 @@ extension ARLessonViewController {
 // MARK: ARLessonViewController - Animation
 extension ARLessonViewController {
     @objc func maximizeSubtitleView() {
+        subtitleView.fadeInSpeakerButton()
         self.subtitleViewTopConstraint?.update(offset: 0)
         self.subtitleViewBottomConstraint?.update(offset: self.subtitleViewTopOffset)
         animateMaximizedSubtitleView()
@@ -154,6 +154,7 @@ extension ARLessonViewController {
     }
     
     @objc func minimizeSubtitleView() {
+        subtitleView.fadeOutSpeakerButton()
         if !subtitleViewMaximized {
             SpeechSynthesizer.shared.stopSpeaking()
             refreshSubtitleView()
@@ -357,6 +358,10 @@ extension ARLessonViewController: ContainerBoxNodeDelegate {
 
 // MARK: ARLessonViewController - Subtitle
 extension ARLessonViewController: SubtitleViewDelegate {
+    func speakerButtonDidTouchUpInside() {
+        speak()
+    }
+    
     func subtitleDidTranslate(y: CGFloat) {
         self.subtitleViewBottomConstraint?.update(offset: -y)
         UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: [], animations: {
