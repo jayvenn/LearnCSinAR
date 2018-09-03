@@ -45,6 +45,7 @@
 		63BA7DD12099C6BB009D785A /* tracker.scn in Resources */ = {isa = PBXBuildFile; fileRef = 63BA7DD02099C162009D785A /* tracker.scn */; };
 		63E679A020C9A3DD00D35BC7 /* upgraded tracker.scn in Resources */ = {isa = PBXBuildFile; fileRef = 63E6799F20C9A3DD00D35BC7 /* upgraded tracker.scn */; };
 		63FC448721110771008FEE0E /* DirectionTubeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FC448621110771008FEE0E /* DirectionTubeNode.swift */; };
+		63FCD82F213CCA9200BD1669 /* OperationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCD82E213CCA9200BD1669 /* OperationCollectionViewCell.swift */; };
 		E884B9F0E586E428CC9590B5 /* Pods_Learn_CS_in_AR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 169B610091AD0ED3C903882C /* Pods_Learn_CS_in_AR.framework */; };
 		FA86ABCE2122B11B00F7ABE0 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA86ABCD2122B11B00F7ABE0 /* FontManager.swift */; };
 		FA86ABD02122B3D400F7ABE0 /* BaseMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA86ABCF2122B3D400F7ABE0 /* BaseMenuViewController.swift */; };
@@ -95,6 +96,7 @@
 		63BA7DD02099C162009D785A /* tracker.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = tracker.scn; sourceTree = "<group>"; };
 		63E6799F20C9A3DD00D35BC7 /* upgraded tracker.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "upgraded tracker.scn"; sourceTree = "<group>"; };
 		63FC448621110771008FEE0E /* DirectionTubeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionTubeNode.swift; sourceTree = "<group>"; };
+		63FCD82E213CCA9200BD1669 /* OperationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationCollectionViewCell.swift; sourceTree = "<group>"; };
 		6B7544049D4B61B9F7A528D7 /* Pods-Learn CS in AR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Learn CS in AR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Learn CS in AR/Pods-Learn CS in AR.debug.xcconfig"; sourceTree = "<group>"; };
 		FA86ABCD2122B11B00F7ABE0 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		FA86ABCF2122B3D400F7ABE0 /* BaseMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMenuViewController.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				6371B35E20A1565C008E3BCF /* ARStackView.swift */,
 				637E57DF20AC4FB3000464D6 /* SubtitleView.swift */,
 				63B459E120A2F7EA00E15798 /* SubtitleTextView.swift */,
+				63FCD82E213CCA9200BD1669 /* OperationCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				FA86ABCE2122B11B00F7ABE0 /* FontManager.swift in Sources */,
 				6370781B2091974900CA5E80 /* ActionButton.swift in Sources */,
 				FA86ABD02122B3D400F7ABE0 /* BaseMenuViewController.swift in Sources */,
+				63FCD82F213CCA9200BD1669 /* OperationCollectionViewCell.swift in Sources */,
 				637078362091C7FF00CA5E80 /* LessonsViewController.swift in Sources */,
 				6370783E2091E5EF00CA5E80 /* DefaultARViewController.swift in Sources */,
 				639F14B0209EEAAF0074330F /* ARLabel.swift in Sources */,

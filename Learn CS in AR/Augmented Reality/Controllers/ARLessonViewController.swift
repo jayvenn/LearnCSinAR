@@ -19,11 +19,28 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var stackView = ARStackView(viewController: self)
     
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+    
     lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
         view.accessibilityLabel = "Lesson info"
         view.delegate = self
         return view
+    }()
+    
+    let flowLayout: UICollectionViewFlowLayout = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.scrollDirection = .horizontal
+        return flowLayout
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+//        collectionView.backgroundColor = .clear
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.bounces = false
+        return collectionView
     }()
     
     lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
@@ -43,6 +60,7 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
     
     let synthesizer = SpeechSynthesizer.shared
+    let cellId = "OperationCollectionViewCell"
     
     init(lesson: Lesson) {
         self.lesson = lesson
@@ -123,7 +141,7 @@ final class ARLessonViewController: DefaultARViewController {
 extension ARLessonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLayout()
+        setupLayout()
     }
 }
 
@@ -132,6 +150,7 @@ extension ARLessonViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         subtitleView.textView.setContentOffset(.zero, animated: false)
+        collectionView.roundCorners([.topRight, .topLeft], radius: 30)
     }
 }
 
@@ -213,12 +232,13 @@ extension ARLessonViewController {
         }
     }
     
-    func setUpLayout() {
-        setUpStackView()
-        setUpTextView()
+    func setupLayout() {
+        setupStackView()
+        setupTextView()
+        setupCollectionView()
     }
     
-    func setUpStackView() {
+    func setupStackView() {
         view.addSubviews(views: [
             stackView
             ])
@@ -229,7 +249,7 @@ extension ARLessonViewController {
         }
     }
     
-    func setUpTextView() {
+    func setupTextView() {
         view.addSubview(subtitleView)
         subtitleView.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
@@ -239,6 +259,20 @@ extension ARLessonViewController {
             subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
         view.setNeedsLayout()
+    }
+    
+    func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .black
+        collectionView.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(view.snp.bottom)
+            $0.height.equalTo(240)
+        }
+        collectionView.register(OperationCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 }
 
@@ -401,6 +435,25 @@ extension ARLessonViewController: SubtitleViewDelegate {
         
     }
     
+}
+
+// MARK: ARLessonViewController - UICollectionViewDelegate
+extension ARLessonViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+// MARK: ARLessonViewController - UICollectionViewDataSource
+extension ARLessonViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
+        return cell
+    }
 }
 
 // MARK: ARLessonViewController - Subtitle
