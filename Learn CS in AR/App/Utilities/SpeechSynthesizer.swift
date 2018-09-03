@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class SpeechSynthesizer {
+final class SpeechSynthesizer {
     
     static let shared = SpeechSynthesizer()
     
@@ -17,8 +17,9 @@ class SpeechSynthesizer {
     func speak(_ text: String) {
         guard !synthesizer.isSpeaking else { return stopSpeaking() }
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-        utterance.rate = 0.52
+//        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = 0.54
         synthesizer.speak(utterance)
     }
     

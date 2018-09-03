@@ -113,7 +113,7 @@ extension SubtitleTextView {
         case .doublyLinkedList:
             return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each element references the next element if the next element exists. In addition, the next element that is being referenced will also references back to the element that references it."
         case .binaryTree:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smallest or largest number of the root node respectiively."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smallest or largest number of the root node respectively."
         }
     }
     
@@ -145,7 +145,7 @@ extension SubtitleTextView {
             return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last \(elementName)."
 //            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
         case .binaryTree:
-            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children on the same hiearchy are called siblings. The node which a node references from is called a parent node."
+            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The node which a node references from is called a parent node."
         }
     }
     
