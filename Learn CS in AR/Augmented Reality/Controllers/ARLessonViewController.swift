@@ -27,20 +27,11 @@ final class ARLessonViewController: DefaultARViewController {
         return view
     }()
     
-    let flowLayout: UICollectionViewFlowLayout = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = 0
-        flowLayout.scrollDirection = .horizontal
-        return flowLayout
-    }()
-    
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-//        collectionView.backgroundColor = .clear
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.bounces = false
-        return collectionView
+    lazy var operationView: OperationView = {
+        let view = OperationView(lesson: lesson)
+        view.accessibilityLabel = "Operation info and buttons"
+        view.delegate = self
+        return view
     }()
     
     lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
@@ -48,7 +39,7 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var binaryTreeNode = BinaryTreeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
     // MARK: ARLessonViewController - Properties
-    let lesson: Lesson
+    var lesson: Lesson
     
     var subtitleViewTopConstraint: Constraint?
     var subtitleViewBottomConstraint: Constraint?
@@ -56,16 +47,15 @@ final class ARLessonViewController: DefaultARViewController {
     var subtitleViewMaximized = false
     
     lazy var subtitleViewHeight: CGFloat = view.frame.height/3
-//    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight - 40
     lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
     
     let synthesizer = SpeechSynthesizer.shared
-    let cellId = "OperationCollectionViewCell"
     
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
         accessibilityLabel = "\(lesson.name) lesson"
+        
     }
     
     deinit {
@@ -92,28 +82,28 @@ final class ARLessonViewController: DefaultARViewController {
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
-        //
-//        containerBoxNode.pushCubeNode()
-        //
         
         runOrdering()
         subtitleView.setOrdering()
-        fadeOutBottomStackViewAndFadeInSubTitleView()
+        fadeOutBottomStackView {
+            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
+        }
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
-        //
-//        containerBoxNode.popCubeNode()
-        //
         
-        subtitleView.setOperation()
-        fadeOutBottomStackViewAndFadeInSubTitleView()
+        operationView.setOperation()
+        fadeOutBottomStackView {
+            self.fadeInSubtitleView(targetView: self.operationView, completion: { })
+        }
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
         subtitleView.setBigO()
-        fadeOutBottomStackViewAndFadeInSubTitleView()
+        fadeOutBottomStackView {
+            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
+        }
     }
     
     @objc func resetButtonDidTouchUpInside(_ sender: AlternateARButton) {
@@ -123,13 +113,6 @@ final class ARLessonViewController: DefaultARViewController {
             }
         })
     }
-    
-    func fadeOutBottomStackViewAndFadeInSubTitleView() {
-        fadeOutBottomStackView {
-            self.fadeInSubtitleView(completion: {})
-        }
-    }
-    
     override func configureView() {
         super.configureView()
         // TODO: Update subtitle view with accessible fonts
@@ -149,8 +132,7 @@ extension ARLessonViewController {
 extension ARLessonViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        subtitleView.textView.setContentOffset(.zero, animated: false)
-        collectionView.roundCorners([.topRight, .topLeft], radius: 30)
+        
     }
 }
 
@@ -177,7 +159,8 @@ extension ARLessonViewController {
         if !subtitleViewMaximized {
             SpeechSynthesizer.shared.stopSpeaking()
             refreshSubtitleView()
-            fadeOutSubtitleView {
+            fadeOutView(targetView: self.operationView, completion: {}) //
+            fadeOutView(targetView: self.subtitleView) {
                 self.fadeInBottomStackView(completion: { })
             }
             return
@@ -235,7 +218,7 @@ extension ARLessonViewController {
     func setupLayout() {
         setupStackView()
         setupTextView()
-        setupCollectionView()
+        setupOperationiew()
     }
     
     func setupStackView() {
@@ -254,25 +237,17 @@ extension ARLessonViewController {
         subtitleView.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-//            $0.height.equalTo(view.frame.height)
             subtitleViewBottomConstraint = $0.bottom.equalTo(view.snp.bottom).constraint
             subtitleViewTopConstraint = $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(subtitleViewTopOffset).constraint
         }
         view.setNeedsLayout()
     }
     
-    func setupCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.backgroundColor = .black
-        collectionView.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.bottom.equalTo(view.snp.bottom)
-            $0.height.equalTo(240)
+    func setupOperationiew() {
+        view.addSubview(operationView)
+        operationView.snp.makeConstraints {
+            $0.leading.trailing.bottom.top.equalTo(subtitleView)
         }
-        collectionView.register(OperationCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.delegate = self
-        collectionView.dataSource = self
     }
 }
 
@@ -280,8 +255,7 @@ extension ARLessonViewController {
 extension ARLessonViewController {
     // Ordering
     func runOrdering() {
-        
-        fadeInSubtitleView(completion: {})
+        fadeInSubtitleView(targetView: self.subtitleView, completion: {})
         switch lesson.name {
         case .stack, .queue:
             containerBoxNode.pushCubeNodes()
@@ -351,7 +325,7 @@ extension ARLessonViewController {
     // Bottom Stack View
     func fadeInBottomStackView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
                 self.stackView.alpha = 1
             }, completion: { _ in completion() })
         }
@@ -359,25 +333,25 @@ extension ARLessonViewController {
     
     func fadeOutBottomStackView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: {
                 self.stackView.alpha = 0
             }, completion: { _ in completion() })
         }
     }
     
     // Subtitle Stack View
-    func fadeInSubtitleView(completion: @escaping () -> ()) {
+    func fadeInSubtitleView(targetView: BaseARView, completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn], animations: {
-                self.subtitleView.alpha = 1
+            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
+                targetView.alpha = 1
             }, completion: { _ in completion() })
         }
     }
     
-    func fadeOutSubtitleView(completion: @escaping () -> ()) {
+    func fadeOutView(targetView: BaseARView, completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
-                self.subtitleView.alpha = 0
+            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: {
+                targetView.alpha = 0
             }, completion: { _ in completion() })
         }
     }
@@ -413,14 +387,14 @@ extension ARLessonViewController: SubtitleViewDelegate {
         }
     }
     
-    
     func closeButtonDidTouchUpInside() {
         DispatchQueue.main.async {
             SpeechSynthesizer.shared.stopSpeaking()
             self.minimizeSubtitleView()
-            self.fadeOutSubtitleView {
+            self.fadeOutView(targetView: self.operationView, completion: {})
+            self.fadeOutView(targetView: self.subtitleView, completion: {
                 self.fadeInBottomStackView(completion: {})
-            }
+            })
         }
     }
     
@@ -435,25 +409,6 @@ extension ARLessonViewController: SubtitleViewDelegate {
         
     }
     
-}
-
-// MARK: ARLessonViewController - UICollectionViewDelegate
-extension ARLessonViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-}
-
-// MARK: ARLessonViewController - UICollectionViewDataSource
-extension ARLessonViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
-        return cell
-    }
 }
 
 // MARK: ARLessonViewController - Subtitle
