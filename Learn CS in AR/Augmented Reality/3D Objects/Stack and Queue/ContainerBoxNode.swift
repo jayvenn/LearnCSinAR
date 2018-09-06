@@ -364,18 +364,22 @@ extension ContainerBoxNode {
         var finalPosition = secondPosition
         finalPosition.x += (Float(self.cubeSpacing + self.cubeLength) * Float(cubeNodes.count - index))
         
-        let action = SCNAction.sequence([SCNAction.move(to: position, duration: animationDuration),
-                                         SCNAction.wait(duration: animationDuration),
-                                         SCNAction.move(to: secondPosition, duration: animationDuration),
-                                         SCNAction.move(to: finalPosition, duration: animationDuration)
+        let duration = animationDuration
+        
+        let action = SCNAction.sequence([SCNAction.move(to: position, duration: duration),
+                                         SCNAction.wait(duration: duration),
+                                         SCNAction.move(to: secondPosition, duration: duration),
+                                         SCNAction.move(to: finalPosition, duration: duration)
                                          ])
         
+        
+        
         let reversedAction = SCNAction.sequence([
-            SCNAction.move(to: finalPosition, duration: animationDuration),
-            SCNAction.move(to: secondPosition, duration: animationDuration),
-            SCNAction.wait(duration: animationDuration),
-            SCNAction.move(to: position, duration: animationDuration),
-            SCNAction.move(to: originalPosition, duration: animationDuration)
+            SCNAction.move(to: finalPosition, duration: duration),
+            SCNAction.move(to: secondPosition, duration: duration),
+            SCNAction.wait(duration: duration),
+            SCNAction.move(to: position, duration: duration),
+            SCNAction.move(to: originalPosition, duration: duration)
             ])
         reversedMoveInsideContainerActionArray.append(reversedAction)
         moveInsideContainerActionArray.append(action)

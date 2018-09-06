@@ -85,6 +85,21 @@ extension SubtitleView {
         titleLabel.attributedText = titleAttributedText
         titleLabel.accessibilityLabel = "Ordering"
     }
+    
+    func setOperation() {
+        setOperationTitleLabel()
+        textView.setOperationText()
+    }
+    
+    func setOperationTitleLabel() {
+        let titleColor = UIColor.black
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
+                                   NSAttributedStringKey.font: getTitleLabelFont()]
+        let titleAttributedText = NSMutableAttributedString(string: "Operation", attributes: titleTextAttributes)
+        titleLabel.attributedText = titleAttributedText
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.accessibilityLabel = "Operation"
+    }
 }
 
 

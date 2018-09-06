@@ -15,9 +15,13 @@ enum BigOComplexity: String {
 //    case logarithmic = "O(logn) - logarithmic"
 //    case linear = "O(n) - linear"
     
-    case constant = "O(1)"
-    case logarithmic = "O(logn)"
-    case linear = "O(n)"
+    case constant = "Constant - O(1)"
+    case linear = "Linear - O(n)"
+    case logarithmic = "Logarithmic - O(logn)"
+    
+//    case constant = "O(1)"
+//    case logarithmic = "O(logn)"
+//    case linear = "O(n)"
 }
 
 let elementName = "cube"

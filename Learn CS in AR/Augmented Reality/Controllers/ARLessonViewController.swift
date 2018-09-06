@@ -93,10 +93,15 @@ final class ARLessonViewController: DefaultARViewController {
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
         
-        operationView.setOperation()
+        subtitleView.setOperation()
         fadeOutBottomStackView {
-            self.fadeInSubtitleView(targetView: self.operationView, completion: { })
+            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
         }
+        
+//        operationView.setOperation()
+//        fadeOutBottomStackView {
+//            self.fadeInSubtitleView(targetView: self.operationView, completion: { })
+//        }
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
@@ -218,7 +223,7 @@ extension ARLessonViewController {
     func setupLayout() {
         setupStackView()
         setupTextView()
-        setupOperationiew()
+//        setupOperationView()
     }
     
     func setupStackView() {
@@ -243,7 +248,7 @@ extension ARLessonViewController {
         view.setNeedsLayout()
     }
     
-    func setupOperationiew() {
+    func setupOperationView() {
         view.addSubview(operationView)
         operationView.snp.makeConstraints {
             $0.leading.trailing.bottom.top.equalTo(subtitleView)

@@ -371,7 +371,7 @@ extension DefaultARViewController {
         }
         
         let position = vector(from: hitTestResult.worldTransform.translation)
-        let action = SCNAction.move(to: position, duration: animationDuration)
+        let action = SCNAction.move(to: position, duration: 0.3)
         mainNode.runAction(action)
 //        UIView.animate(withDuration: 1) {
 //            self.mainNode.position = self.vector(from: hitTestResult.worldTransform.translation)
