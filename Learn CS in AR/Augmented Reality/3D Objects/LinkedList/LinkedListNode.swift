@@ -91,6 +91,7 @@ final class LinkedListNode: BaseNode {
         )
         
         let repeatAction = SCNAction.repeat(actionSequence, count: 3)
+        // TODO: Use action?
         let action = SCNAction.sequence([repeatAction,
                                          SCNAction.removeFromParentNode()])
         
