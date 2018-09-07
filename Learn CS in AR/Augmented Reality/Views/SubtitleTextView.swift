@@ -101,8 +101,6 @@ extension SubtitleTextView {
         attributedText = titleAttributedText
         let accessibilityValue = getTypeBodyText() + "\n" + getFromExampleBodyText() + "\n" + getPutSimplyBodyText()
         self.accessibilityValue = accessibilityValue
-        
-//        speak(accessibilityValue)
     }
     
     func getTypeBodyText() -> String {
@@ -113,11 +111,11 @@ extension SubtitleTextView {
             return "A queue data structure uses the first-in-first-out (FIFO) ordering."
 //            "Imagine lining up to get the latest Star Wars movie ticket, the first person in line to get the ticket is also the first person out."
         case .singlyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each element references the next element if the next element exists."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) references the next \(elementName) if the next \(elementName) exists."
         case .doublyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each element references the next element if the next element exists. In addition, the next element that is being referenced will also references back to the element that references it."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) references the next \(elementName) if the next \(elementName) exists. In addition, the next \(elementName) that is being referenced will also references back to the \(elementName) that references it."
         case .binaryTree:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where whenever a new element is added to a tree, if there is a root node, then the new element will be in the left or right hand side of the root node depending on if it is smallest or largest number of the root node respectively."
+            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) can have a maximum of two children."
         }
     }
     
@@ -130,9 +128,10 @@ extension SubtitleTextView {
         case .singlyLinkedList:
             return "The first \(elementName) has a reference to the second \(elementName). The second \(elementName) has a reference to the third \(elementName). The third \(elementName)’s next \(elementName) reference is nothing or nil."
         case .doublyLinkedList:
-            return "The first cube references the second cube. The second cube references the first cubes. The same referencing procedure occurs between the second and third cubes."
+            return "The first \(elementName) references the second \(elementName). The second \(elementName) references the first \(elementName). The same referencing procedure occurs between the second and third \(elementNamePlural)."
         case .binaryTree:
-            return "The first cube references a cube to the left and a cube to the right. The cube in the left is smaller than the cube to its right. The two cubes beneath the root node are called siblings."
+            return "When a child \(elementName) is added onto a root \(elementName), the child \(elementName) will reside either on the left or right of the root \(elementName). The child \(elementName) position will depend on the \(elementName)'s size in comparison to the other child \(elementName). The smaller \(elementName) will reside on the left. The bigger \(elementName) will reside on the right. If there the added \(elementName) is the only child, it will be reside on the left. When a \(elementName) is added, a reference is created."
+//            return "The root \(elementName) references a cube to the left and a \(elementName) to the right. The \(elementName) in the left is smaller than the \(elementName) to its right. The two \(elementNamePlural) beneath the root \(elementName) are called siblings."
         }
     }
     
@@ -149,7 +148,8 @@ extension SubtitleTextView {
             return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last \(elementName)."
 //            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
         case .binaryTree:
-            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The node which a node references from is called a parent node."
+            return "A \(elementName) can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The \(elementName) which a \(elementName) references from is called a parent node."
+//            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The node which a node references from is called a parent node."
         }
     }
     
@@ -201,39 +201,71 @@ extension SubtitleTextView {
         
         attributedText = titleAttributedText
         self.accessibilityValue = accessibilityValue
-//        speak(accessibilityValue)
     }
     
     func getDescriptionOf(_ operation: Operation) -> String {
         switch operation {
-        case .push:
-            return "Add a \(elementName) by sliding a cube from the container's back to the container's front."
-        case .pop:
-            return "Remove the \(elementName) closest to the container's back."
+        case .push, .enqueue:
+            return "Add a \(elementName) into the container."
+        case .append:
+            return "Add a \(elementName) to the end of the container."
+        case .pop, .dequeue:
+            return "Remove a cube \(elementName) from the container."
         case .peek:
-            return "Look at the \(elementName) closest to the container's back."
+            return "Show the latest added \(elementName) in the container."
         case .isEmpty:
             return "Check whether the container contains any \(elementName)."
-        case .enqueue:
-            return "Add a \(elementName) by sliding a \(elementName) from the container's back to the container's front, like a Stack's push(\(elementSymbol))."
-        case .dequeue:
-            return "Remove the \(elementName) closest to the container's front."
-        case .append:
-            return "Add a \(elementName) to the end of the collection."
         case .remove:
-            return "Remove a \(elementName) at a particular index."
+            return "Remove a particular \(elementName) from the container."
         case .nodeAtIndex:
-            return "Return the \(elementName) at a particular index."
+            return "Show a particular \(elementName) in the container."
         case .removeAll:
-            return "Remove everything from the collection."
+            return "Remove all \(elementNamePlural) from container."
         case .insertAfter:
             return "Insert a \(elementName) after another \(elementName)."
         case .removeLast:
-            return "Remove the last \(elementName) from the collection."
+            return "Remove the last \(elementName) from the container."
         case .removeAfter:
-            return "Remove the \(elementName) after the indicated \(elementName)."
+            return "Remove a particular \(elementName) after another \(elementName)."
+        case .find:
+            return "Find a particular \(elementName) on a tree and check if it exists."
+        case .addChild:
+            return "Add a child \(elementName) onto a tree."
+        case .removeChild:
+            return "Remove a particular child \(elementName) from a tree."
         }
     }
+    
+//    func getDescriptionOf(_ operation: Operation) -> String {
+//        switch operation {
+//        case .push:
+//            return "Add a \(elementName) by sliding a \(elementName) from the container's back to the container's front."
+//        case .pop:
+//            return "Remove the \(elementName) closest to the container's back."
+//        case .peek:
+//            return "Look at the \(elementName) closest to the container's back."
+//        case .isEmpty:
+//            return "Check whether the container contains any \(elementName)."
+//        case .enqueue:
+//            return "Add a \(elementName) by sliding a \(elementName) from the container's back to the container's front, like a Stack's push(\(elementSymbol))."
+//        case .dequeue:
+//            return "Remove the \(elementName) closest to the container's front."
+//        case .append:
+//            return "Add a \(elementName) to the end of the collection."
+//        case .remove:
+//            return "Remove a \(elementName) at a particular index."
+//        case .nodeAtIndex:
+//            return "Return the \(elementName) at a particular index."
+//        case .removeAll:
+//            return "Remove everything from the collection."
+//        case .insertAfter:
+//            return "Insert a \(elementName) after another \(elementName)."
+//        case .removeLast:
+//            return "Remove the last \(elementName) from the collection."
+//        case .removeAfter:
+//            return "Remove the \(elementName) after the indicated \(elementName)."
+//        }
+//    }
     
 }
 
@@ -270,7 +302,6 @@ extension SubtitleTextView {
         
         attributedText = titleAttributedText
         self.accessibilityValue = accessibilityValue
-//        speak(accessibilityValue)
     }
     
     
@@ -284,6 +315,8 @@ extension SubtitleTextView {
         switch operation {
         case .nodeAtIndex:
             text = BigOComplexity.linear.rawValue
+        case .addChild, .removeChild, .find:
+            text = BigOComplexity.logarithmic.rawValue
         default:
             text = BigOComplexity.constant.rawValue
         }

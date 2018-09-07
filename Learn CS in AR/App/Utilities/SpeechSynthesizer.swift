@@ -19,7 +19,7 @@ final class SpeechSynthesizer {
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
 //        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        utterance.rate = 0.52 // 0.54
+        utterance.rate = 0.53 // 0.54
         synthesizer.speak(utterance)
     }
     

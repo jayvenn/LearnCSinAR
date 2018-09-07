@@ -33,6 +33,10 @@ enum Operation: String {
     case insertAfter = "insert(after: cube)"
     case removeLast = "removeLast()"
     case removeAfter = "remove(after: cube)"
+    
+    case find = "find(cube)"
+    case addChild = "add(child: cube)"
+    case removeChild = "remove(child: cube)"
 }
 
 struct Lesson {
@@ -46,12 +50,10 @@ struct Lesson {
             operations = [.push, .pop, .peek, .isEmpty]
         case .queue:
             operations = [.enqueue, .dequeue, .peek, .isEmpty]
-        case .singlyLinkedList:
+        case .singlyLinkedList, .doublyLinkedList:
             operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
-        case .doublyLinkedList:
-            operations = []
         case .binaryTree:
-            operations = []
+            operations = [.find, .addChild, .removeChild]
         }
         return operations
     }()

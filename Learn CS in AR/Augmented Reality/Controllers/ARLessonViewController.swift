@@ -73,10 +73,15 @@ final class ARLessonViewController: DefaultARViewController {
     }
     
     private func speak() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+        DispatchQueue.main.async {
             guard let text = self.subtitleView.textView.accessibilityValue else { return }
             self.synthesizer.speak(text)
         }
+        
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+//            guard let text = self.subtitleView.textView.accessibilityValue else { return }
+//            self.synthesizer.speak(text)
+//        }
     }
     
     // MARK: ARLessonViewController - Button methods
