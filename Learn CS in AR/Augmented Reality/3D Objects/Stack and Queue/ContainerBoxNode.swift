@@ -25,7 +25,7 @@ protocol ContainerBoxNodeDelegate: class {
 final class ContainerBoxNode: BaseNode {
     
     let fadeInAction: SCNAction = {
-        return SCNAction.sequence([SCNAction.fadeIn(duration: 0.3)])
+        return SCNAction.sequence([SCNAction.fadeIn(duration: fadeInAnimationDuration)])
     }()
     
     // Square
@@ -51,7 +51,7 @@ final class ContainerBoxNode: BaseNode {
             SCNAction.moveBy(x: horizontalDistance, y: 0, z: 0, duration: animationDuration)
             ])
         // BUG: Completion handler doesn't run with timing mode set to .easeInEaseOut
-//        action.timingMode = .easeInEaseOut
+        action.timingMode = .easeInEaseOut
         return action
     }()
     
@@ -62,7 +62,8 @@ final class ContainerBoxNode: BaseNode {
             SCNAction.moveBy(x: 0, y: squareLength, z: 0, duration: animationDuration),
             SCNAction.moveBy(x: -horizontalDistance, y: 0, z: 0, duration: animationDuration)
             ])
-//        action.timingMode = .easeInEaseOut
+        action.timingMode = .easeInEaseOut
+        
         return action
     }()
     

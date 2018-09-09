@@ -126,25 +126,25 @@ class ARStackView: UIStackView {
     
     func setUpLayout() {
         let buttonLength = 60
-        orderingButton.snp.makeConstraints { (make) in
-            make.size.equalTo(buttonLength)
+        orderingButton.snp.makeConstraints {
+            $0.size.equalTo(buttonLength)
         }
         
-        operationButton.snp.makeConstraints { (make) in
-            make.size.equalTo(buttonLength)
+        operationButton.snp.makeConstraints {
+            $0.size.equalTo(buttonLength)
         }
         
-        bigOButton.snp.makeConstraints { (make) in
-            make.size.equalTo(buttonLength)
+        bigOButton.snp.makeConstraints {
+            $0.size.equalTo(buttonLength)
         }
         
-        bottomRightStackView.snp.makeConstraints { (make) in
-            make.width.equalTo(220)
+        bottomRightStackView.snp.makeConstraints {
+            $0.width.equalTo(220)
         }
         
         let alternateButtonLegth = 50
-        resetButton.snp.makeConstraints { (make) in
-            make.size.equalTo(alternateButtonLegth)
+        resetButton.snp.makeConstraints {
+            $0.size.equalTo(alternateButtonLegth)
         }
     }
     

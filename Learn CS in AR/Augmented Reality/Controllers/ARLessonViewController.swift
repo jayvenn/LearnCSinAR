@@ -103,10 +103,6 @@ final class ARLessonViewController: DefaultARViewController {
             self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
         }
         
-//        operationView.setOperation()
-//        fadeOutBottomStackView {
-//            self.fadeInSubtitleView(targetView: self.operationView, completion: { })
-//        }
     }
     
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
@@ -335,7 +331,7 @@ extension ARLessonViewController {
     // Bottom Stack View
     func fadeInBottomStackView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseIn], animations: {
                 self.stackView.alpha = 1
             }, completion: { _ in completion() })
         }
@@ -343,7 +339,7 @@ extension ARLessonViewController {
     
     func fadeOutBottomStackView(completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseOut], animations: {
                 self.stackView.alpha = 0
             }, completion: { _ in completion() })
         }
@@ -352,7 +348,7 @@ extension ARLessonViewController {
     // Subtitle Stack View
     func fadeInSubtitleView(targetView: BaseARView, completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseIn], animations: {
                 targetView.alpha = 1
             }, completion: { _ in completion() })
         }
@@ -360,7 +356,7 @@ extension ARLessonViewController {
     
     func fadeOutView(targetView: BaseARView, completion: @escaping () -> ()) {
         DispatchQueue.main.async {
-            UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseOut], animations: {
                 targetView.alpha = 0
             }, completion: { _ in completion() })
         }

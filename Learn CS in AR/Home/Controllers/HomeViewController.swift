@@ -44,6 +44,7 @@ final class HomeViewController: BaseMenuViewController {
     
     fileprivate lazy var bottomStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [beginButton, aboutButton])
+//        let stackView = UIStackView(arrangedSubviews: [beginButton])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
@@ -111,7 +112,7 @@ extension HomeViewController {
         beginButton.snp.makeConstraints {
             $0.height.equalTo(44)
         }
-
+        
         aboutButton.snp.makeConstraints {
             $0.height.equalTo(beginButton)
         }

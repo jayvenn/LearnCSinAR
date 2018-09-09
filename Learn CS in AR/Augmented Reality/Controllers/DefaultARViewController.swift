@@ -74,7 +74,8 @@ class DefaultARViewController: BaseMenuViewController {
     
     private let instructionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Move around \nto find a surface".uppercased()
+        let localizedString = NSLocalizedString("Move around \nto find a surface", comment: "Move camera around")
+        label.text = localizedString.uppercased()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18)
 //        label.textColor = .lightGray
@@ -94,7 +95,8 @@ class DefaultARViewController: BaseMenuViewController {
     
     private let beginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Begin Lesson".uppercased(), for: .normal)
+        let localizedString = NSLocalizedString("Begin Lesson", comment: "Begin Lesson").uppercased()
+        button.setTitle(localizedString, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         button.titleLabel?.minimumScaleFactor = minimumScaleFactor
         button.addTarget(self, action: #selector(DefaultARViewController.beginButtonDidTouchUpInside), for: .touchUpInside)
@@ -329,14 +331,14 @@ extension DefaultARViewController {
     }
 
     func fadeInTopObjects() {
-        UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseIn], animations: {
+        UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseIn], animations: {
             self.instructionLabel.alpha = 1
             self.cancelButton.alpha = 1
         })
     }
     
     func fadeInBeginButton() {
-        UIView.animate(withDuration: animationDuration, delay: 0.5, options: [.curveEaseIn], animations: {
+        UIView.animate(withDuration: fadeInAnimationDuration, delay: 0.5, options: [.curveEaseIn], animations: {
             self.beginButton.alpha = 1
         })
     }

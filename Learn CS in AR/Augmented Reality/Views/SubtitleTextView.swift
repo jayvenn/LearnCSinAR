@@ -131,7 +131,6 @@ extension SubtitleTextView {
             return "The first \(elementName) references the second \(elementName). The second \(elementName) references the first \(elementName). The same referencing procedure occurs between the second and third \(elementNamePlural)."
         case .binaryTree:
             return "When a child \(elementName) is added onto a root \(elementName), the child \(elementName) will reside either on the left or right of the root \(elementName). The child \(elementName) position will depend on the \(elementName)'s size in comparison to the other child \(elementName). The smaller \(elementName) will reside on the left. The bigger \(elementName) will reside on the right. If there the added \(elementName) is the only child, it will be reside on the left. When a \(elementName) is added, a reference is created."
-//            return "The root \(elementName) references a cube to the left and a \(elementName) to the right. The \(elementName) in the left is smaller than the \(elementName) to its right. The two \(elementNamePlural) beneath the root \(elementName) are called siblings."
         }
     }
     
