@@ -6,8 +6,12 @@
   Copyright © 2018 Jayven Nhan. All rights reserved.
 */
 
+"Learn CS in AR" = "在AR学习CS";
+"Made for CS Students" = "为CS学生而制作";
+"Purpose" = "目的";
+"Begin" = "开始";
 "Move around \nto find a surface" = "四处走找一个表面";
 "Begin Lesson" = "开始课";
-"Ordering" = "排序"
-"Operation" = "操作"
-
+"Ordering" = "排序";
+"Operation" = "操作";
+"Data Structures" = "数据结构";

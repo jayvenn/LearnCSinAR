@@ -24,9 +24,9 @@ enum BigOComplexity: String {
 //    case linear = "O(n)"
 }
 
-let elementName = "cube"
-let elementNamePlural = "cubes"
-let elementSymbol = "cube"
+let elementName = NSLocalizedString("cube", comment: "cube")
+let elementNamePlural = NSLocalizedString("cubes", comment: "cubes")
+let elementSymbol = NSLocalizedString("cube", comment: "cube")
 
 // MARK: SubtitleTextView
 final class SubtitleTextView: UITextView {
