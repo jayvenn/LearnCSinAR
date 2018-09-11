@@ -24,7 +24,7 @@ final class HomeViewController: BaseMenuViewController {
     }()
     
     private let beginButton: ActionButton = {
-        let buttonText = "Begin"
+        let buttonText = NSLocalizedString("Begin", comment: "Begin")
         let button = ActionButton(type: .system)
         button.setTitle(buttonText, for: .normal)
         button.addTarget(self, action: #selector(beginButtonDidTouchUpInside(_:)), for: .touchUpInside)
@@ -35,7 +35,8 @@ final class HomeViewController: BaseMenuViewController {
     
     private let aboutButton: AlternateActionButton = {
         let button = AlternateActionButton(type: .system)
-        button.setTitle("Purpose", for: .normal)
+        let text = NSLocalizedString("Purpose", comment: "Purpose")
+        button.setTitle(text, for: .normal)
         button.addTarget(self, action: #selector(HomeViewController.aboutButtonDidTouchUpInside), for: .touchUpInside)
         button.accessibilityLabel = "Purpose"
         button.accessibilityHint = "App Purpose"
@@ -120,7 +121,7 @@ extension HomeViewController {
     
     func setHeaderLabelFont() {
         let titleText = "Learn CS in AR"
-        let subTitleText = "Made for CS Students"
+        let subTitleText = NSLocalizedString("Made for CS Students", comment: "Made for CS Students")
         
 //        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
 //                                   NSAttributedStringKey.font: Font(object: .titleLabel).instance]

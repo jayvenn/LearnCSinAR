@@ -76,7 +76,7 @@ extension CoursesViewController {
         setUpLayout()
         setUpUI()
         loadTableView()
-        title = "Select a Course"
+        title = NSLocalizedString("Select a Course", comment: "Select a Course")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -132,7 +132,8 @@ extension CoursesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let course = courses[indexPath.row]
         let courseViewController = LessonsViewController(course: course)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        let title = NSLocalizedString("Back", comment: "Back")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         show(courseViewController, sender: nil)
     }
 }

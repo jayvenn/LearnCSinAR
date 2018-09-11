@@ -81,7 +81,8 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: getTitleLabelFont()]
-        let titleAttributedText = NSMutableAttributedString(string: "Ordering", attributes: titleTextAttributes)
+        let string = NSLocalizedString(LocalizedString.ordering, comment: "Ordering")
+        let titleAttributedText = NSMutableAttributedString(string: string, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.accessibilityLabel = "Ordering"
     }

@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Learn CS in AR
+
+  Created by Jayven Nhan on 9/8/18.
+  Copyright © 2018 Jayven Nhan. All rights reserved.
+*/
+
+// Element
+"cube" = "cubo";
+"cubes" = "cubitos";
+
+// HomeViewController
+"Learn CS in AR" = "Aprende CS en AR";
+"Made for CS Students" = "Hecho para estudiantes de CS";
+"Purpose" = "Propósito";
+"Begin" = "Comienza";
+"Back" = "Regresa";
+
+// CourseViewController
+"Select a Course" = "Seleccione un curso";
+
+// ARViewController
+"Move around \nto find a surface" = "Muévete para \nencontrar una superficie.";
+"Begin Lesson" = "Comienza la Lección";
+"Ordering" = "Ordenando";
+"Operation" = "Operación";
+"Data Structures" = "Estructuras de Datos";
+
+// Stack Lesson
+"A stack data structure uses the last-in-first-out (LIFO) ordering." = "Una estructura de datos stack utiliza el orden de último en entrar primero en salir.";
+
+"If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first." = "";
+
+"Go in first, get out last.\nGo in last, get out first." = ""
+
+// Queue Lesson
+"A queue data structure uses the first-in-first-out (FIFO) ordering." = "Una estructura de datos queue utiliza el orden de primer en entrar primero en salir.";
+
+"The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last." = "";
+
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+
+// Singly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ hace referencia al siguiente %@ si existe el siguiente %@";
+
+"The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil." = "";
+
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+
+// Doubly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ hace referencia al siguiente %@ si existe el siguiente %@. Además, el próximo %@ al que se hace referencia también hará referencia al %@ que lo referencia.";
+
+"The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@." = "";
+
+"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@." = ""
+
+// Binary Tree
+"A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ puede tener un máximo de dos hijos.";
+
+"When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created." = "Cuando se agrega un OBJETO infantil a un OBJETO raíz, el OBJETO hijo residirá ya sea a la izquierda o a la derecha del OBJETO raíz. La posición del OBJETO infantil dependerá del tamaño del OBJETO en comparación con el otro OBJETO infantil. resida a la izquierda. El OBJETO más grande residirá a la derecha. Si existe el OBJETO agregado es el único hijo, residirá a la izquierda. Cuando se agrega un OBJETO, se crea una referencia.";
+
+"A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node." = "";

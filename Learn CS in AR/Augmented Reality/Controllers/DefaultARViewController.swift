@@ -112,7 +112,6 @@ class DefaultARViewController: BaseMenuViewController {
     
     lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.setImage(#imageLiteral(resourceName: "cancelButton").withRenderingMode(.alwaysOriginal), for: .normal)
         button.setTitle("X", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.sizeToFit()
@@ -430,8 +429,6 @@ extension DefaultARViewController {
         cubeLength = (trackerNodeLength - totalSpacing) / numberOfCubes
         
         let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
-//        let yInitial = Float((cubeLength / 2))
-//        let yFinal = Float((cubeLength / 2) + 0.2)
         let yEulerAngle = trackerNode.eulerAngles.y
         
         for index in 0..<Int(numberOfCubes) {
@@ -473,19 +470,11 @@ extension DefaultARViewController {
         spotLightNode.position.y = 2
         spotLightNode.position.x = 0.1
         spotLightNode.position.z = 0.5
-//        spotLightNode.position = SCNVector3(1,5,1)
+        
         spotLightNode.look(at: mainNode.position)
         
         mainNode.addChildNode(spotLightNode)
         lightNodes.append(spotLightNode)
-        
-//        omniLightNode.position.y = 2
-//        mainNode.addChildNode(omniLightNode)
-//        lightNodes.append(omniLightNode)
-
-//        ambientLightNode.position.y = 20
-//        mainNode.addChildNode(ambientLightNode)
-//        lightNodes.append(ambientLightNode)
     }
     
     func updateLightNodesLightEstimation() {

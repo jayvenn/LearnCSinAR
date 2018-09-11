@@ -21,7 +21,7 @@ struct Course {
     init(courseSubject: CourseSubject) {
         switch courseSubject {
         case .dataStructures:
-            name = "Data Structures"
+            name = NSLocalizedString("Data Structures", comment: "Data Structures")
             let lesson1 = Lesson(lessonName: .stack)
             let lesson2 = Lesson(lessonName: .queue)
             let lesson3 = Lesson(lessonName: .singlyLinkedList)

@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Learn CS in AR
+
+  Created by Jayven Nhan on 9/8/18.
+  Copyright © 2018 Jayven Nhan. All rights reserved.
+*/
+
+// Element
+"cube" = "立方體";
+"cubes" = "立方體";
+
+// HomeViewController
+"Learn CS in AR" = "在AR學習CS";
+"Made for CS Students" = "為CS學生而製作";
+"Purpose" = "目的";
+"Begin" = "開始";
+"Back" = "回";
+
+// CourseViewController
+"Select a Course" = "選擇課程";
+
+// ARViewController
+"Move around \nto find a surface" = "四處走找一個表面";
+"Begin Lesson" = "開始課";
+"Ordering" = "排序";
+"Operation" = "操作";
+"Data Structures" = "數據結構";
+
+// Stack Lesson
+"A stack data structure uses the last-in-first-out (LIFO) ordering." = "STACK數據結構使用後進先出排序。";
+
+"If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first." = "";
+
+"Go in first, get out last.\nGo in last, get out first." = "";
+
+// Queue Lesson
+"A queue data structure uses the first-in-first-out (FIFO) ordering." = "QUEUE數據結構使用先進先出順序。";
+
+"The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last." = "";
+
+"Go in first, get out first.\nGo in last, get out last." = "";
+
+// Singly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists." = "%@數據結構使用排序順序，如果下一個%@存在，則每個%@引用下一個%@。";
+
+"The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil." = "";
+
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+
+// Doubly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it." = "％d數據結構使用排序序列，其中如果存在下一個％d，則每個％d引用下一個％d。此外，正在引用的下一個OBJECT也將引用回引用它的％d。";
+
+"The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@." = "";
+
+"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@." = ""
+
+// Binary Tree
+"A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children." = "%@數據結構使用一個排序序列，其中每個%@最多可以有兩個子節點。";
+
+"When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created." = "將子%@添加到根%@時，子%@將位於根%@的左側或右側。子%@位置將取決於%@的大小與其他子%@的比較。較小的%@將 位於左側。較大的%@將位於右側。如果添加的%@是唯一的子級，則它將駐留在左側。當添加%@時，將創建一個引用。";
+
+"A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node." = "";

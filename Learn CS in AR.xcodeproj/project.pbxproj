@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		634AE3E92112495D000F8B6D /* BinaryTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634AE3E82112495D000F8B6D /* BinaryTreeNode.swift */; };
 		634AE3ED2112536C000F8B6D /* ARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634AE3EC2112536C000F8B6D /* ARManager.swift */; };
+		6355C8BD21455C81006922AB /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355C8BC21455C81006922AB /* Localization.swift */; };
 		635ADD9821110FFD00BF1385 /* DirectionBallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635ADD9721110FFD00BF1385 /* DirectionBallNode.swift */; };
 		637077F820918E2500CA5E80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637077F720918E2500CA5E80 /* AppDelegate.swift */; };
 		637077FF20918E2700CA5E80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 637077FE20918E2700CA5E80 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		40E4C13DED107D72F1752A9E /* Pods-Learn CS in AR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Learn CS in AR.release.xcconfig"; path = "Pods/Target Support Files/Pods-Learn CS in AR/Pods-Learn CS in AR.release.xcconfig"; sourceTree = "<group>"; };
 		634AE3E82112495D000F8B6D /* BinaryTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryTreeNode.swift; sourceTree = "<group>"; };
 		634AE3EC2112536C000F8B6D /* ARManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARManager.swift; sourceTree = "<group>"; };
+		6355C8BC21455C81006922AB /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		635ADD9721110FFD00BF1385 /* DirectionBallNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionBallNode.swift; sourceTree = "<group>"; };
 		637077F420918E2500CA5E80 /* Learn CS in AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Learn CS in AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		637077F720918E2500CA5E80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		6355C8BB21455C72006922AB /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				637F5B8D2143CD15000E8DB7 /* Localizable.strings */,
+				6355C8BC21455C81006922AB /* Localization.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		637077EB20918E2500CA5E80 = {
 			isa = PBXGroup;
 			children = (
@@ -182,12 +193,12 @@
 		637077F620918E2500CA5E80 /* Learn CS in AR */ = {
 			isa = PBXGroup;
 			children = (
+				6355C8BB21455C72006922AB /* Localization */,
 				6370780B2091905800CA5E80 /* App */,
 				6370783B2091E5CB00CA5E80 /* Augmented Reality */,
 				6370780C2091905C00CA5E80 /* Home */,
 				634AE3EA211252F6000F8B6D /* Manager */,
 				6370781E20919EE500CA5E80 /* Menu */,
-				637F5B8D2143CD15000E8DB7 /* Localizable.strings */,
 			);
 			path = "Learn CS in AR";
 			sourceTree = "<group>";
@@ -345,7 +356,6 @@
 		6370783B2091E5CB00CA5E80 /* Augmented Reality */ = {
 			isa = PBXGroup;
 			children = (
-				637F5B582143BC18000E8DB7 /* Localization */,
 				63BA7DC92099C0D8009D785A /* 3D Objects */,
 				6370783C2091E5D700CA5E80 /* Controllers */,
 				634AE3EB21125342000F8B6D /* Models */,
@@ -374,13 +384,6 @@
 				63FCD830213E08E400BD1669 /* OperationHeaderView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		637F5B582143BC18000E8DB7 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		6386D055209BFC6A005B052B /* Resources */ = {
@@ -587,6 +590,7 @@
 				6370782C2091B61100CA5E80 /* Constants.swift in Sources */,
 				63A2DC72210D4D7A0090EA52 /* CubeNode.swift in Sources */,
 				639F14B2209F09610074330F /* AlternateARButton.swift in Sources */,
+				6355C8BD21455C81006922AB /* Localization.swift in Sources */,
 				634AE3ED2112536C000F8B6D /* ARManager.swift in Sources */,
 				6370783A2091E2B600CA5E80 /* ARLessonViewController.swift in Sources */,
 				63FCD831213E08E400BD1669 /* OperationHeaderView.swift in Sources */,

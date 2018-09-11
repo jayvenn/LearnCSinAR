@@ -38,7 +38,7 @@ class ARStackView: UIStackView {
     // MARK: ARLessonViewController - Ordering Objects
     let orderingLabel: ARLabel = {
         let label = ARLabel()
-        label.text = "Ordering"
+        label.text = LocalizedString.ordering
         return label
     }()
     
@@ -71,7 +71,7 @@ class ARStackView: UIStackView {
     
     let operationLabel: ARLabel = {
         let label = ARLabel()
-        label.text = "Operation"
+        label.text = LocalizedString.operation
         return label
     }()
     

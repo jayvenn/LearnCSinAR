@@ -89,7 +89,7 @@ extension OperationView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: getTitleLabelFont()]
-        let titleAttributedText = NSMutableAttributedString(string: "Operation", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: LocalizedString.operation, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.accessibilityLabel = "Operation"

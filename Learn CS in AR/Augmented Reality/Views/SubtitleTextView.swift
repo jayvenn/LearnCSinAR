@@ -106,49 +106,89 @@ extension SubtitleTextView {
     func getTypeBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "A stack data structure uses the last-in-first-out (LIFO) ordering."
+            let string = "A stack data structure uses the last-in-first-out (LIFO) ordering."
+            let localizedString = NSLocalizedString(string, comment: string)
+            return localizedString
         case .queue:
-            return "A queue data structure uses the first-in-first-out (FIFO) ordering."
-//            "Imagine lining up to get the latest Star Wars movie ticket, the first person in line to get the ticket is also the first person out."
+            let string = "A queue data structure uses the first-in-first-out (FIFO) ordering."
+            let localizedString = NSLocalizedString(string, comment: string)
+            return localizedString
         case .singlyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) references the next \(elementName) if the next \(elementName) exists."
+            let lessonName = lesson.name.rawValue.lowercased()
+            let string = "A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lessonName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .doublyLinkedList:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) references the next \(elementName) if the next \(elementName) exists. In addition, the next \(elementName) that is being referenced will also references back to the \(elementName) that references it."
+            let lessonName = lesson.name.rawValue.lowercased()
+            let string = "A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lessonName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .binaryTree:
-            return "A \(lesson.name.rawValue.lowercased()) data structure uses an ordering sequence where each \(elementName) can have a maximum of two children."
+            let lessonName = lesson.name.rawValue.lowercased()
+            let string = "A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat = String.localizedStringWithFormat(localizedString, lessonName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         }
     }
     
     func getFromExampleBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "If the \(elementName) that moves into the container first wants to move out of the container, it will have to wait until every other \(elementNamePlural) have moved out of the container before it can do the same. Conversely, the \(elementName) that moves into the container last can move out of the container first."
+            let string = "If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .queue:
-            return "The \(elementName) that moves into the container first is the \(elementName) that can move out of the container first. Conversely, the \(elementName) that moves into the container last is the \(elementName) that can move out of the container last."
+            let string = "The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .singlyLinkedList:
-            return "The first \(elementName) has a reference to the second \(elementName). The second \(elementName) has a reference to the third \(elementName). The third \(elementName)’s next \(elementName) reference is nothing or nil."
+            let string = "The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .doublyLinkedList:
-            return "The first \(elementName) references the second \(elementName). The second \(elementName) references the first \(elementName). The same referencing procedure occurs between the second and third \(elementNamePlural)."
+            let string = "The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         case .binaryTree:
-            return "When a child \(elementName) is added onto a root \(elementName), the child \(elementName) will reside either on the left or right of the root \(elementName). The child \(elementName) position will depend on the \(elementName)'s size in comparison to the other child \(elementName). The smaller \(elementName) will reside on the left. The bigger \(elementName) will reside on the right. If there the added \(elementName) is the only child, it will be reside on the left. When a \(elementName) is added, a reference is created."
+            let string = "When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName, elementName, elementName, elementName, elementName, elementName, elementName, elementName, elementName)
+            return localizedStringWithFormat.capitalizingFirstLetter()
         }
     }
     
     func getPutSimplyBodyText() -> String {
         switch lesson.name {
         case .stack:
-            return "Go in first, get out last.\nGo in last, get out first."
+            let string = "Go in first, get out last.\nGo in last, get out first."
+            let localizedString = NSLocalizedString(string, comment: string)
+            return localizedString
         case .queue:
-            return "Go in first, get out first.\nGo in last, get out last."
+            let string = "Go in first, get out first.\nGo in last, get out last."
+            let localizedString = NSLocalizedString(string, comment: string)
+            return localizedString
         case .singlyLinkedList:
-            return "First references second. \nSecond references third. \nThis pattern continues until you reach the last \(elementName)."
-//            return "First references second. \nSecond references third. \nAnd so on until there is no longer the next \(elementName) to reference to…"
+            let string = "First references second. \nSecond references third. \nThis pattern continues until you reach the last %@."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName)
+            return localizedStringWithFormat
         case .doublyLinkedList:
-            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last \(elementName)."
-//            return "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nAnd on and on."
+            let string = "First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName)
+            return localizedStringWithFormat
         case .binaryTree:
-            return "A \(elementName) can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The \(elementName) which a \(elementName) references from is called a parent node."
-//            return "Root stays single. Can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The node which a node references from is called a parent node."
+            let string = "A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node."
+            let localizedString = NSLocalizedString(string, comment: string)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, elementName, elementName, elementName)
+            return localizedStringWithFormat
         }
     }
     
