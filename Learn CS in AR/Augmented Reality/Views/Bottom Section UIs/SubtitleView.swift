@@ -81,10 +81,9 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: getTitleLabelFont()]
-        let string = NSLocalizedString(LocalizedString.ordering, comment: "Ordering")
-        let titleAttributedText = NSMutableAttributedString(string: string, attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: LocalizedString.ordering, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
-        titleLabel.accessibilityLabel = "Ordering"
+        titleLabel.accessibilityLabel = LocalizedString.ordering
     }
     
     func setOperation() {
@@ -96,10 +95,10 @@ extension SubtitleView {
         let titleColor = UIColor.black
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
                                    NSAttributedStringKey.font: getTitleLabelFont()]
-        let titleAttributedText = NSMutableAttributedString(string: "Operation", attributes: titleTextAttributes)
+        let titleAttributedText = NSMutableAttributedString(string: LocalizedString.operation, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.accessibilityLabel = "Operation"
+        titleLabel.accessibilityLabel = LocalizedString.operation
     }
 }
 
