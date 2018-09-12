@@ -30,34 +30,34 @@
 // Stack Lesson
 "A stack data structure uses the last-in-first-out (LIFO) ordering." = "Una estructura de datos stack utiliza el orden de último en entrar primero en salir.";
 
-"If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first." = "";
+"If the OBJECT that moves into the container first wants to move out of the container, it will have to wait until every other OBJECT have moved out of the container before it can do the same. Conversely, the OBJECT that moves into the container last can move out of the container first." = "";
 
-"Go in first, get out last.\nGo in last, get out first." = ""
+"Go in first, get out last.\nGo in last, get out first." = "Entra primero, vete el último.\nEntra por último, vete primero.";
 
 // Queue Lesson
 "A queue data structure uses the first-in-first-out (FIFO) ordering." = "Una estructura de datos queue utiliza el orden de primer en entrar primero en salir.";
 
-"The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last." = "";
+"The OBJECT that moves into the container first is the OBJECT that can move out of the container first. Conversely, the OBJECT that moves into the container last is the OBJECT that can move out of the container last." = "El OBJETO que se mueve primero al contenedor es el OBJETO que puede salir primero del contenedor. Por el contrario, el OBJETO que se mueve al contenedor por última vez es el OBJETO que puede salir del contenedor al final.";
 
-"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+"Go in first, get out first.\nGo in last, get out last." = "Entra primero, vete primero.\nEntra el último, vete el último";
 
 // Singly Linked List
-"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ hace referencia al siguiente %@ si existe el siguiente %@";
+"A OBJECT data structure uses an ordering sequence where each OBJECT references the next OBJECT if the next OBJECT exists." = "Una estructura de datos OBJECT utiliza una secuencia de ordenamiento donde cada OBJECT hace referencia al siguiente OBJECT si existe el siguiente OBJECT";
 
-"The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil." = "";
+"The first OBJECT has a reference to the second OBJECT. The second OBJECT has a reference to the third OBJECT. The third OBJECT’s next OBJECT reference is nothing or nil." = "El primer OBJETO tiene una referencia al segundo OBJETO. El segundo OBJETO tiene una referencia al tercer OBJETO. La siguiente referencia OBJETO del tercer OBJETO es nada.";
 
-"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last OBJECT." = "El primer hace referencia al segundo. El segundo hace referencia al tercer. Este patrón continúa hasta llegar al último OBJETO.";
 
 // Doubly Linked List
-"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ hace referencia al siguiente %@ si existe el siguiente %@. Además, el próximo %@ al que se hace referencia también hará referencia al %@ que lo referencia.";
+"A OBJECT data structure uses an ordering sequence where each OBJECT references the next OBJECT if the next OBJECT exists. In addition, the next OBJECT that is being referenced will also reference back to the OBJECT that references it." = "Una estructura de datos OBJECT utiliza una secuencia de ordenamiento donde cada OBJECT hace referencia al siguiente OBJECT si existe el siguiente OBJECT. Además, el próximo OBJECT al que se hace referencia también hará referencia al OBJECT que lo referencia.";
 
-"The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@." = "";
+"The first OBJECT references the second OBJECT. The second OBJECT references the first OBJECT. The same referencing procedure occurs between the second and third OBJECT." = "El primer OBJETO hace referencia al segundo OBJETO. El segundo OBJETO hace referencia al primer OBJETO. El mismo procedimiento de referencia se produce entre el segundo y el tercer OBJETO";
 
-"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@." = ""
+"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last OBJECT." = "El primer hace referencia al segundo. El segundo hace referencia al primer. El segundo hace referencia al tercer. El tercer hace referencia al segundo. Este patrón continúa hasta llegar al último OBJETO.";
 
 // Binary Tree
-"A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children." = "Una estructura de datos %@ utiliza una secuencia de ordenamiento donde cada %@ puede tener un máximo de dos hijos.";
+"A OBJECT data structure uses an ordering sequence where each OBJECT can have a maximum of two children." = "Una estructura de datos OBJECT utiliza una secuencia de ordenamiento donde cada OBJECT puede tener un máximo de dos hijos.";
 
-"When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created." = "Cuando se agrega un OBJETO infantil a un OBJETO raíz, el OBJETO hijo residirá ya sea a la izquierda o a la derecha del OBJETO raíz. La posición del OBJETO infantil dependerá del tamaño del OBJETO en comparación con el otro OBJETO infantil. resida a la izquierda. El OBJETO más grande residirá a la derecha. Si existe el OBJETO agregado es el único hijo, residirá a la izquierda. Cuando se agrega un OBJETO, se crea una referencia.";
+"When a child OBJECT is added onto a root OBJECT, the child OBJECT will reside either on the left or right of the root OBJECT. The child OBJECT position will depend on the OBJECT's size in comparison to the other child OBJECT. The smaller OBJECT will reside on the left. The bigger OBJECT will reside on the right. If there the added OBJECT is the only child, it will be reside on the left. When a OBJECT is added, a reference is created." = "Cuando se agrega un OBJETO infantil a un OBJETO raíz, el OBJETO hijo residirá ya sea a la izquierda o a la derecha del OBJETO raíz. La posición del OBJETO infantil dependerá del tamaño del OBJETO en comparación con el otro OBJETO infantil. resida a la izquierda. El OBJETO más grande residirá a la derecha. Si existe el OBJETO agregado es el único hijo, residirá a la izquierda. Cuando se agrega un OBJETO, se crea una referencia.";
 
-"A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node." = "";
+"A OBJECT can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The OBJECT which a OBJECT references from is called a parent node." = "Un OBJETO puede tener un máximo de dos hijos. Todos los niños están obligados a tener un máximo de dos hijos. Los niños en la misma jerarquía se llaman hermanos. El OBJETO al que hace referencia un OBJETO se llama nodo padre.";

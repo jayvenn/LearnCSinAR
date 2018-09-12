@@ -30,34 +30,34 @@
 // Stack Lesson
 "A stack data structure uses the last-in-first-out (LIFO) ordering." = "STACK數據結構使用後進先出排序。";
 
-"If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first." = "";
+"If the OBJECT that moves into the container first wants to move out of the container, it will have to wait until every other OBJECT have moved out of the container before it can do the same. Conversely, the OBJECT that moves into the container last can move out of the container first." = "如果移动到容器中的OBJECT首先想要移出容器，则它必须等到所有其他OBJECT都移出容器才能执行相同操作。 相反，最后移入容器的OBJECT可以首先移出容器。";
 
-"Go in first, get out last.\nGo in last, get out first." = "";
+"Go in first, get out last.\nGo in last, get out first." = "先進去，後出去。最進去，先出去。";
 
 // Queue Lesson
 "A queue data structure uses the first-in-first-out (FIFO) ordering." = "QUEUE數據結構使用先進先出順序。";
 
-"The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last." = "";
+"The OBJECT that moves into the container first is the OBJECT that can move out of the container first. Conversely, the OBJECT that moves into the container last is the OBJECT that can move out of the container last." = "首先移动到容器中的OBJECT是可以首先移出容器的OBJECT。 相反，最后移入容器的OBJECT是可以最后移出容器的OBJECT。";
 
-"Go in first, get out first.\nGo in last, get out last." = "";
+"Go in first, get out first.\nGo in last, get out last." = "先進去，先出去\n後進去，後出去。";
 
 // Singly Linked List
-"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists." = "%@數據結構使用排序順序，如果下一個%@存在，則每個%@引用下一個%@。";
+"A OBJECT data structure uses an ordering sequence where each OBJECT references the next OBJECT if the next OBJECT exists." = "OBJECT數據結構使用排序順序，如果下一個OBJECT存在，則每個OBJECT引用下一個OBJECT。";
 
-"The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil." = "";
+"The first OBJECT has a reference to the second OBJECT. The second OBJECT has a reference to the third OBJECT. The third OBJECT’s next OBJECT reference is nothing or nil." = "第一个OBJECT引用了第二个OBJECT。 第二个OBJECT引用了第三个OBJECT。 第三个OBJECT的下一个OBJECT参考是没有。";
 
-"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "";
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last OBJECT." = "第一个引用第二个。 第二个引用第三个。 这种模式一直持续到最后一个OBJECT。";
 
 // Doubly Linked List
-"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it." = "％d數據結構使用排序序列，其中如果存在下一個％d，則每個％d引用下一個％d。此外，正在引用的下一個OBJECT也將引用回引用它的％d。";
+"A OBJECT data structure uses an ordering sequence where each OBJECT references the next OBJECT if the next OBJECT exists. In addition, the next OBJECT that is being referenced will also reference back to the OBJECT that references it." = "%@數據結構使用排序序列，其中如果存在下一個%@，則每個%@引用下一個%@。此外，正在引用的下一個OBJECT也將引用回引用它的%@。";
 
-"The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@." = "";
+"The first OBJECT references the second OBJECT. The second OBJECT references the first OBJECT. The same referencing procedure occurs between the second and third OBJECT." = "第一個OBJECT引用第二個OBJECT。 第二個OBJECT引用第一個OBJECT。 在第二個和第三個OBJECT之間發生相同的引用過程。";
 
-"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@." = ""
+"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last OBJECT." = "第一個引用第二個。 第二個引用第一個。 第二個引用第三個。 第三個引用第二個。 這種模式一直持續到最後一個OBJECT。";
 
 // Binary Tree
-"A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children." = "%@數據結構使用一個排序序列，其中每個%@最多可以有兩個子節點。";
+"A OBJECT data structure uses an ordering sequence where each OBJECT can have a maximum of two children." = "OBJECT數據結構使用一個排序序列，其中每個OBJECT最多可以有兩個子節點。";
 
-"When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created." = "將子%@添加到根%@時，子%@將位於根%@的左側或右側。子%@位置將取決於%@的大小與其他子%@的比較。較小的%@將 位於左側。較大的%@將位於右側。如果添加的%@是唯一的子級，則它將駐留在左側。當添加%@時，將創建一個引用。";
+"When a child OBJECT is added onto a root OBJECT, the child OBJECT will reside either on the left or right of the root OBJECT. The child OBJECT position will depend on the OBJECT's size in comparison to the other child OBJECT. The smaller OBJECT will reside on the left. The bigger OBJECT will reside on the right. If there the added OBJECT is the only child, it will be reside on the left. When a OBJECT is added, a reference is created." = "將子OBJECT添加到根OBJECT時，子OBJECT將位於根OBJECT的左側或右側。子OBJECT位置將取決於OBJECT的大小與其他子OBJECT的比較。較小的OBJECT將 位於左側。較大的OBJECT將位於右側。如果添加的OBJECT是唯一的子級，則它將駐留在左側。當添加OBJECT時，將創建一個引用。";
 
-"A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node." = "";
+"A OBJECT can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The OBJECT which a OBJECT references from is called a parent node." = "一个OBJECT最多可以有两个孩子。 所有儿童最多只能有两个孩子。 同一层次结构中的孩子称为兄弟姐妹。 OBJECT引用的OBJECT称为父节点。";
