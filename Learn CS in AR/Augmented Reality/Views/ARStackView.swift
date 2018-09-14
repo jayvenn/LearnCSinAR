@@ -103,8 +103,10 @@ class ARStackView: UIStackView {
     
     // MARK: ARLessonViewController - Stack View
     lazy var bottomRightStackView: UIStackView = {
+//        let stackView =
+//            UIStackView(arrangedSubviews: [orderingStackView, operationStackView])
         let stackView =
-            UIStackView(arrangedSubviews: [orderingStackView, operationStackView])
+            UIStackView(arrangedSubviews: [orderingStackView])
         stackView.distribution = .fillEqually
         stackView.spacing = 8
         return stackView

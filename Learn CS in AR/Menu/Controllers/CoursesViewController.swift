@@ -103,11 +103,11 @@ extension CoursesViewController {
         view.addSubviews(views: [
             tableView
             ])
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -132,8 +132,8 @@ extension CoursesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let course = courses[indexPath.row]
         let courseViewController = LessonsViewController(course: course)
-        let title = NSLocalizedString("Back", comment: "Back")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+//        let title = NSLocalizedString("Back", comment: "Back")
+//        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         show(courseViewController, sender: nil)
     }
 }
