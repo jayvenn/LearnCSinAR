@@ -19,7 +19,7 @@ struct Font {
         case h1 = 36
         case h2 = 18
         case h3 = 14
-        case h4 = 10
+        case h4 = 16
     }
     
     enum FontType {
@@ -67,7 +67,7 @@ struct Font {
             type = FontType.system
             size = FontSize.standard(.h2)
         case .aRLabel:
-            type = FontType.system
+            type = FontType.systemBold
             size = FontSize.standard(.h4)
         case .textViewTitle:
             type = FontType.systemBold

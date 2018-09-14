@@ -51,15 +51,10 @@ class ARStackView: UIStackView {
     lazy var orderingStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [orderingButton, orderingLabel])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .fill
+        stackView.distribution = .fill
         stackView.spacing = labelButtonSpacing
         return stackView
-    }()
-    
-    let bigOLabel: ARLabel = {
-        let label = ARLabel()
-        label.text = "Big O"
-        return label
     }()
     
     // MARK: ARLessonViewController - Operation Objects
@@ -78,7 +73,8 @@ class ARStackView: UIStackView {
     lazy var operationStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [operationButton, operationLabel])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .fill
+        stackView.distribution = .fill
         stackView.spacing = labelButtonSpacing
         return stackView
     }()
@@ -90,20 +86,27 @@ class ARStackView: UIStackView {
         return button
     }()
     
+    let bigOLabel: ARLabel = {
+        let label = ARLabel()
+        label.text = "Big O"
+        return label
+    }()
+    
     lazy var bigOStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [bigOButton, bigOLabel])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
         stackView.spacing = 2
         return stackView
     }()
     
     // MARK: ARLessonViewController - Stack View
     lazy var bottomRightStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [orderingStackView, operationStackView, bigOStackView])
-//        let stackView = UIStackView(arrangedSubviews: [orderingStackView, UIView(), UIView()])
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
+        let stackView =
+            UIStackView(arrangedSubviews: [orderingStackView, operationStackView])
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -113,7 +116,7 @@ class ARStackView: UIStackView {
         setUpUI()
         setUpLayout()
         addArrangedSubview(resetStackView)
-        addArrangedSubview(UIView())
+//        addArrangedSubview(UIView())
         addArrangedSubview(bottomRightStackView)
     }
     
@@ -125,21 +128,17 @@ class ARStackView: UIStackView {
     }
     
     func setUpLayout() {
-        let buttonLength = 60
+        let buttonLength: Float = 60
         orderingButton.snp.makeConstraints {
-            $0.size.equalTo(buttonLength)
+            $0.height.equalTo(buttonLength)
         }
         
         operationButton.snp.makeConstraints {
-            $0.size.equalTo(buttonLength)
-        }
-        
-        bigOButton.snp.makeConstraints {
-            $0.size.equalTo(buttonLength)
+            $0.height.equalTo(buttonLength)
         }
         
         bottomRightStackView.snp.makeConstraints {
-            $0.width.equalTo(220)
+            $0.width.equalTo(240)
         }
         
         let alternateButtonLegth = 50

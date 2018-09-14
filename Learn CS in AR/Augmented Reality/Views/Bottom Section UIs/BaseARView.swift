@@ -159,7 +159,6 @@ class BaseARView: UIView {
         case .changed:
             let translation = gestureRecognizer.translation(in: self.superview)
             var transform = CGAffineTransform.identity
-            print("Translation:", translation.y)
             transform = transform.translatedBy(x: 0, y: translation.y)
             self.delegate?.subtitleDidTranslate(y: translation.y)
             self.transform = transform

@@ -26,6 +26,7 @@ class ARLabel: UILabel {
     fileprivate func setFont() {
         font = Font(object: .aRLabel).instance
         textColor = .white
+        textAlignment = .center
     }
     
     required init?(coder aDecoder: NSCoder) {

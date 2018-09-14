@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Learn CS in AR
+
+  Created by Jayven Nhan on 9/8/18.
+  Copyright © 2018 Jayven Nhan. All rights reserved.
+*/
+
+// Element
+"cube" = "立方体";
+"cubes" = "立方体";
+
+// HomeViewController
+"Learn CS in AR" = "在AR学习CS";
+"Made for CS Students" = "为CS学生而制作";
+"Purpose" = "目的";
+"Begin" = "开始";
+"Back" = "回";
+
+// CourseViewController
+"Select a Course" = "选择课程";
+
+// ARViewController
+"Move around \nto find a surface" = "四处走找一个表面";
+"Begin Lesson" = "开始课";
+"Ordering" = "排序";
+"Operation" = "操作";
+"Data Structures" = "数据结构";
+
+// Stack Lesson
+"A stack data structure uses the last-in-first-out (LIFO) ordering." = "Stack数据结构使用后进先出排序。";
+
+"If the %@ that moves into the container first wants to move out of the container, it will have to wait until every other %@ have moved out of the container before it can do the same. Conversely, the %@ that moves into the container last can move out of the container first." = "如果移动到容器中的%@首先想要移出容器，则它必须等到所有其他%@都移出容器才能执行相同操作。 相反，最后移入容器的%@可以首先移出容器。";
+
+"Go in first, get out last.\nGo in last, get out first." = "先进去，后出去。\n最进去，先出去。";
+
+// Queue Lesson
+"A queue data structure uses the first-in-first-out (FIFO) ordering." = "QUEUE数据结构使用先进先出顺序。";
+
+"The %@ that moves into the container first is the %@ that can move out of the container first. Conversely, the %@ that moves into the container last is the %@ that can move out of the container last." = "首先移动到容器中的%@是可以首先移出容器的%@。 相反，最后移入容器的%@是可以最后移出容器的%@。";
+
+"Go in first, get out first.\nGo in last, get out last." = "先进去，先出去。\n后进去，后出去。";
+
+// Singly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists." = "%@数据结构使用排序序列，其中如果存在下一个%@，则每个%@引用下一个%@。";
+
+"The first %@ has a reference to the second %@. The second %@ has a reference to the third %@. The third %@’s next %@ reference is nothing or nil." = "第一个%@引用了第二个%@。 第二个%@引用了第三个%@。 第三个%@的下一个%@参考是没有。";
+
+"First references second. \nSecond references third. \nThis pattern continues until you reach the last %@." = "第一个引用第二个。\n第二个引用第三个。\n这种模式一直持续到最后一个%@。";
+
+// Doubly Linked List
+"A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it." = "%@数据结构使用排序序列，其中如果存在下一个%@，则每个%@引用下一个%@。 此外，正在引用的下一个%@也将引用回引用它的%@。";
+
+"The first %@ references the second %@. The second %@ references the first %@. The same referencing procedure occurs between the second and third %@." = "第一个%@引用第二个%@。 第二个%@引用第一个%@。 在第二个和第三个%@之间发生相同的引用过程。";
+
+"First references second. \nSecond references first. \nSecond references third. \nThird references second. \nThis pattern continues until you reach the last %@." = "第一个引用第二个。第二个引用第一个。\n第二个引用第三个。\n第三个引用第二个。\n这种模式一直持续到最后一个%@。";
+
+// Binary Tree
+"A %@ data structure uses an ordering sequence where each %@ can have a maximum of two children." = "%@数据结构使用一个排序顺序，其中每个%@最多可以有两个子节点。";
+
+"When a child %@ is added onto a root %@, the child %@ will reside either on the left or right of the root %@. The child %@ position will depend on the %@'s size in comparison to the other child %@. The smaller %@ will reside on the left. The bigger %@ will reside on the right. If there the added %@ is the only child, it will be reside on the left. When a %@ is added, a reference is created." = "将子%@添加到根%@时，子%@将位于根%@的左侧或右侧。子%@位置将取决于%@的大小与其他子%@的比较。较小的%@将 位于左侧。较大的%@将位于右侧。如果添加的%@是唯一的子级，则它将驻留在左侧。当添加%@时，将创建一个引用。";
+
+"A %@ can have a maximum of two children. All children are bound to have a maximum of two children. Children in the same hierarchy are called siblings. The %@ which a %@ references from is called a parent node." = "一个%@最多可以有两个孩子。 所有儿童最多只能有两个孩子。 同一层次结构中的孩子称为兄弟姐妹。 %@引用的%@称为父节点。";
