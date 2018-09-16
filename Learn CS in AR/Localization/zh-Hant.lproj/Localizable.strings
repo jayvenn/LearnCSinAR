@@ -6,6 +6,16 @@
   Copyright © 2018 Jayven Nhan. All rights reserved.
 */
 
+// Accessibility
+// DefaultARViewController
+"Tracker" = "跟踪器";
+"Cancel" = "取消";
+
+// ARLessonViewController
+"Lesson info" = "課程信息";
+"Operation info" = "操作信息";
+"%@ lesson" = "%@課程";
+
 // Element
 "cube" = "立方體";
 "cubes" = "立方體";

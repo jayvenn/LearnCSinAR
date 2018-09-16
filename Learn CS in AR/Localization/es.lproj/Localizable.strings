@@ -6,6 +6,16 @@
   Copyright © 2018 Jayven Nhan. All rights reserved.
 */
 
+// Accessibility
+// DefaultARViewController
+"Tracker" = "Rastreador";
+"Cancel" = "Cancelar";
+
+// ARLessonViewController
+"Lesson info" = "Información de la lección";
+"Operation info" = "Información de operación";
+"%@ lesson" = "%@ Lección";
+
 // Element
 "cube" = "cubo";
 "cubes" = "cubitos";

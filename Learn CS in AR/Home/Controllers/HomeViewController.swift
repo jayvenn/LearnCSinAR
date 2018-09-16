@@ -40,12 +40,13 @@ final class HomeViewController: BaseMenuViewController {
         button.addTarget(self, action: #selector(HomeViewController.aboutButtonDidTouchUpInside), for: .touchUpInside)
         button.accessibilityLabel = "Purpose"
         button.accessibilityHint = "App Purpose"
+        button.isHidden = true
         return button
     }()
     
     fileprivate lazy var bottomStackView: UIStackView = {
+//        let stackView = UIStackView(arrangedSubviews: [beginButton, UIView()])
         let stackView = UIStackView(arrangedSubviews: [beginButton, aboutButton])
-//        let stackView = UIStackView(arrangedSubviews: [beginButton])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
@@ -64,9 +65,6 @@ final class HomeViewController: BaseMenuViewController {
     
     @objc private func beginButtonDidTouchUpInside(_ sender: UIButton) {
         let navigationController = MenuNavigationController()
-//        let viewController = LessonsViewController(course: Course(courseSubject: .dataStructures))
-//        let navigationController = UINavigationController(rootViewController: viewController)
-//        navigationController.navigationBar.barTintColor = .white
         present(navigationController, animated: true)
     }
     
@@ -123,9 +121,6 @@ extension HomeViewController {
         let titleText = "Learn CS in AR"
         let subTitleText = NSLocalizedString("Made for CS Students", comment: "Made for CS Students")
         
-//        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-//                                   NSAttributedStringKey.font: Font(object: .titleLabel).instance]
-//
         let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
         let titleTextFont: UIFont
         let subtitleTextFont: UIFont
@@ -157,7 +152,6 @@ extension HomeViewController {
         headerLabel.accessibilityValue = "\(titleText). \(subTitleText)."
         headerLabel.attributedText = titleAttributedText
         headerLabel.setNeedsDisplay()
-//        view.setNeedsLayout()
     }
     
     func setButtonFonts() {

@@ -22,14 +22,18 @@ final class ARLessonViewController: DefaultARViewController {
     
     lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
-        view.accessibilityLabel = "Lesson info"
+        let string = "Lesson info"
+        let localizedString = NSLocalizedString(string, comment: string)
+        view.accessibilityLabel = localizedString
         view.delegate = self
         return view
     }()
     
     lazy var operationView: OperationView = {
         let view = OperationView(lesson: lesson)
-        view.accessibilityLabel = "Operation info and buttons"
+        let string = "Operation info"
+        let localizedString = NSLocalizedString(string, comment: string)
+        view.accessibilityLabel = localizedString
         view.delegate = self
         return view
     }()
@@ -54,8 +58,14 @@ final class ARLessonViewController: DefaultARViewController {
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
-        accessibilityLabel = "\(lesson.name) lesson"
-        
+        setAccessibilityLabel()
+    }
+    
+    func setAccessibilityLabel() {
+        let string = "%@ lesson"
+        let localizedString = NSLocalizedString(string, comment: string)
+        let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lesson.name.rawValue)
+        accessibilityLabel = localizedStringWithFormat
     }
     
     deinit {

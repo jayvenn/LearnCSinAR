@@ -15,10 +15,8 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 1
         label.textAlignment = .center
-//        label.minimumScaleFactor = 0.5
-//        label.adjustsFontForContentSizeCategory = true
         label.sizeToFit()
-        label.accessibilityLabel = "Operation name"
+        label.accessibilityLabel = "Operation label"
         return label
     }()
     

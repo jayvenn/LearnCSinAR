@@ -360,58 +360,6 @@ extension SubtitleTextView {
             text = BigOComplexity.constant.rawValue
         }
         return text
-        
-//        var text = ""
-//        switch operation {
-//        case .push:
-//            text += "elements.append(element)"
-//        case .pop:
-//            text += "return elements.popLast()"
-//        case .peek:
-//            text += "return elements.last"
-//        case .isEmpty:
-//            switch lesson.name {
-//            case .singlyLinkedList:
-//                text += "return headNode == nil"
-//            default:
-//                text += "elements.isEmpty"
-//            }
-//        case .enqueue:
-//            text += "elements.append(element)"
-//        case .dequeue:
-//            text += "elements.removeFirst()"
-//        case .append:
-//            text += """
-//            guard !isEmpty else {
-//            \(String.tab)push(value)
-//            \(String.tab)return
-//            }
-//            tail.next = newNode
-//            tail = tail.next
-//            """
-//        case .remove:
-//            break
-//        case .nodeAtIndex:
-//            text += """
-//            var currentNode = headNode\n
-//            var currentIndex = 0\n
-//            while currentNode != nil, currentIndex < index {\n
-//            \(String.tab)currentNode = currentNode!.next\n
-//            \(String.tab)currentIndex += 1\n
-//            }
-//            return currentNode
-//            """
-//        case .removeAll:
-//            text += "headNode = nil"
-//        case .insertAfter:
-//            text += ""
-//        case .removeLast:
-//            text += ""
-//        case .removeAfter:
-//            text += ""
-//        }
-//
-//        return text
     }
     
 }

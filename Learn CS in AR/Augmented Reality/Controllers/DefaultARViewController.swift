@@ -56,7 +56,9 @@ class DefaultARViewController: BaseMenuViewController {
         plane.firstMaterial = material
         let node = SCNNode(geometry: plane)
         node.eulerAngles.x = Float(-90 * degreesToRadians)
-        node.accessibilityLabel = "Tracker"
+        let string = "Tracker"
+        let localizedString = NSLocalizedString(string, comment: string)
+        node.accessibilityLabel = localizedString
         return node
     }()
     
@@ -78,7 +80,6 @@ class DefaultARViewController: BaseMenuViewController {
         label.text = localizedString.uppercased()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18)
-//        label.textColor = .lightGray
         label.textColor = .black
         label.alpha = 0
         label.adjustsFontSizeToFitWidth = true
@@ -89,7 +90,7 @@ class DefaultARViewController: BaseMenuViewController {
         label.backgroundColor = .transparentTextBackgroundWhite
         label.layer.cornerRadius = 10
         label.layer.masksToBounds = true
-        label.accessibilityLabel = "Instruction"
+        label.accessibilityLabel = localizedString
         return label
     }()
     
@@ -105,8 +106,8 @@ class DefaultARViewController: BaseMenuViewController {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.backgroundColor = .plantButtonBackground
-        button.accessibilityLabel = "Begin lesson"
-        button.accessibilityHint = "Begin lesson"
+        button.accessibilityLabel = localizedString
+        button.accessibilityHint =  localizedString
         return button
     }()
     
@@ -118,8 +119,10 @@ class DefaultARViewController: BaseMenuViewController {
         button.alpha = 0
         button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         button.addTarget(self, action: #selector(DefaultARViewController.cancelButtonDidTouchUpInside(_:)), for: .touchUpInside)
-        button.accessibilityLabel = "Cancel"
-        button.accessibilityHint = "Cancel"
+        let string = "Cancel"
+        let localizedString = NSLocalizedString(string, comment: string)
+        button.accessibilityLabel = localizedString
+        button.accessibilityHint = localizedString
         return button
     }()
     
@@ -374,9 +377,6 @@ extension DefaultARViewController {
         let position = vector(from: hitTestResult.worldTransform.translation)
         let action = SCNAction.move(to: position, duration: 0.3)
         mainNode.runAction(action)
-//        UIView.animate(withDuration: 1) {
-//            self.mainNode.position = self.vector(from: hitTestResult.worldTransform.translation)
-//        }
     }
     
     func fadeOutAndRemove(node: SCNNode) {
