@@ -19,7 +19,7 @@ class LessonsViewController: BaseMenuViewController {
         tableView.accessibilityValue = "Lessons"
         tableView.accessibilityHint = "Select a course"
         tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
     
@@ -103,6 +103,6 @@ extension LessonsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 }

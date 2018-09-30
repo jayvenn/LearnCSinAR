@@ -39,7 +39,7 @@ class EmptyView: UIView {
     
     let actionButton: UIButton = {
         let frame = CGRect(x: 0, y: 0, width: 280, height: 50)
-        let button = UIButton(type: UIButtonType.system)
+        let button = UIButton(type: UIButton.ButtonType.system)
         button.setTitle("Action", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)

@@ -16,10 +16,10 @@ class CoursesViewController: BaseMenuViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.accessibilityValue = "Courses"
         tableView.accessibilityHint = "Select course"
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
     
@@ -53,7 +53,7 @@ class CoursesViewController: BaseMenuViewController {
     }
     
     private lazy var rightBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(CoursesViewController.rightBarItemDidTouchUpInside))
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(CoursesViewController.rightBarItemDidTouchUpInside))
         return barButtonItem
     }()
     
@@ -153,7 +153,7 @@ extension CoursesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 }
 

@@ -55,7 +55,7 @@ final class SubtitleTextView: UITextView {
     
     func setOffsets() {
         let side: CGFloat = 16
-        scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -side)
+        scrollIndicatorInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: -side)
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -76,24 +76,24 @@ extension SubtitleTextView {
         let textViewTitleFont: UIFont = fonts.textViewBodyFont
         let textViewBodyFont: UIFont = fonts.textViewBodyFont
         
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: textViewTitleFont]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
-        let typeBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                      NSAttributedStringKey.font: textViewBodyFont]
+        let typeBodyTextAttributes = [NSAttributedString.Key.foregroundColor: bodyColor,
+                                      NSAttributedString.Key.font: textViewBodyFont]
         let typeBodyAttributedText = NSMutableAttributedString(string: getTypeBodyText() + "\n\n",
                                                                attributes: typeBodyTextAttributes)
         titleAttributedText.append(typeBodyAttributedText)
         
-        let fromExampleBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                             NSAttributedStringKey.font: textViewBodyFont]
+        let fromExampleBodyTextAttributes = [NSAttributedString.Key.foregroundColor: bodyColor,
+                                             NSAttributedString.Key.font: textViewBodyFont]
         let fromExampleBodyAttributedText = NSMutableAttributedString(string: getFromExampleBodyText() + "\n\n",
                                                                       attributes: fromExampleBodyTextAttributes)
         titleAttributedText.append(fromExampleBodyAttributedText)
         
-        let putSimplyBodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                           NSAttributedStringKey.font: textViewBodyFont]
+        let putSimplyBodyTextAttributes = [NSAttributedString.Key.foregroundColor: bodyColor,
+                                           NSAttributedString.Key.font: textViewBodyFont]
         let putSimplyBodyAttributedText = NSMutableAttributedString(string: getPutSimplyBodyText() + "\n\n",
                                                                     attributes: putSimplyBodyTextAttributes)
         titleAttributedText.append(putSimplyBodyAttributedText)
@@ -123,7 +123,7 @@ extension SubtitleTextView {
             let lessonName = lesson.name.rawValue.lowercased()
             let string = "A %@ data structure uses an ordering sequence where each %@ references the next %@ if the next %@ exists. In addition, the next %@ that is being referenced will also reference back to the %@ that references it."
             let localizedString = NSLocalizedString(string, comment: string)
-            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lessonName, elementName, elementName, elementName)
+            let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lessonName, elementName, elementName, elementName, elementName, elementName)
             return localizedStringWithFormat.capitalizingFirstLetter()
         case .binaryTree:
             let lessonName = lesson.name.rawValue.lowercased()
@@ -214,24 +214,24 @@ extension SubtitleTextView {
         let textViewTitleFont: UIFont = fonts.textViewBodyFont
         let textViewBodyFont: UIFont = fonts.textViewBodyFont
         
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: textViewTitleFont]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
         var accessibilityValue = ""
         for operation in lesson.operations {
             // Subtitle
             let subtitleStr = "\(operation.rawValue)" + "\n"
-            let subtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                          NSAttributedStringKey.font: textViewBodyFont]
+            let subtitleTextAttributes = [NSAttributedString.Key.foregroundColor: subtitleColor,
+                                          NSAttributedString.Key.font: textViewBodyFont]
             let subtitleAttributedText = NSMutableAttributedString(string: subtitleStr,
                                                                    attributes: subtitleTextAttributes)
             titleAttributedText.append(subtitleAttributedText)
             accessibilityValue.append(subtitleStr)
             
             let bodyTextStr = self.getDescriptionOf(operation) + "\n\n"
-            let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                          NSAttributedStringKey.font: textViewBodyFont]
+            let bodyTextAttributes = [NSAttributedString.Key.foregroundColor: bodyColor,
+                                          NSAttributedString.Key.font: textViewBodyFont]
             let bodyAttributedText = NSMutableAttributedString(string: self.getDescriptionOf(operation) + "\n\n",
                                                                    attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)
@@ -315,24 +315,24 @@ extension SubtitleTextView {
         let textViewTitleFont: UIFont = fonts.textViewBodyFont
         let textViewBodyFont: UIFont = fonts.textViewBodyFont
         
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: textViewTitleFont]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: textViewTitleFont]
         let titleAttributedText = NSMutableAttributedString(string: initialSpacerText, attributes: titleTextAttributes)
         
         var accessibilityValue = ""
         for operation in lesson.operations {
             // Subtitle
             let subtitleStr = getBigOSubtitleFor(operation) + "\n"
-            let subtitleTextAttributes = [NSAttributedStringKey.foregroundColor: subtitleColor,
-                                          NSAttributedStringKey.font: textViewBodyFont]
+            let subtitleTextAttributes = [NSAttributedString.Key.foregroundColor: subtitleColor,
+                                          NSAttributedString.Key.font: textViewBodyFont]
             let subtitleAttributedText = NSMutableAttributedString(string: subtitleStr,
                                                                    attributes: subtitleTextAttributes)
             titleAttributedText.append(subtitleAttributedText)
             accessibilityValue.append(subtitleStr)
             
             let bodyTextStr = getBigODescriptionOf(operation) + "\n\n"
-            let bodyTextAttributes = [NSAttributedStringKey.foregroundColor: bodyColor,
-                                      NSAttributedStringKey.font: textViewBodyFont]
+            let bodyTextAttributes = [NSAttributedString.Key.foregroundColor: bodyColor,
+                                      NSAttributedString.Key.font: textViewBodyFont]
             let bodyAttributedText = NSMutableAttributedString(string: bodyTextStr,
                                                                attributes: bodyTextAttributes)
             titleAttributedText.append(bodyAttributedText)

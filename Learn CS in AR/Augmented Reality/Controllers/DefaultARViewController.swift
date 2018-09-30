@@ -293,6 +293,9 @@ extension DefaultARViewController {
         fadeInTopObjects()
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
+        #if DEBUG
+            sceneView.showsStatistics = true
+        #endif
         resetObjects()
         
         var deadline = DispatchTime.now() + 1
@@ -364,7 +367,7 @@ extension DefaultARViewController {
         guard trackingReady,
             !gameStarted,
             let hitTestResult = sceneView.hitTest(CGPoint(x: view.frame.midX, y: view.frame.midY),
-                                                  types: [.existingPlane, .estimatedHorizontalPlane]).first
+                                                  types: [.existingPlane]).first
             else { return }
         
         

@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import MessageUI
 
 // MARK: HomeViewController
 final class HomeViewController: BaseMenuViewController {
@@ -33,20 +34,20 @@ final class HomeViewController: BaseMenuViewController {
         return button
     }()
     
-    private let aboutButton: AlternateActionButton = {
+    private let contributeButton: AlternateActionButton = {
         let button = AlternateActionButton(type: .system)
-        let text = NSLocalizedString("Purpose", comment: "Purpose")
+        let string = "Contribute"
+        let text = NSLocalizedString(string, comment: string)
         button.setTitle(text, for: .normal)
-        button.addTarget(self, action: #selector(HomeViewController.aboutButtonDidTouchUpInside), for: .touchUpInside)
-        button.accessibilityLabel = "Purpose"
-        button.accessibilityHint = "App Purpose"
-        button.isHidden = true
+        button.addTarget(self, action: #selector(contributeButtonDidTouchUpInside), for: .touchUpInside)
+        button.accessibilityLabel = string
+        button.accessibilityHint = "Send email"
         return button
     }()
     
     fileprivate lazy var bottomStackView: UIStackView = {
 //        let stackView = UIStackView(arrangedSubviews: [beginButton, UIView()])
-        let stackView = UIStackView(arrangedSubviews: [beginButton, aboutButton])
+        let stackView = UIStackView(arrangedSubviews: [beginButton, contributeButton])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
@@ -68,10 +69,66 @@ final class HomeViewController: BaseMenuViewController {
         present(navigationController, animated: true)
     }
     
-    @objc private func aboutButtonDidTouchUpInside(_ sender: UIButton) {
-        
+    @objc private func contributeButtonDidTouchUpInside(_ sender: UIButton) {
+        sendContributionMessage()
     }
     
+    func sendContributionMessage() {
+        let bodyText = generateBodyText()
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["LearnCSinAR@gmail.com"])
+            mail.setMessageBody("<p>\(bodyText)</p>", isHTML: true)
+            present(mail, animated: true)
+        } else if MFMessageComposeViewController.canSendText() {
+            let viewController = MFMessageComposeViewController()
+            viewController.recipients = ["+6587766238"]
+            viewController.messageComposeDelegate = self
+            viewController.body = bodyText
+            present(viewController, animated: true)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+    
+    func generateBodyText() -> String {
+        let bodyText = """
+        Hi Learn CS in AR,
+
+        I'm here to contribute for the greater purpose than myself.
+
+        I believe education is a basic human right.
+
+        I believe in pushing education forward for humanity.
+
+        I believe in putting others in front of me.
+
+        I want to contribute because [your why].
+
+        I can contribute by [doing] by [date].
+
+        This contribution can help [who/what] achieve [what].
+
+        My one highly scarce and in-demand skill is [what].
+
+        My one highly scarce but not in-demand skill is [what].
+
+        I will only send this message only if I believe in this message.
+        
+        My name is ...
+        """
+        return bodyText
+    }
+    
+    func showSendMailErrorAlert() {
+        let title = "Could Not Open Mail or Messages"
+        let message = "Set configurations and try again."
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
+    }
     
     override func configureView() {
         super.configureView()
@@ -80,6 +137,19 @@ final class HomeViewController: BaseMenuViewController {
     }
 }
 
+// MARK: - MFMailComposeViewControllerDelegate
+extension HomeViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+}
+
+// MARK: - MFMessageComposeViewControllerDelegate
+extension HomeViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true)
+    }
+}
 
 // MARK: LoginViewController - Life cycles
 extension HomeViewController {
@@ -112,7 +182,7 @@ extension HomeViewController {
             $0.height.equalTo(44)
         }
         
-        aboutButton.snp.makeConstraints {
+        contributeButton.snp.makeConstraints {
             $0.height.equalTo(beginButton)
         }
     }
@@ -139,13 +209,13 @@ extension HomeViewController {
                 $0.height.equalTo(heightConstraint)
             }
         }
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                                   NSAttributedStringKey.font: titleTextFont]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                   NSAttributedString.Key.font: titleTextFont]
         
         
         let titleAttributedText = NSMutableAttributedString(string: "\(titleText)\n", attributes: titleTextAttributes)
-        let subTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                                      NSAttributedStringKey.font: subtitleTextFont]
+        let subTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                      NSAttributedString.Key.font: subtitleTextFont]
         let subTitleAttributedText = NSMutableAttributedString(string: "\(subTitleText)",
             attributes: subTitleTextAttributes)
         titleAttributedText.append(subTitleAttributedText)
@@ -163,7 +233,7 @@ extension HomeViewController {
             font = Font(object: .button).instance
         }
         beginButton.titleLabel?.font = font
-        aboutButton.titleLabel?.font = font
+        contributeButton.titleLabel?.font = font
     }
     
     fileprivate func setUpUI() {

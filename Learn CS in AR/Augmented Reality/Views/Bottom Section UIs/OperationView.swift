@@ -14,8 +14,11 @@ final class OperationView: BaseARView {
     let flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
-        flowLayout.scrollDirection = .vertical
-        flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 16
+        let verticalInset: CGFloat = 16
+        let horizontalInset: CGFloat = 0
+        flowLayout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         return flowLayout
     }()
     
@@ -35,6 +38,8 @@ final class OperationView: BaseARView {
     
     override init(lesson: Lesson) {
         super.init(lesson: lesson)
+        sliderButton.isHidden = true
+        expanderView.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -68,6 +73,7 @@ extension OperationView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
         let operation = lesson.operations[indexPath.item]
+        cell.backgroundColor = .yellow
         cell.configureCell(operation)
         return cell
     }
@@ -75,7 +81,11 @@ extension OperationView: UICollectionViewDataSource {
 
 // MARK: OperationView - UICollectionViewDelegateFlowLayout
 extension OperationView: UICollectionViewDelegateFlowLayout {
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = Calculator.CollectionView.getOperationCollectionViewCellSize(view: collectionView, flowLayout: flowLayout)
+//        let height = collectionView.frame.height - 20
+        return size
+    }
 }
 
 
@@ -87,8 +97,8 @@ extension OperationView {
     
     func setOperationTitleLabel() {
         let titleColor = UIColor.black
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: getTitleLabelFont()]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: LocalizedString.operation, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail

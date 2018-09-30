@@ -97,16 +97,14 @@ final class BinaryTreeNode: BaseNode {
     func addDirectionTubeNodeBetween(currentNode: CubeNode, and rootNode: CubeNode, index: Int, nodeDrection: NodeDirection, completion: @escaping () -> ()) {
         print("DIRECTION:", nodeDrection == .left ? "Left" : "Right")
         let multipler: CGFloat = nodeDrection == .left ? 1 : -1
-        let directionTubeNode = DirectionTubeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, index: index)
-//        directionTubeNode.opacity = 1
+//        let directionTubeNode = DirectionTubeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, index: index, isDoubly: false)
+        let directionTubeNode = DirectionTubeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, index: index, isDoubly: false, isDiagonal: true)
         let zRotation = CGFloat(45 * 3 * degreesToRadians * multipler)
         directionTubeNode.eulerAngles.z = Float(zRotation)
-//        let action = SCNAction.rotateTo(x: 0, y: 0, z: zRotation, duration: 1)
-//        directionTubeNode.runAction(action)
         
         let x = ((currentNode.position.x - rootNode.position.x * Float(multipler)) / 2)
         let y = (currentNode.position.y - rootNode.position.y) / 2
-//        let z = (currentNode.position.z - rootNode.position.z) / 2
+        
         let position = SCNVector3(x,y,0)
         directionTubeNode.position = position
         

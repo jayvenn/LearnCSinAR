@@ -15,6 +15,7 @@ final class DirectionTubeNode: SCNNode {
     let cubeLength: CGFloat
     let index: Int
     let isDoubly: Bool
+    let isDiagonal: Bool
     
     var height: CGFloat {
         return cubeSpacing
@@ -23,7 +24,7 @@ final class DirectionTubeNode: SCNNode {
     lazy var radius = cubeSpacing / 4
     
     lazy var cylinder: SCNCylinder = {
-        let cylinder = SCNCylinder(radius: radius, height: cubeSpacing)
+        let cylinder = SCNCylinder(radius: radius, height: isDiagonal ? cubeSpacing * 1.8 : cubeSpacing)
         cylinder.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.7) // 0.7
         return cylinder
     }()
@@ -33,11 +34,12 @@ final class DirectionTubeNode: SCNNode {
         return node
     }()
     
-    init(cubeLength: CGFloat, cubeSpacing: CGFloat, index: Int, isDoubly: Bool = false) {
+    init(cubeLength: CGFloat, cubeSpacing: CGFloat, index: Int, isDoubly: Bool = false, isDiagonal: Bool = false) {
         self.index = index
         self.cubeLength = cubeLength
         self.cubeSpacing = cubeSpacing
         self.isDoubly = isDoubly
+        self.isDiagonal = isDiagonal
         super.init()
         opacity = 0
         setGeometry()

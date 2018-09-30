@@ -106,7 +106,7 @@ class ARStackView: UIStackView {
 //        let stackView =
 //            UIStackView(arrangedSubviews: [orderingStackView, operationStackView])
         let stackView =
-            UIStackView(arrangedSubviews: [orderingStackView])
+            UIStackView(arrangedSubviews: [orderingStackView, operationStackView])
         stackView.distribution = .fillEqually
         stackView.spacing = 8
         return stackView

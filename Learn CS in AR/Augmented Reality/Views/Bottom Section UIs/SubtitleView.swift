@@ -79,11 +79,11 @@ extension SubtitleView {
     
     func setOrderingTitleLabel() {
         let titleColor = UIColor.black
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: getTitleLabelFont()]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: LocalizedString.ordering, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
-        titleLabel.accessibilityLabel = LocalizedString.ordering
+        titleLabel.accessibilityLabel = titleAttributedText.string
     }
     
     func setOperation() {
@@ -93,8 +93,8 @@ extension SubtitleView {
     
     func setOperationTitleLabel() {
         let titleColor = UIColor.black
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: getTitleLabelFont()]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: LocalizedString.operation, attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
         titleLabel.lineBreakMode = .byTruncatingTail
@@ -113,8 +113,8 @@ extension SubtitleView {
     
     func setBigOTitleLabel() {
         let titleColor = UIColor.black
-        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: titleColor,
-                                   NSAttributedStringKey.font: getTitleLabelFont()]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleColor,
+                                   NSAttributedString.Key.font: getTitleLabelFont()]
         let titleAttributedText = NSMutableAttributedString(string: "Big O", attributes: titleTextAttributes)
         titleLabel.attributedText = titleAttributedText
     }

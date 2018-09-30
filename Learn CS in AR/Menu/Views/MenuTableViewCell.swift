@@ -23,7 +23,7 @@ class MenuTableViewCell: UITableViewCell {
         }
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpLayout()
         selectionStyle = .none
@@ -43,12 +43,12 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     fileprivate func setDescriptionLabelText() {
-        let nameTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                                  NSAttributedStringKey.font: FontManager.shared.titleFont]
+        let nameTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                  NSAttributedString.Key.font: FontManager.shared.titleFont]
         let nameAttributedText = NSMutableAttributedString(string: "\(course.name)\n", attributes: nameTextAttributes)
         
-        let addressTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
-                                     NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .regular)]
+        let addressTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+                                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular)]
         let addressAttributedText = NSMutableAttributedString(string: course.description + "\n\n",
                                                               attributes: addressTextAttributes)
         nameAttributedText.append(addressAttributedText)

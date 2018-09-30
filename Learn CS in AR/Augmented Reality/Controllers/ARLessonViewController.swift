@@ -16,6 +16,7 @@ let springWithDaming: CGFloat = 0.9 // 0.7
 // MARK: ARLessonViewController
 final class ARLessonViewController: DefaultARViewController {
     
+    // MARK: - Properties
     lazy var stackView = ARStackView(viewController: self)
     
     lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
@@ -47,6 +48,10 @@ final class ARLessonViewController: DefaultARViewController {
     
     var subtitleViewTopConstraint: Constraint?
     var subtitleViewBottomConstraint: Constraint?
+    
+    let operationViewTopOffset = -120
+//    var operationViewTopConstraint: Constraint?
+    var operationViewBottomConstraint: Constraint?
     
     var subtitleViewMaximized = false
     
@@ -96,16 +101,15 @@ final class ARLessonViewController: DefaultARViewController {
         runOrdering()
         subtitleView.setOrdering()
         fadeOutBottomStackView {
-            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
+            self.fadeInView(targetView: self.subtitleView, completion: { })
         }
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
-        
-        subtitleView.setOperation()
+        operationView.setOperation()
         fadeOutBottomStackView {
-            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
+            self.fadeInView(targetView: self.operationView, completion: { })
         }
         
     }
@@ -113,7 +117,7 @@ final class ARLessonViewController: DefaultARViewController {
     @objc func bigOButtonDidTouchUpInside(_ sender: ARButton) {
         subtitleView.setBigO()
         fadeOutBottomStackView {
-            self.fadeInSubtitleView(targetView: self.subtitleView, completion: { })
+            self.fadeInView(targetView: self.subtitleView, completion: { })
         }
     }
     
@@ -228,8 +232,8 @@ extension ARLessonViewController {
     
     func setupLayout() {
         setupStackView()
-        setupTextView()
-//        setupOperationView()
+        setupSubtitleView()
+        setupOperationView()
     }
     
     func setupStackView() {
@@ -243,7 +247,7 @@ extension ARLessonViewController {
         }
     }
     
-    func setupTextView() {
+    func setupSubtitleView() {
         view.addSubview(subtitleView)
         subtitleView.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
@@ -256,8 +260,12 @@ extension ARLessonViewController {
     
     func setupOperationView() {
         view.addSubview(operationView)
+        
+        let height = (view.frame.height / 3).rounded()
         operationView.snp.makeConstraints {
-            $0.leading.trailing.bottom.top.equalTo(subtitleView)
+            $0.leading.trailing.equalTo(subtitleView)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(height)
         }
     }
 }
@@ -266,7 +274,7 @@ extension ARLessonViewController {
 extension ARLessonViewController {
     // Ordering
     func runOrdering() {
-        fadeInSubtitleView(targetView: self.subtitleView, completion: {})
+        fadeInView(targetView: self.subtitleView, completion: {})
         switch lesson.name {
         case .stack, .queue:
             containerBoxNode.pushCubeNodes()
@@ -351,7 +359,7 @@ extension ARLessonViewController {
     }
     
     // Subtitle Stack View
-    func fadeInSubtitleView(targetView: BaseARView, completion: @escaping () -> ()) {
+    func fadeInView(targetView: BaseARView, completion: @escaping () -> ()) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: fadeInAnimationDuration, delay: 0, options: [.curveEaseIn], animations: {
                 targetView.alpha = 1
