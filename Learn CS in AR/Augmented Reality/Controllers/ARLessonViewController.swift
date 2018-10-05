@@ -140,6 +140,8 @@ extension ARLessonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+//        let button = ARButton(image: #imageLiteral(resourceName: "operation"))
+//        operationButtonDidTouchUpInside(button)
     }
 }
 

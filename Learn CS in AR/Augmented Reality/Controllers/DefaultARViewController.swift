@@ -144,20 +144,8 @@ class DefaultARViewController: BaseMenuViewController {
     
     // MARK: IBAction methods
     @objc func beginButtonDidTouchUpInside(_ sender: UIButton) {
-        gameStarted = true
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = []
-        sceneView.session.run(configuration, options: [])
-        
-        gamePosition = mainNode.position
-        gameEulerAngles = mainNode.eulerAngles
-        
-        beginButton.fadeOut()
-        instructionLabel.fadeOut()
-        
-        mainNode.constraints = []
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0) {
+        DispatchQueue.main.async {
+            self.lessonBegins()
             let startYScale = self.trackerNode.scale.y
             let endYScale: Float = 0
             let action: SCNAction = SCNAction.customAction(duration: 1, action: { (node, elapsedTime) in
@@ -177,6 +165,21 @@ class DefaultARViewController: BaseMenuViewController {
                 })
             })
         }
+    }
+    
+    func lessonBegins() {
+        gameStarted = true
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = []
+        sceneView.session.run(configuration, options: [])
+        
+        gamePosition = mainNode.position
+        gameEulerAngles = mainNode.eulerAngles
+        
+        beginButton.fadeOut()
+        instructionLabel.fadeOut()
+        
+        mainNode.constraints = []
     }
     
     func finishedIntroductionAnimation() {

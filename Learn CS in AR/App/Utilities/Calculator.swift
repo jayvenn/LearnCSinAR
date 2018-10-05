@@ -13,16 +13,14 @@ struct Calculator {
     struct CollectionView {
         static func getOperationCollectionViewCellSize(view: UIView, flowLayout: UICollectionViewFlowLayout) -> CGSize {
             let horizontalInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-            let minimumInteritemSpacing = flowLayout.minimumInteritemSpacing
+            let minimumInteritemSpacing = flowLayout.minimumLineSpacing
             let horizontalItemsCount: CGFloat = 2
-            let width = ((view.frame.width - horizontalInsets) - (horizontalItemsCount - 1) * minimumInteritemSpacing) / horizontalItemsCount
-            
-            let verticalInsets = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
-//            let minimumLineSpacingSpacing = flowLayout.minimumLineSpacing
-//            let verticalItemsCount: CGFloat = 2
-//            let height = width * 1.5
-            print(verticalInsets)
-            let height = ((view.frame.height - verticalInsets) - (horizontalItemsCount - 1) * minimumInteritemSpacing) / horizontalItemsCount
+            let width = ((view.frame.width - 2 - horizontalInsets) - (horizontalItemsCount - 1) * minimumInteritemSpacing) / horizontalItemsCount
+//
+////            let verticalItemsCount: CGFloat = 1
+//            let verticalInsets = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
+////            let height = ((view.frame.height - verticalInsets) - ((verticalItemsCount - 1) * minimumInteritemSpacing)) / verticalItemsCount
+            let height = view.frame.height - 72
             let size = CGSize(width: width, height: height)
             return size
         }

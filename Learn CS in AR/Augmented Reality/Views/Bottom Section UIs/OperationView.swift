@@ -13,9 +13,9 @@ final class OperationView: BaseARView {
     
     let flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumLineSpacing = 16
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumInteritemSpacing = 16
+//        flowLayout.minimumInteritemSpacing = 16
         let verticalInset: CGFloat = 16
         let horizontalInset: CGFloat = 0
         flowLayout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
@@ -24,9 +24,9 @@ final class OperationView: BaseARView {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.isPagingEnabled = true
+//        collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.bounces = false
+//        collectionView.bounces = false
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -73,7 +73,6 @@ extension OperationView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
         let operation = lesson.operations[indexPath.item]
-        cell.backgroundColor = .yellow
         cell.configureCell(operation)
         return cell
     }
@@ -83,7 +82,6 @@ extension OperationView: UICollectionViewDataSource {
 extension OperationView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = Calculator.CollectionView.getOperationCollectionViewCellSize(view: collectionView, flowLayout: flowLayout)
-//        let height = collectionView.frame.height - 20
         return size
     }
 }

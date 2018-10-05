@@ -11,20 +11,24 @@ import SnapKit
 
 final class OperationCollectionViewCell: UICollectionViewCell {
     
-    private let operationNameLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.sizeToFit()
-        label.accessibilityLabel = "Operation label"
-        return label
+    private let operationButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.roundedRect)
+        button.sizeToFit()
+        button.accessibilityLabel = "Operation label"
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        button.setTitleColor(UIColor.black, for: .normal)
+        return button
     }()
     
     var operation: Operation! {
         didSet {
             let operationName = operation.rawValue
-            operationNameLabel.accessibilityLabel = operationName
-            operationNameLabel.text = operationName
+            operationButton.accessibilityLabel = operationName
+            operationButton.setTitle(operationName, for: .normal)
         }
     }
     
@@ -33,9 +37,18 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         print("CELL OPERATION NAME:", operation.rawValue)
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setupLayout() {
-        addSubview(operationNameLabel)
-        operationNameLabel.snp.makeConstraints {
+        addSubview(operationButton)
+        operationButton.snp.makeConstraints {
             $0.leading.trailing.top.bottom.equalToSuperview()
         }
     }

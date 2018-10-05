@@ -98,22 +98,4 @@ final class LinkedListNode: BaseNode {
         
         return repeatAction
     }
-    
-//    func removeTubesAndBalls() {
-//        let fadeOutAction = SCNAction.fadeOut(duration: animationDuration)
-//        var index = 0
-//        let endIndex = tubeNodes.count - 1
-//        while index < endIndex {
-//            let node = tubeNodes[index]
-//            if index == endIndex - 1 {
-//                node.runAction(fadeOutAction) {
-//                    self.tubeNodes.forEach { $0.removeFromParentNode() }
-//                    self.directionBallNodes.forEach { $0.removeFromParentNode() }
-//                }
-//            } else {
-//                node.runAction(fadeOutAction)
-//            }
-//            index += 1
-//        }
-//    }
 }

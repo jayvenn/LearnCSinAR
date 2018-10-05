@@ -114,7 +114,7 @@ class BaseARView: UIView {
             $0.leading.equalTo(snp.leading).offset(24)
             $0.top.equalToSuperview().offset(32)
             $0.trailing.equalTo(snp.trailing).offset(-24)
-            $0.bottom.equalTo(snp.bottom)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
         
         mainView.addSubview(expanderView)
