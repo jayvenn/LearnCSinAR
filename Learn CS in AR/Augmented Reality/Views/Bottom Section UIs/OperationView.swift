@@ -15,7 +15,6 @@ final class OperationView: BaseARView {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 16
         flowLayout.scrollDirection = .horizontal
-//        flowLayout.minimumInteritemSpacing = 16
         let verticalInset: CGFloat = 16
         let horizontalInset: CGFloat = 0
         flowLayout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)

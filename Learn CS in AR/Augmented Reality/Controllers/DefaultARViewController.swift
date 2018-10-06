@@ -152,7 +152,8 @@ class DefaultARViewController: BaseMenuViewController {
                 var scale = node.scale
                 scale.y = startYScale - ((startYScale + endYScale) * Float((elapsedTime / 1.0)))
                 if elapsedTime == 1 {
-                    scale.y = 0.000161627
+//                    scale.y = 0.000161627
+                    scale.y = 0.0005
                 }
                 node.scale = scale
             })

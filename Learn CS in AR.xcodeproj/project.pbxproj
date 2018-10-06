@@ -150,13 +150,6 @@
 			path = Tree;
 			sourceTree = "<group>";
 		};
-		634AE3EA211252F6000F8B6D /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		634AE3EB21125342000F8B6D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +192,6 @@
 				6370780B2091905800CA5E80 /* App */,
 				6370783B2091E5CB00CA5E80 /* Augmented Reality */,
 				6370780C2091905C00CA5E80 /* Home */,
-				634AE3EA211252F6000F8B6D /* Manager */,
 				6370781E20919EE500CA5E80 /* Menu */,
 			);
 			path = "Learn CS in AR";

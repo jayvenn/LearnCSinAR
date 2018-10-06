@@ -9,6 +9,9 @@
 import UIKit
 
 class ARButton: UIButton {
+    override var buttonType: UIButton.ButtonType {
+        return .system
+    }
     
     init(image: UIImage, frame: CGRect = .zero) {
         super.init(frame: frame)

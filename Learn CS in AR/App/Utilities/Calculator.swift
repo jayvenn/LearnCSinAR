@@ -20,7 +20,7 @@ struct Calculator {
 ////            let verticalItemsCount: CGFloat = 1
 //            let verticalInsets = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
 ////            let height = ((view.frame.height - verticalInsets) - ((verticalItemsCount - 1) * minimumInteritemSpacing)) / verticalItemsCount
-            let height = view.frame.height - 72
+            let height = view.frame.height - 80
             let size = CGSize(width: width, height: height)
             return size
         }

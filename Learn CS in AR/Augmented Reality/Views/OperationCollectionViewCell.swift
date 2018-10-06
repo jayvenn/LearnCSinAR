@@ -35,6 +35,7 @@ final class OperationCollectionViewCell: UICollectionViewCell {
     func configureCell(_ operation: Operation) {
         self.operation = operation
         print("CELL OPERATION NAME:", operation.rawValue)
+        layoutIfNeeded()
     }
     
     override init(frame: CGRect) {

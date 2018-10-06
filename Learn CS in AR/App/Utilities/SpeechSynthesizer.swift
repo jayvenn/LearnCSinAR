@@ -17,10 +17,15 @@ final class SpeechSynthesizer {
     func speak(_ text: String) {
         guard !synthesizer.isSpeaking else { return stopSpeaking() }
         let utterance = AVSpeechUtterance(string: text)
-//        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-//        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        utterance.rate = 0.53 // 0.54
+        if isEnglish() {
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        }
+        utterance.rate = 0.56 // 0.54
         synthesizer.speak(utterance)
+    }
+    
+    private func isEnglish() -> Bool {
+        return NSLocale.preferredLanguages[0].range(of:"en") != nil
     }
     
     func stopSpeaking() {

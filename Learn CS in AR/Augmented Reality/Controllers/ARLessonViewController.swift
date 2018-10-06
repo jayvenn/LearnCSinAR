@@ -49,8 +49,6 @@ final class ARLessonViewController: DefaultARViewController {
     var subtitleViewTopConstraint: Constraint?
     var subtitleViewBottomConstraint: Constraint?
     
-    let operationViewTopOffset = -120
-//    var operationViewTopConstraint: Constraint?
     var operationViewBottomConstraint: Constraint?
     
     var subtitleViewMaximized = false
@@ -128,6 +126,11 @@ final class ARLessonViewController: DefaultARViewController {
             }
         })
     }
+    
+    func addObservers() {
+        
+    }
+    
     override func configureView() {
         super.configureView()
         // TODO: Update subtitle view with accessible fonts
@@ -142,6 +145,16 @@ extension ARLessonViewController {
         setupLayout()
 //        let button = ARButton(image: #imageLiteral(resourceName: "operation"))
 //        operationButtonDidTouchUpInside(button)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addObservers()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
 }
 

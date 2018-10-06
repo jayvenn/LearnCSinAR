@@ -47,11 +47,14 @@ struct Lesson {
         var operations = [Operation]()
         switch name {
         case .stack:
-            operations = [.push, .pop, .peek, .isEmpty]
+            operations = [.push, .pop]
+//            operations = [.push, .pop, .peek, .isEmpty]
         case .queue:
-            operations = [.enqueue, .dequeue, .peek, .isEmpty]
+            operations = [.enqueue, .dequeue]
+//            operations = [.enqueue, .dequeue, .peek, .isEmpty]
         case .singlyLinkedList, .doublyLinkedList:
-            operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
+            operations = [.push, .pop]
+//            operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
         case .binaryTree:
             operations = [.find, .addChild, .removeChild]
         }
