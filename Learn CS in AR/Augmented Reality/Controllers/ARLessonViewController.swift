@@ -236,7 +236,7 @@ extension ARLessonViewController {
         switch lesson.name {
         case .stack, .queue :
             guard containerBoxNode.cubeNodes.isEmpty else { return }
-            containerBoxNode.cubeNodes = boxes
+            containerBoxNode.cubeNodes = cubeNodes
         case .singlyLinkedList:
             runSinglyLinkedListLesson()
         case .doublyLinkedList:
@@ -316,15 +316,15 @@ extension ARLessonViewController {
             containerBoxNode.pushCubeNodes()
         case .singlyLinkedList:
             DispatchQueue.main.async {
-                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes)
+                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes)
             }
         case .doublyLinkedList:
             DispatchQueue.main.async {
-                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.boxes, isDoubly: true)
+                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes, isDoubly: true)
             }
         case .binaryTree:
             DispatchQueue.main.async {
-                self.binaryTreeNode.animate(with: self.boxes)
+                self.binaryTreeNode.animate(with: self.cubeNodes)
             }
         }
     }

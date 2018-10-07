@@ -133,7 +133,7 @@ class DefaultARViewController: BaseMenuViewController {
     var gameEulerAngles = SCNVector3(0,0,0)
     var gameStarted = false
     var foundSurface = false
-    var boxes = [CubeNode]()
+    var cubeNodes = [CubeNode]()
     var lightNodes = [SCNNode]()
     var trackingReady = false
     var firstLoad = true
@@ -161,7 +161,7 @@ class DefaultARViewController: BaseMenuViewController {
             self.trackerNode.runAction(action, completionHandler: {
                 self.generateBoxes(completionHandler: { (completed, cubeLength)  in
                     
-                    self.move(boxes: self.boxes, completion: {
+                    self.move(boxes: self.cubeNodes, completion: {
                     })
                 })
             })
@@ -324,7 +324,7 @@ extension DefaultARViewController {
         trackerNode.opacity = 0
         trackerNode.scale.y = scaleFactor
         
-        boxes = []
+        cubeNodes = []
         
         for node in mainNode.childNodes {
             guard node != planeNode else { continue }
@@ -442,7 +442,7 @@ extension DefaultARViewController {
             let cubeNode = CubeNode(length: cubeLength, index: index, leadingX: leadingX)
             cubeNode.eulerAngles.y = yEulerAngle
             mainNode.addChildNode(cubeNode)
-            boxes.append(cubeNode)
+            cubeNodes.append(cubeNode)
         }
         
         completionHandler(true, cubeLength)
