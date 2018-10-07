@@ -44,7 +44,7 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var binaryTreeNode = BinaryTreeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
     // MARK: ARLessonViewController - Properties
-    var lesson: Lesson
+    let lesson: Lesson
     
     var subtitleViewTopConstraint: Constraint?
     var subtitleViewBottomConstraint: Constraint?
@@ -63,7 +63,6 @@ final class ARLessonViewController: DefaultARViewController {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
         setAccessibilityLabel()
-        setCubeNodes()
     }
     
     func setAccessibilityLabel() {
@@ -96,6 +95,7 @@ final class ARLessonViewController: DefaultARViewController {
     
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
+        setCubeNodes()
         runOrdering()
         subtitleView.setOrdering()
         fadeOutBottomStackView {
@@ -104,7 +104,6 @@ final class ARLessonViewController: DefaultARViewController {
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
-        setCubeNodes()
         operationView.setOperation()
         fadeOutBottomStackView {
             self.fadeInView(targetView: self.operationView, completion: { })
@@ -174,15 +173,7 @@ extension ARLessonViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-    }
-}
-
-// MARK: ARLessonViewController - Set Ups
-extension ARLessonViewController {
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+        notificationCenter.removeObserver(self)
     }
 }
 

@@ -159,13 +159,34 @@ class DefaultARViewController: BaseMenuViewController {
             })
             action.timingMode = .easeIn
             self.trackerNode.runAction(action, completionHandler: {
-                self.generateBoxes(completionHandler: { (completed, cubeLength)  in
+                self.generateCubeNodes(completionHandler: { (completed, cubeLength)  in
                     
                     self.move(boxes: self.cubeNodes, completion: {
                     })
                 })
             })
         }
+    }
+    
+    // MARK: - Initializers
+    func generateCubeNodes(completionHandler: @escaping (Bool, _ cubeLength: CGFloat) -> Void) {
+        let numberOfCubes: CGFloat = 3
+        trackerNodeLength = CGFloat(40 * trackerNode.scale.x)
+        
+        let totalSpacing = (numberOfCubes - 1.0) * cubeSpacing
+        cubeLength = (trackerNodeLength - totalSpacing) / numberOfCubes
+        
+        let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
+        let yEulerAngle = trackerNode.eulerAngles.y
+        
+        for index in 0..<Int(numberOfCubes) {
+            let cubeNode = CubeNode(length: cubeLength, index: index, leadingX: leadingX)
+            cubeNode.eulerAngles.y = yEulerAngle
+            mainNode.addChildNode(cubeNode)
+            cubeNodes.append(cubeNode)
+        }
+        
+        completionHandler(true, cubeLength)
     }
     
     func lessonBegins() {
@@ -354,6 +375,11 @@ extension DefaultARViewController {
     
 }
 
+// MARK: DefaultARViewController - Set cube nodes
+extension DefaultARViewController {
+    
+}
+
 // MARK: DefaultARViewController - Scene Rendering
 extension DefaultARViewController {
     
@@ -427,28 +453,6 @@ extension DefaultARViewController: ARSessionDelegate {
 
 // MARK: DefaultARViewController - Introduction animation
 extension DefaultARViewController {
-    
-    func generateBoxes(completionHandler: @escaping (Bool, _ cubeLength: CGFloat) -> Void) {
-        let numberOfCubes: CGFloat = 3
-        trackerNodeLength = CGFloat(40 * trackerNode.scale.x)
-        
-        let totalSpacing = (numberOfCubes - 1.0) * cubeSpacing
-        cubeLength = (trackerNodeLength - totalSpacing) / numberOfCubes
-        
-        let leadingX = -(trackerNodeLength / 2) + (cubeLength / 2)
-        let yEulerAngle = trackerNode.eulerAngles.y
-        
-        for index in 0..<Int(numberOfCubes) {
-            let cubeNode = CubeNode(length: cubeLength, index: index, leadingX: leadingX)
-            cubeNode.eulerAngles.y = yEulerAngle
-            mainNode.addChildNode(cubeNode)
-            cubeNodes.append(cubeNode)
-        }
-        
-        completionHandler(true, cubeLength)
-    }
-    
-    
     func move(boxes: [CubeNode], index: Int = 0, completion: @escaping ()->()) {
         guard boxes.count != index else {
             completion()

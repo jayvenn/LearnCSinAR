@@ -24,25 +24,26 @@ protocol ContainerBoxNodeDelegate: class {
 
 final class ContainerBoxNode: BaseNode {
     
-    let fadeInAction: SCNAction = {
+    private let fadeInAction: SCNAction = {
         return SCNAction.sequence([SCNAction.fadeIn(duration: fadeInAnimationDuration)])
     }()
     
     // Square
-    lazy var squareLength: CGFloat = cubeLength + 0.05
-    lazy var squarePlane: SCNPlane = {
+    private lazy var squareLength: CGFloat = cubeLength + 0.05
+    private lazy var squarePlane: SCNPlane = {
         let plane = SCNPlane(width: squareLength, height: squareLength)
         plane.firstMaterial?.isDoubleSided = true
         return plane
     }()
-    var halfTrackerNodeLength: Float {
+    
+    private var halfTrackerNodeLength: Float {
         return Float(trackerNodeLength / 2)
     }
     
-    lazy var rightSquareNode = SCNNode(geometry: squarePlane)
-    lazy var leftSquareNode = SCNNode(geometry: squarePlane)
+    private lazy var rightSquareNode = SCNNode(geometry: squarePlane)
+    private lazy var leftSquareNode = SCNNode(geometry: squarePlane)
     
-    lazy var openLeftDoorAction: SCNAction = {
+    private lazy var openLeftDoorAction: SCNAction = {
         let horizontalDistance: CGFloat = 0.05
         let action = SCNAction.sequence([
             SCNAction.moveBy(x: -horizontalDistance, y: 0, z: 0, duration: animationDuration),
@@ -53,7 +54,8 @@ final class ContainerBoxNode: BaseNode {
         action.timingMode = .easeInEaseOut
         return action
     }()
-    lazy var openRightDoorAction: SCNAction = {
+    
+    private lazy var openRightDoorAction: SCNAction = {
         let horizontalDistance: CGFloat = 0.05
         let action = SCNAction.sequence([
             SCNAction.moveBy(x: horizontalDistance, y: 0, z: 0, duration: animationDuration),
@@ -61,27 +63,24 @@ final class ContainerBoxNode: BaseNode {
             SCNAction.moveBy(x: -horizontalDistance, y: 0, z: 0, duration: animationDuration)
             ])
         action.timingMode = .easeInEaseOut
-        
         return action
     }()
     
-    var moveInsideContainerActionArray = [SCNAction]()
-    var reversedMoveInsideContainerActionArray = [SCNAction]()
+    private var leftDoorOpen = false
+    private var rightDoorOpen = false
     
-    var leftDoorOpen = false
-    var rightDoorOpen = false
-    
-    var isAnimating = false
+    private var isAnimating = false
     
     var cubeNodes = [CubeNode]() {
         didSet {
             for (index, node) in cubeNodes.enumerated() {
                 self.setActionFor(node: node, index: index)
             }
+            print("CUBE NODES COUNT:", cubeNodes.count)
         }
     }
     
-    var index: Int = 0 {
+    private var index: Int = 0 {
         didSet {
             print("INDEX:", index)
         }
@@ -102,17 +101,18 @@ final class ContainerBoxNode: BaseNode {
         generateNode()
     }
     
-    func generateNode() {
+    private func generateNode() {
         generateLeftSquareNode()
         generateRightSquareNode()
         generateRectangleNodes()
     }
     
-    func setIndex(increment: Bool, completion: @escaping () -> ()) {
+    private func setIndex(increment: Bool, completion: @escaping () -> ()) {
+        print("Cube Node Index:", index)
         let cubeNode: CubeNode
         switch increment {
         case true:
-            guard index < cubeNodes.count else { return completion() }
+            guard index < cubeNodes.count else { return }
             cubeNode = cubeNodes[index]
             openSideDoors {
                 cubeNode.runAction(cubeNode.action) {
@@ -121,17 +121,33 @@ final class ContainerBoxNode: BaseNode {
             }
             index += 1
         case false:
-            guard index > 0 else {
-//                return completion()
-                return
-            }
+            guard index > 0 else { return }
             index -= 1
-            cubeNode = cubeNodes[index]
-            let theIndex = index
-            cubeNode.runAction(cubeNode.reversedAction) {
-                guard theIndex == 0 else { return completion() }
-                self.closeSideDoors(index: theIndex) {
-                    completion()
+            let theIndex: Int
+            let action: SCNAction
+            if lesson.name == .stack {
+                theIndex = index
+            } else {
+                theIndex = cubeNodes.count - 1 - index
+            }
+            
+            cubeNode = cubeNodes[theIndex]
+            if lesson.name == .stack {
+                action = cubeNode.reversedAction
+            } else {
+                action = cubeNode.getPopQueueAction()
+            }
+            cubeNode.runAction(action) {
+                if self.lesson.name == .stack {
+                    guard theIndex == 0 else { return completion() }
+                    self.closeSideDoors(index: theIndex) {
+                        completion()
+                    }
+                } else {
+                    guard theIndex == self.cubeNodes.count - 1 else { return completion() }
+                    self.closeSideDoors(index: theIndex) {
+                        completion()
+                    }
                 }
             }
         }
@@ -229,7 +245,6 @@ extension ContainerBoxNode {
     func pushCubeNodes() {
         guard index != cubeNodes.count else { return popCubeNodes() }
         pushCubeNode {
-            print("PUSH!!!")
             self.pushCubeNodes()
         }
     }
@@ -265,17 +280,16 @@ extension ContainerBoxNode {
     }
     
     func closeSideDoors(index: Int, completion: @escaping () -> ()) {
-        guard index == 0 else { return completion() }
         switch lesson.name {
         case .stack:
             closeLeftDoor {
                 completion()
             }
         case .queue:
-            openLeftDoor {
+            closeLeftDoor {
                 completion()
             }
-            openRightDoor { }
+            closeRightDoor { }
         default:
             break
         }
@@ -326,13 +340,20 @@ extension ContainerBoxNode {
             SCNAction.move(to: finalPosition, duration: duration)
             ])
         
-        let reversedAction = SCNAction.sequence([
-            SCNAction.move(to: finalPosition, duration: duration),
-            SCNAction.move(to: secondPosition, duration: duration),
-            SCNAction.wait(duration: duration),
-            SCNAction.move(to: position, duration: duration),
-            SCNAction.move(to: originalPosition, duration: duration)
-            ])
+        let reversedAction: SCNAction
+        
+        if lesson.name == .stack {
+            reversedAction = SCNAction.sequence([
+                SCNAction.move(to: finalPosition, duration: duration),
+                SCNAction.move(to: secondPosition, duration: duration),
+                SCNAction.wait(duration: duration),
+                SCNAction.move(to: position, duration: duration),
+                SCNAction.move(to: originalPosition, duration: duration)
+                ])
+        } else {
+            reversedAction = node.getPopQueueAction()
+        }
+        
         
         node.action = action
         node.reversedAction = reversedAction
