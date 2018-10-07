@@ -57,11 +57,13 @@ final class ARLessonViewController: DefaultARViewController {
     lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
     
     let synthesizer = SpeechSynthesizer.shared
+    let notificationCenter = NotificationCenter.default
     
     init(lesson: Lesson) {
         self.lesson = lesson
         super.init(nibName: nil, bundle: nil)
         setAccessibilityLabel()
+        setCubeNodes()
     }
     
     func setAccessibilityLabel() {
@@ -94,8 +96,6 @@ final class ARLessonViewController: DefaultARViewController {
     
     // MARK: ARLessonViewController - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
-        setCubeNodes()
-        
         runOrdering()
         subtitleView.setOrdering()
         fadeOutBottomStackView {
@@ -128,7 +128,27 @@ final class ARLessonViewController: DefaultARViewController {
     }
     
     func addObservers() {
-        
+        notificationCenter.addObserver(forName: .operationButtonDidTouchUpInside, object: nil, queue: .main) { [weak self] (notification) in
+            guard let self = self,
+                let operation = notification.object as? Operation
+                else { return }
+            self.operationAnimation(operation: operation)
+        }
+    }
+    
+    func operationAnimation(operation: Operation) {
+        switch operation {
+        case .push:
+            containerBoxNode.pushCubeNode {
+                
+            }
+        case .pop:
+            containerBoxNode.popCubeNode {
+                
+            }
+        default:
+            break
+        }
     }
     
     override func configureView() {
@@ -215,6 +235,7 @@ extension ARLessonViewController {
     func setCubeNodes() {
         switch lesson.name {
         case .stack, .queue :
+            guard containerBoxNode.cubeNodes.isEmpty else { return }
             containerBoxNode.cubeNodes = boxes
         case .singlyLinkedList:
             runSinglyLinkedListLesson()

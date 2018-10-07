@@ -23,9 +23,7 @@ final class OperationView: BaseARView {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-//        collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.bounces = false
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -83,6 +81,22 @@ extension OperationView: UICollectionViewDelegateFlowLayout {
         let size = Calculator.CollectionView.getOperationCollectionViewCellSize(view: collectionView, flowLayout: flowLayout)
         return size
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+//        UIView.animate(withDuration: 0.5) {
+//            guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
+//            cell.operationLabel.transform = .init(scaleX: 0.95, y: 0.95)
+//            cell.contentView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+//        UIView.animate(withDuration: 0.5) {
+//            guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as? OperationCollectionViewCell else { fatalError() }
+//            cell.operationLabel.transform = .identity
+//            cell.contentView.backgroundColor = .clear
+//        }
+//    }
 }
 
 

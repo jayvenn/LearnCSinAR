@@ -35,13 +35,12 @@ final class ContainerBoxNode: BaseNode {
         plane.firstMaterial?.isDoubleSided = true
         return plane
     }()
-    
-    lazy var rightSquareNode = SCNNode(geometry: squarePlane)
-    lazy var leftSquareNode = SCNNode(geometry: squarePlane)
-    
     var halfTrackerNodeLength: Float {
         return Float(trackerNodeLength / 2)
     }
+    
+    lazy var rightSquareNode = SCNNode(geometry: squarePlane)
+    lazy var leftSquareNode = SCNNode(geometry: squarePlane)
     
     lazy var openLeftDoorAction: SCNAction = {
         let horizontalDistance: CGFloat = 0.05
@@ -54,7 +53,6 @@ final class ContainerBoxNode: BaseNode {
         action.timingMode = .easeInEaseOut
         return action
     }()
-    
     lazy var openRightDoorAction: SCNAction = {
         let horizontalDistance: CGFloat = 0.05
         let action = SCNAction.sequence([
@@ -69,13 +67,25 @@ final class ContainerBoxNode: BaseNode {
     
     var moveInsideContainerActionArray = [SCNAction]()
     var reversedMoveInsideContainerActionArray = [SCNAction]()
-    var isAnimating = false
     
     var leftDoorOpen = false
     var rightDoorOpen = false
     
-    var cubeNodes = [CubeNode]()
-    var index = 0
+    var isAnimating = false
+    
+    var cubeNodes = [CubeNode]() {
+        didSet {
+            for (index, node) in cubeNodes.enumerated() {
+                self.setActionFor(node: node, index: index)
+            }
+        }
+    }
+    
+    var index: Int = 0 {
+        didSet {
+            print("INDEX:", index)
+        }
+    }
     
     weak var delegate: ContainerBoxNodeDelegate?
     
@@ -98,6 +108,35 @@ final class ContainerBoxNode: BaseNode {
         generateRectangleNodes()
     }
     
+    func setIndex(increment: Bool, completion: @escaping () -> ()) {
+        let cubeNode: CubeNode
+        switch increment {
+        case true:
+            guard index < cubeNodes.count else { return completion() }
+            cubeNode = cubeNodes[index]
+            openSideDoors {
+                cubeNode.runAction(cubeNode.action) {
+                    completion()
+                }
+            }
+            index += 1
+        case false:
+            guard index > 0 else {
+//                return completion()
+                return
+            }
+            index -= 1
+            cubeNode = cubeNodes[index]
+            let theIndex = index
+            cubeNode.runAction(cubeNode.reversedAction) {
+                guard theIndex == 0 else { return completion() }
+                self.closeSideDoors(index: theIndex) {
+                    completion()
+                }
+            }
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -105,7 +144,6 @@ final class ContainerBoxNode: BaseNode {
 
 // MARK: ContainerBoxNode - Action
 extension ContainerBoxNode {
-    
     func runAssembleSquareAction(completion: @escaping () -> ()) {
         let duration = TimeInterval(1)
         let leftSquareAction = SCNAction.moveBy(x: CGFloat(cubeLength), y: 0, z: 0, duration: duration)
@@ -125,14 +163,12 @@ extension ContainerBoxNode {
         rightSquareNode.name = stackContainerBoxNodeName.rightSquare.rawValue
         addChildNode(rightSquareNode)
     }
-    
     func generateLeftSquareNode() {
         leftSquareNode.eulerAngles = SCNVector3(0,90 * degreesToRadians,0)
         leftSquareNode.position.x = -halfTrackerNodeLength - Float(cubeLength)
         leftSquareNode.name = stackContainerBoxNodeName.leftSquare.rawValue
         addChildNode(leftSquareNode)
     }
-    
     func generateRectangleNodes() {
         var rectangularNodes = [SCNNode]()
         // Rectangle Plane
@@ -186,121 +222,53 @@ extension ContainerBoxNode {
     }
     
     // - Push cube nodes
-    
-    func pushCubeNodes() {
-        guard !isAnimating else { return }
-        isAnimating = true
-        
-        openSideDoors {}
-        // BUG: Completion handler doesn't run with timing mode set to .easeInEaseOut
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + animationDuration * 3) {
-            self.moveIn()
-        }
+    func pushCubeNode(completion: @escaping () -> ()) {
+        setIndex(increment: true) { completion() }
     }
     
-    func pushCubeNode() {
-        guard !isAnimating else { return } // Refactore: Repeated code
-        
-        guard index != cubeNodes.count else { return }
-        
-        let cubeNode = cubeNodes[index]
-        let action = getMoveInsideContainerAction(withNode: cubeNode, index: index)
-        
-        openSideDoors {
-            cubeNode.runAction(action)
+    func pushCubeNodes() {
+        guard index != cubeNodes.count else { return popCubeNodes() }
+        pushCubeNode {
+            print("PUSH!!!")
+            self.pushCubeNodes()
         }
-        index += 1
     }
     
     // - Pop cube nodes
-    /**
-     
-     1, 0
-     0, 0
-     
-     2, 0
-     1, 1
-     
-     
-     3, 0
-     2, 1
-     1, 2
-     
-     **/
-    
-    func popCubeNode() {
-        index -= 1
-        guard index >= 0 else {
-            self.moveInsideContainerActionArray = []
-            return
-        }
-        
-        let cubeNode = lesson.name == .stack ? cubeNodes[index] : cubeNodes[cubeNodes.count - index - 1]
-//        print("Move Inside Action Count:", moveInsideContainerActionArray.count)
-        print("INDEX:", index)
-        let action = getMoveOutsideContainerAction(withNode: cubeNode, index: index)
-        cubeNode.runAction(action) {
-            
-        }
+    func popCubeNode(completion: @escaping () -> ()) {
+        setIndex(increment: false) { completion() }
     }
     
     func popCubeNodes() {
-        let index = moveInsideContainerActionArray.count - 1
-        guard index >= 0 else {
-            self.moveInsideContainerActionArray = []
-            return
-        }
-        let node: CubeNode
-        let action: SCNAction
-        switch lesson.name {
-        case .stack:
-            moveInsideContainerActionArray.removeFirst()
-            node = cubeNodes[index]
-            action = reversedMoveInsideContainerActionArray[index]
-        case .queue:
-            moveInsideContainerActionArray.removeLast()
-            node = cubeNodes[cubeNodes.count - 1 - index]
-            action = getMoveOutsideContainerAction(withNode: node, index: index)
-        default:
-            fatalError()
-        }
-        
-        node.runAction(action) {
-            guard index - 1 == 0 else { return }
-            switch self.lesson.name {
-            case .stack:
-                self.closeLeftDoorMoveDown(node: self.leftSquareNode, completion: {
-                    self.delegate?.didFinishOrdering()
-                })
-            case .queue:
-                self.closeLeftDoorMoveDown(node: self.leftSquareNode, completion: {
-                    self.delegate?.didFinishOrdering()
-                })
-                
-                self.closeRightDoorMoveDown(node: self.rightSquareNode, completion: {
-                    // Repeat action
-//                    self.pushCubeNodes()
-                })
-            default:
-                break
-            }
-            self.isAnimating = false
-            self.reversedMoveInsideContainerActionArray = []
-        }
-        
-        delay(animationDuration * 2) {
+        guard index >= 0 else { return }
+        popCubeNode {
             self.popCubeNodes()
         }
     }
     
     // - Doors
-    
     func openSideDoors(completion: @escaping () -> ()) {
-        guard !leftDoorOpen else { return completion() }
+        guard index == 0 else { return completion() }
         switch lesson.name {
         case .stack:
-            
             openLeftDoor {
+                completion()
+            }
+        case .queue:
+            openLeftDoor {
+                completion()
+            }
+            openRightDoor { }
+        default:
+            break
+        }
+    }
+    
+    func closeSideDoors(index: Int, completion: @escaping () -> ()) {
+        guard index == 0 else { return completion() }
+        switch lesson.name {
+        case .stack:
+            closeLeftDoor {
                 completion()
             }
         case .queue:
@@ -327,36 +295,21 @@ extension ContainerBoxNode {
         }
     }
     
-    func moveIn(index: Int = 0) {
-        guard index != cubeNodes.count else { return }
-        let node = cubeNodes[index]
-        
-        let action = getMoveInsideContainerAction(withNode: node, index: index)
-        node.runAction(action) {
-            guard index + 1 == self.cubeNodes.count else { return }
-            self.popCubeNodes()
-        }
-        
-        delay(animationDuration * 2) {
-            self.moveIn(index: index + 1)
-        }
-    }
-    
-    func closeLeftDoorMoveDown(node: SCNNode, completion: @escaping () -> ()) {
-        node.runAction(openLeftDoorAction.reversed()) {
+    func closeLeftDoor(completion: @escaping () -> ()) {
+        leftSquareNode.runAction(openLeftDoorAction.reversed()) {
             self.leftDoorOpen = false
             completion()
         }
     }
     
-    func closeRightDoorMoveDown(node: SCNNode, completion: @escaping () -> ()) {
-        node.runAction(openRightDoorAction.reversed()) {
+    func closeRightDoor(completion: @escaping () -> ()) {
+        rightSquareNode.runAction(openRightDoorAction.reversed()) {
             self.rightDoorOpen = false
             completion()
         }
     }
     
-    func getMoveInsideContainerAction(withNode node: CubeNode, index: Int) -> SCNAction {
+    private func setActionFor(node: CubeNode, index: Int) {
         let originalPosition = node.position
         var position = node.position
         position.x -= (Float(cubeSpacing + cubeLength) * Float(index + 1))
@@ -366,14 +319,12 @@ extension ContainerBoxNode {
         finalPosition.x += (Float(self.cubeSpacing + self.cubeLength) * Float(cubeNodes.count - index))
         
         let duration = animationDuration
-        
-        let action = SCNAction.sequence([SCNAction.move(to: position, duration: duration),
-                                         SCNAction.wait(duration: duration),
-                                         SCNAction.move(to: secondPosition, duration: duration),
-                                         SCNAction.move(to: finalPosition, duration: duration)
-                                         ])
-        
-        
+        let action = SCNAction.sequence([
+            SCNAction.move(to: position, duration: duration),
+            SCNAction.wait(duration: duration),
+            SCNAction.move(to: secondPosition, duration: duration),
+            SCNAction.move(to: finalPosition, duration: duration)
+            ])
         
         let reversedAction = SCNAction.sequence([
             SCNAction.move(to: finalPosition, duration: duration),
@@ -382,26 +333,10 @@ extension ContainerBoxNode {
             SCNAction.move(to: position, duration: duration),
             SCNAction.move(to: originalPosition, duration: duration)
             ])
-        reversedMoveInsideContainerActionArray.append(reversedAction)
-        moveInsideContainerActionArray.append(action)
-        return action
+        
+        node.action = action
+        node.reversedAction = reversedAction
     }
-    
-    func getMoveOutsideContainerAction(withNode node: CubeNode, index: Int) -> SCNAction {
-        let action: SCNAction
-        switch lesson.name {
-        case .stack:
-            action = reversedMoveInsideContainerActionArray[index]
-        case .queue:
-            action = node.getPopQueueAction()
-        default:
-            fatalError()
-        }
-//        moveInsideContainerActionArray.remove(at: index)
-//        reversedMoveInsideContainerActionArray.remove(at: index)
-        return action
-    }
-    
     
     func delay(_ delay:Double, closure:@escaping ()->()) {
         DispatchQueue.main.asyncAfter(

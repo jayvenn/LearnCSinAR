@@ -17,6 +17,9 @@ class CubeNode: SCNNode {
     let cubeSpacing: CGFloat = 0.05
     var leftNode: CubeNode?
     var rightNode: CubeNode?
+    var action = SCNAction()
+    var reversedAction = SCNAction()
+    var isInContainer = false
     
     var airPosition: (x: Float, y: Float) {
         let x = initialPosition.x
@@ -43,18 +46,16 @@ class CubeNode: SCNNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setGeometry() {
+    private func setGeometry() {
         let cube = SCNBox(width: length, height: length, length: length, chamferRadius: length/10)
         cube.firstMaterial?.isDoubleSided = true
         geometry = cube
     }
     
-    func setInitialPosition() {
+    private func setInitialPosition() {
         position.x = initialPosition.x
         position.y = initialPosition.y
     }
-    
-    
 }
 
 // - Queue

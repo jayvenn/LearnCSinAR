@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63478885216882150004035F /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63478884216882150004035F /* Notification+Name.swift */; };
 		634AE3E92112495D000F8B6D /* BinaryTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634AE3E82112495D000F8B6D /* BinaryTreeNode.swift */; };
 		634AE3ED2112536C000F8B6D /* ARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634AE3EC2112536C000F8B6D /* ARManager.swift */; };
 		6355C8BD21455C81006922AB /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355C8BC21455C81006922AB /* Localization.swift */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		169B610091AD0ED3C903882C /* Pods_Learn_CS_in_AR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Learn_CS_in_AR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E4C13DED107D72F1752A9E /* Pods-Learn CS in AR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Learn CS in AR.release.xcconfig"; path = "Pods/Target Support Files/Pods-Learn CS in AR/Pods-Learn CS in AR.release.xcconfig"; sourceTree = "<group>"; };
+		63478884216882150004035F /* Notification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
 		634AE3E82112495D000F8B6D /* BinaryTreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryTreeNode.swift; sourceTree = "<group>"; };
 		634AE3EC2112536C000F8B6D /* ARManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARManager.swift; sourceTree = "<group>"; };
 		6355C8BC21455C81006922AB /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				637078332091C5BB00CA5E80 /* StyleKit.swift */,
 				FAFA188B212A4C0100D41A70 /* SpeechSynthesizer.swift */,
 				63743B11215C7CD5007BF9C6 /* Calculator.swift */,
+				63478884216882150004035F /* Notification+Name.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				6370783A2091E2B600CA5E80 /* ARLessonViewController.swift in Sources */,
 				63FCD831213E08E400BD1669 /* OperationHeaderView.swift in Sources */,
 				637078262091A07C00CA5E80 /* Course.swift in Sources */,
+				63478885216882150004035F /* Notification+Name.swift in Sources */,
 				639F14AE209EA7130074330F /* ContainerBoxNode.swift in Sources */,
 				63FC448721110771008FEE0E /* DirectionTubeNode.swift in Sources */,
 				637077F820918E2500CA5E80 /* AppDelegate.swift in Sources */,
