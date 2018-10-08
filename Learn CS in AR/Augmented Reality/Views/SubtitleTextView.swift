@@ -272,6 +272,8 @@ extension SubtitleTextView {
             return "Add a child \(elementName) onto a tree."
         case .removeChild:
             return "Remove a particular child \(elementName) from a tree."
+        default:
+            return ""
         }
     }
     

@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import MessageUI
 
 // MARK: HomeViewController
 final class HomeViewController: BaseMenuViewController {
@@ -62,7 +61,7 @@ final class HomeViewController: BaseMenuViewController {
     }()
     
     var beginButtonHeightConstraint: Constraint?
-    var aboutButtonHeightConstraint: Constraint?
+    var contributeButtonHeightConstraint: Constraint?
     
     @objc private func beginButtonDidTouchUpInside(_ sender: UIButton) {
         let navigationController = MenuNavigationController()
@@ -73,81 +72,10 @@ final class HomeViewController: BaseMenuViewController {
         sendContributionMessage()
     }
     
-    func sendContributionMessage() {
-        let bodyText = generateBodyText()
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(["LearnCSinAR@gmail.com"])
-            mail.setMessageBody("<p>\(bodyText)</p>", isHTML: true)
-            present(mail, animated: true)
-        } else if MFMessageComposeViewController.canSendText() {
-            let viewController = MFMessageComposeViewController()
-            viewController.recipients = ["+6587766238"]
-            viewController.messageComposeDelegate = self
-            viewController.body = bodyText
-            present(viewController, animated: true)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-    
-    func generateBodyText() -> String {
-        let bodyText = """
-        Hi Learn CS in AR,
-
-        I'm here to contribute for the greater purpose than myself.
-
-        I believe education is a basic human right.
-
-        I believe in pushing education forward for humanity.
-
-        I believe in putting others in front of me.
-
-        I want to contribute because [your why].
-
-        I can contribute by [doing] by [date].
-
-        This contribution can help [who/what] achieve [what].
-
-        My one highly scarce and in-demand skill is [what].
-
-        My one highly scarce but not in-demand skill is [what].
-
-        I will only send this message only if I believe in this message.
-        
-        My name is ...
-        """
-        return bodyText
-    }
-    
-    func showSendMailErrorAlert() {
-        let title = "Could Not Open Mail or Messages"
-        let message = "Set configurations and try again."
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(action)
-        present(alertController, animated: true, completion: nil)
-    }
-    
     override func configureView() {
         super.configureView()
         setHeaderLabelFont()
         setButtonFonts()
-    }
-}
-
-// MARK: - MFMailComposeViewControllerDelegate
-extension HomeViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
-    }
-}
-
-// MARK: - MFMessageComposeViewControllerDelegate
-extension HomeViewController: MFMessageComposeViewControllerDelegate {
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        controller.dismiss(animated: true)
     }
 }
 
@@ -189,7 +117,8 @@ extension HomeViewController {
     
     func setHeaderLabelFont() {
         let titleText = "Learn CS in AR"
-        let subTitleText = NSLocalizedString("Made for CS Students", comment: "Made for CS Students")
+//        let subTitleText = NSLocalizedString("Made for CS Students", comment: "Made for CS Students")
+        let subTitleText = NSLocalizedString("Computer Science for Everyone", comment: "Computer Science for Everyone")
         
         let preferredContentSizeCategory = traitCollection.preferredContentSizeCategory
         let titleTextFont: UIFont

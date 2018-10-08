@@ -17,11 +17,11 @@ let springWithDaming: CGFloat = 0.9 // 0.7
 final class ARLessonViewController: DefaultARViewController {
     
     // MARK: - Properties
-    lazy var stackView = ARStackView(viewController: self)
+    private lazy var stackView = ARStackView(viewController: self)
     
-    lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+    private lazy var containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
-    lazy var subtitleView: SubtitleView = {
+    private lazy var subtitleView: SubtitleView = {
         let view = SubtitleView(lesson: lesson)
         let string = "Lesson info"
         let localizedString = NSLocalizedString(string, comment: string)
@@ -30,7 +30,7 @@ final class ARLessonViewController: DefaultARViewController {
         return view
     }()
     
-    lazy var operationView: OperationView = {
+    private lazy var operationView: OperationView = {
         let view = OperationView(lesson: lesson)
         let string = "Operation info"
         let localizedString = NSLocalizedString(string, comment: string)
@@ -39,25 +39,24 @@ final class ARLessonViewController: DefaultARViewController {
         return view
     }()
     
-    lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+    private lazy var linkedListNode = LinkedListNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
-    lazy var binaryTreeNode = BinaryTreeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
+    private lazy var binaryTreeNode = BinaryTreeNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
     
-    // MARK: ARLessonViewController - Properties
-    let lesson: Lesson
+    private let lesson: Lesson
     
-    var subtitleViewTopConstraint: Constraint?
-    var subtitleViewBottomConstraint: Constraint?
+    private var subtitleViewTopConstraint: Constraint?
+    private var subtitleViewBottomConstraint: Constraint?
     
-    var operationViewBottomConstraint: Constraint?
+    private var operationViewBottomConstraint: Constraint?
     
-    var subtitleViewMaximized = false
+    private var subtitleViewMaximized = false
     
-    lazy var subtitleViewHeight: CGFloat = view.frame.height/3
-    lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
+    private lazy var subtitleViewHeight: CGFloat = view.frame.height/3
+    private lazy var subtitleViewTopOffset: CGFloat = view.frame.height - subtitleViewHeight + 120
     
-    let synthesizer = SpeechSynthesizer.shared
-    let notificationCenter = NotificationCenter.default
+    private let synthesizer = SpeechSynthesizer.shared
+    private let notificationCenter = NotificationCenter.default
     
     init(lesson: Lesson) {
         self.lesson = lesson
@@ -65,7 +64,7 @@ final class ARLessonViewController: DefaultARViewController {
         setAccessibilityLabel()
     }
     
-    func setAccessibilityLabel() {
+    private func setAccessibilityLabel() {
         let string = "%@ lesson"
         let localizedString = NSLocalizedString(string, comment: string)
         let localizedStringWithFormat =  String.localizedStringWithFormat(localizedString, lesson.name.rawValue)
@@ -80,7 +79,7 @@ final class ARLessonViewController: DefaultARViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: ARLessonViewController - Override methods
+    // MARK: - Override methods
     override func finishedIntroductionAnimation() {
         super.finishedIntroductionAnimation()
         beginLesson()
@@ -93,7 +92,7 @@ final class ARLessonViewController: DefaultARViewController {
         }
     }
     
-    // MARK: ARLessonViewController - Button methods
+    // MARK: - Button methods
     @objc func orderingButtonDidTouchUpInside(_ sender: ARButton) {
         setCubeNodes()
         runOrdering()
@@ -104,6 +103,7 @@ final class ARLessonViewController: DefaultARViewController {
     }
     
     @objc func operationButtonDidTouchUpInside(_ sender: ARButton) {
+        setCubeNodes()
         operationView.setOperation()
         fadeOutBottomStackView {
             self.fadeInView(targetView: self.operationView, completion: { })
@@ -137,17 +137,25 @@ final class ARLessonViewController: DefaultARViewController {
     
     func operationAnimation(operation: Operation) {
         switch operation {
-        case .push:
-            containerBoxNode.pushCubeNode {
-                
+        case .push, .enqueue:
+            switch lesson.name {
+            case .stack, .queue:
+                containerBoxNode.pushCubeNode { }
+            case .singlyLinkedList, .doublyLinkedList:
+                break
+            default:
+                break
             }
-        case .pop:
+        case .pop, .dequeue:
             containerBoxNode.popCubeNode {
                 
             }
+        case .comingSoon:
+            sendContributionMessage()
         default:
             break
         }
+        
     }
     
     override func configureView() {
@@ -177,7 +185,7 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Animation
+// MARK: - Animation
 extension ARLessonViewController {
     @objc func maximizeSubtitleView() {
         subtitleView.fadeInSpeakerButton()
@@ -221,7 +229,7 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Set cube nodes
+// MARK: - Set cube nodes
 extension ARLessonViewController {
     func setCubeNodes() {
         switch lesson.name {
@@ -238,7 +246,7 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Lesson
+// MARK: - Lesson
 extension ARLessonViewController {
     
     func beginLesson() {
@@ -297,7 +305,7 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Lesson Ordering, Operation, Big O
+// MARK: - Lesson Ordering, Operation, Big O
 extension ARLessonViewController {
     // Ordering
     func runOrdering() {
@@ -306,13 +314,15 @@ extension ARLessonViewController {
         case .stack, .queue:
             containerBoxNode.pushCubeNodes()
         case .singlyLinkedList:
-            DispatchQueue.main.async {
-                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes)
-            }
+            linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes)
+//            DispatchQueue.main.async {
+//                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes)
+//            }
         case .doublyLinkedList:
-            DispatchQueue.main.async {
-                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes, isDoubly: true)
-            }
+            linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes, isDoubly: true)
+//            DispatchQueue.main.async {
+//                self.linkedListNode.generateSinglyLinkingNodes(basedOn: self.cubeNodes, isDoubly: true)
+//            }
         case .binaryTree:
             DispatchQueue.main.async {
                 self.binaryTreeNode.animate(with: self.cubeNodes)
@@ -337,7 +347,7 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Stack Lesson
+// MARK: - Stack Lesson
 extension ARLessonViewController {
     func runStackLesson() {
         containerBoxNode = ContainerBoxNode(cubeLength: cubeLength, cubeSpacing: cubeSpacing, trackerNodeLength: trackerNodeLength, lesson: lesson)
@@ -352,14 +362,14 @@ extension ARLessonViewController {
     }
 }
 
-// MARK: ARLessonViewController - Queue Lesson
+// MARK: - Queue Lesson
 extension ARLessonViewController {
     func runQueueLesson() {
         runStackLesson()
     }
 }
 
-// MARK: ARLessonViewController - Singly-Linked List Lesson
+// MARK: - Singly-Linked List Lesson
 extension ARLessonViewController {
     func runSinglyLinkedListLesson() {
         fadeInBottomStackView() { }
@@ -454,10 +464,4 @@ extension ARLessonViewController: SubtitleViewDelegate {
         }
         
     }
-    
-}
-
-// MARK: ARLessonViewController - Subtitle
-extension ARLessonViewController {
-    
 }

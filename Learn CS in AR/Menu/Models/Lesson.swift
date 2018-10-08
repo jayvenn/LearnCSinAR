@@ -37,6 +37,8 @@ enum Operation: String {
     case find = "find(cube)"
     case addChild = "add(child: cube)"
     case removeChild = "remove(child: cube)"
+    
+    case comingSoon = "Coming Soon\nTap to Contribute"
 }
 
 struct Lesson {
@@ -53,10 +55,12 @@ struct Lesson {
             operations = [.enqueue, .dequeue]
 //            operations = [.enqueue, .dequeue, .peek, .isEmpty]
         case .singlyLinkedList, .doublyLinkedList:
-            operations = [.push, .pop]
+            operations = [.comingSoon, .comingSoon]
+//            operations = [.push, .pop]
 //            operations = [.push, .append, .insertAfter, .nodeAtIndex, .pop, .removeLast, .removeAfter]
         case .binaryTree:
-            operations = [.find, .addChild, .removeChild]
+            operations = [.comingSoon, .comingSoon]
+//            operations = [.find, .addChild, .removeChild]
         }
         return operations
     }()

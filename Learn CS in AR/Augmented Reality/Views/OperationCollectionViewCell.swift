@@ -11,7 +11,8 @@ import SnapKit
 
 final class OperationCollectionViewCell: UICollectionViewCell {
     
-    lazy var operationButton: UIButton = {
+    // MARK: - Properties
+    private lazy var operationButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.roundedRect)
         button.sizeToFit()
         button.accessibilityLabel = "Operation label"
@@ -21,11 +22,15 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
         button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.minimumScaleFactor = 0.5
         button.addTarget(self, action: #selector(operationButtonDidTouchUpDown), for: .touchUpInside)
         return button
     }()
     
-    let operationLabel: UILabel = {
+    private let operationLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "Operation"
         label.backgroundColor = .black
@@ -36,9 +41,9 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let notificationCenter = NotificationCenter.default
+    private let notificationCenter = NotificationCenter.default
     
-    var operation: Operation! {
+    private var operation: Operation! {
         didSet {
             let operationName = operation.rawValue
 //            operationLabel.accessibilityLabel = operationName
@@ -57,6 +62,7 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Methods
     func configureCell(_ operation: Operation) {
         self.operation = operation
     }
@@ -65,8 +71,7 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         notificationCenter.post(name: .operationButtonDidTouchUpInside, object: operation)
     }
     
-//    func operationButton
-    
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -76,7 +81,9 @@ final class OperationCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupLayout() {
+    
+    // MARK: - UI, Layout, Overheads
+    private func setupLayout() {
         addSubview(operationButton)
         operationButton.snp.makeConstraints { $0.leading.trailing.top.bottom.equalToSuperview() }
     }

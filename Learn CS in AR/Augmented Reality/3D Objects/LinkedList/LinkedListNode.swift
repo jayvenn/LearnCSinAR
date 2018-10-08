@@ -62,6 +62,48 @@ final class LinkedListNode: BaseNode {
         }
     }
     
+    func pushNode() {
+        let index = directionTubeNodes.count
+        let cubeNode = CubeNode(length: cubeLength, index: index)
+        
+    }
+    
+    func getSinglyLinkedListActions(node: CubeNode) -> (action: SCNAction, reversedAction: SCNAction) {
+        return (SCNAction(), SCNAction())
+//        let originalPosition = node.position
+//        var position = node.position
+//        position.x -= (Float(cubeSpacing + cubeLength) * Float(index + 1))
+//        var secondPosition = position
+//        secondPosition.y = self.position.y
+//        var finalPosition = secondPosition
+//        finalPosition.x += (Float(self.cubeSpacing + self.cubeLength) * Float(cubeNodes.count - index))
+//
+//        let duration = animationDuration
+//        let action = SCNAction.sequence([
+//            SCNAction.move(to: position, duration: duration),
+//            SCNAction.wait(duration: duration),
+//            SCNAction.move(to: secondPosition, duration: duration),
+//            SCNAction.move(to: finalPosition, duration: duration)
+//            ])
+//
+//        let reversedAction: SCNAction
+//        switch lesson.name {
+//        case .stack:
+//            reversedAction = SCNAction.sequence([
+//                SCNAction.move(to: finalPosition, duration: duration),
+//                SCNAction.move(to: secondPosition, duration: duration),
+//                SCNAction.wait(duration: duration),
+//                SCNAction.move(to: position, duration: duration),
+//                SCNAction.move(to: originalPosition, duration: duration)
+//                ])
+//        case .queue:
+//            reversedAction = node.getPopQueueAction()
+//        default:
+//            reversedAction = SCNAction()
+//        }
+//        return (action, reversedAction)
+    }
+    
     func moveCubesToAirPosition(_ nodes: [CubeNode]) {
         for node in nodes {
             let position = node.airPosition

@@ -108,7 +108,6 @@ final class ContainerBoxNode: BaseNode {
     }
     
     private func setIndex(increment: Bool, completion: @escaping () -> ()) {
-        print("Cube Node Index:", index)
         let cubeNode: CubeNode
         switch increment {
         case true:
@@ -125,10 +124,14 @@ final class ContainerBoxNode: BaseNode {
             index -= 1
             let theIndex: Int
             let action: SCNAction
-            if lesson.name == .stack {
+            
+            switch lesson.name {
+            case .stack:
                 theIndex = index
-            } else {
+            case .queue:
                 theIndex = cubeNodes.count - 1 - index
+            default:
+                return
             }
             
             cubeNode = cubeNodes[theIndex]
@@ -324,6 +327,17 @@ extension ContainerBoxNode {
     }
     
     private func setActionFor(node: CubeNode, index: Int) {
+//        let actions: (action: SCNAction, reversedAction: SCNAction)
+//        switch lesson.name {
+//        case .stack, .queue:
+//            actions = getStackOrQueueActions(node: node)
+//        default:
+//            actions = (SCNAction(), SCNAction())
+//        }
+//
+//        node.action = actions.action
+//        node.reversedAction = actions.reversedAction
+        
         let originalPosition = node.position
         var position = node.position
         position.x -= (Float(cubeSpacing + cubeLength) * Float(index + 1))
@@ -339,10 +353,11 @@ extension ContainerBoxNode {
             SCNAction.move(to: secondPosition, duration: duration),
             SCNAction.move(to: finalPosition, duration: duration)
             ])
+        action.timingMode = .easeInEaseOut
         
         let reversedAction: SCNAction
-        
-        if lesson.name == .stack {
+        switch lesson.name {
+        case .stack:
             reversedAction = SCNAction.sequence([
                 SCNAction.move(to: finalPosition, duration: duration),
                 SCNAction.move(to: secondPosition, duration: duration),
@@ -350,13 +365,51 @@ extension ContainerBoxNode {
                 SCNAction.move(to: position, duration: duration),
                 SCNAction.move(to: originalPosition, duration: duration)
                 ])
-        } else {
+        case .queue:
             reversedAction = node.getPopQueueAction()
+        default:
+            reversedAction = SCNAction()
         }
-        
+        reversedAction.timingMode = .easeInEaseOut
         
         node.action = action
         node.reversedAction = reversedAction
+    }
+    
+    func getStackOrQueueActions(node: CubeNode) -> (action: SCNAction, reversedAction: SCNAction) {
+//        let originalPosition = node.position
+//        var position = node.position
+//        position.x -= (Float(cubeSpacing + cubeLength) * Float(index + 1))
+//        var secondPosition = position
+//        secondPosition.y = self.position.y
+//        var finalPosition = secondPosition
+//        finalPosition.x += (Float(self.cubeSpacing + self.cubeLength) * Float(cubeNodes.count - index))
+//
+//        let duration = animationDuration
+//        let action = SCNAction.sequence([
+//            SCNAction.move(to: position, duration: duration),
+//            SCNAction.wait(duration: duration),
+//            SCNAction.move(to: secondPosition, duration: duration),
+//            SCNAction.move(to: finalPosition, duration: duration)
+//            ])
+//
+//        let reversedAction: SCNAction
+//        switch lesson.name {
+//        case .stack:
+//            reversedAction = SCNAction.sequence([
+//                SCNAction.move(to: finalPosition, duration: duration),
+//                SCNAction.move(to: secondPosition, duration: duration),
+//                SCNAction.wait(duration: duration),
+//                SCNAction.move(to: position, duration: duration),
+//                SCNAction.move(to: originalPosition, duration: duration)
+//                ])
+//        case .queue:
+//            reversedAction = node.getPopQueueAction()
+//        default:
+//            reversedAction = SCNAction()
+//        }
+//        return (action, reversedAction)
+        return (SCNAction(), SCNAction())
     }
     
     func delay(_ delay:Double, closure:@escaping ()->()) {
