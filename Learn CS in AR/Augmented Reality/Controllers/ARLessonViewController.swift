@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import SnapKit
+import SpriteKit
 
 let initialSpringVelocity: CGFloat = 1 // 1
 let springWithDaming: CGFloat = 0.9 // 0.7
@@ -161,8 +162,14 @@ final class ARLessonViewController: DefaultARViewController {
     override func configureView() {
         super.configureView()
         // TODO: Update subtitle view with accessible fonts
-        
+        switch lesson.name {
+        case .stack, .queue:
+            break
+        default:
+            stackView.operationStackView.isHidden = true
+        }
     }
+    
 }
 
 // MARK: ARLessonViewController - Life cycles
@@ -184,6 +191,7 @@ extension ARLessonViewController {
         notificationCenter.removeObserver(self)
     }
 }
+
 
 // MARK: - Animation
 extension ARLessonViewController {
@@ -296,7 +304,7 @@ extension ARLessonViewController {
     func setupOperationView() {
         view.addSubview(operationView)
         
-        let height = (view.frame.height / 3).rounded()
+        let height = (view.frame.height / 4).rounded()
         operationView.snp.makeConstraints {
             $0.leading.trailing.equalTo(subtitleView)
             $0.bottom.equalToSuperview()

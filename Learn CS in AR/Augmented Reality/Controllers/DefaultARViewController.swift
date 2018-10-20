@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 import SnapKit
+import SpriteKit
 
 let minimumScaleFactor: CGFloat = 0.5
 class DefaultARViewController: BaseMenuViewController {
@@ -238,6 +239,40 @@ extension DefaultARViewController {
     }
 }
 
+// MARK: - ARSKViewDelegate
+extension DefaultARViewController: ARSKViewDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        guard let currentFrame = sceneView.session.currentFrame else { return }
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -0.2
+        let transform = simd_mul(currentFrame.camera.transform, translation)
+        
+        // Add a new anchor to the session.
+        let anchor = ARAnchor(transform: transform)
+        
+        sceneView.session.add(anchor: anchor)
+    }
+    
+    func getTextNode() -> SCNNode {
+        let txtNote = SCNText()
+        txtNote.string = "Hello AR word!"
+        txtNote.font = UIFont.systemFont(ofSize: 2)
+        txtNote.extrusionDepth = 1.0
+        txtNote.containerFrame = CGRect(x: 2.5, y: 0, width: 16, height: 10)
+        txtNote.isWrapped = true
+        txtNote.alignmentMode = CATextLayerAlignmentMode.left.rawValue
+        txtNote.materials.first?.diffuse.contents = UIColor.black.cgColor
+        
+        let txtNode = SCNNode(geometry: txtNote)
+        return txtNode
+    }
+    
+    func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
+        return SKLabelNode(text: "👾")
+    }
+}
+
 // MARK: DefaultARViewController - Set Up and Layouts
 extension DefaultARViewController {
     
@@ -247,6 +282,7 @@ extension DefaultARViewController {
         
         sceneView.session = ARSession()
         sceneView.delegate = self
+        
         view.addSubview(sceneView)
         sceneView.snp.makeConstraints { (make) in
             make.size.equalTo(view)

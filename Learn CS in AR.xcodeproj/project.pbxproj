@@ -190,6 +190,7 @@
 		637077F620918E2500CA5E80 /* Learn CS in AR */ = {
 			isa = PBXGroup;
 			children = (
+				63BA7DC92099C0D8009D785A /* 3D Objects */,
 				6355C8BB21455C72006922AB /* Localization */,
 				6370780B2091905800CA5E80 /* App */,
 				6370783B2091E5CB00CA5E80 /* Augmented Reality */,
@@ -354,7 +355,6 @@
 		6370783B2091E5CB00CA5E80 /* Augmented Reality */ = {
 			isa = PBXGroup;
 			children = (
-				63BA7DC92099C0D8009D785A /* 3D Objects */,
 				6370783C2091E5D700CA5E80 /* Controllers */,
 				634AE3EB21125342000F8B6D /* Models */,
 				6386D055209BFC6A005B052B /* Resources */,
