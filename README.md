@@ -1,5 +1,8 @@
 # Hi Apple
 
-**Welcome to the Learn CS in AR project's source code.**
+**This is the Learn CS in AR app's source code.**
 
 **Hope you like it!**
+
+![](https://i.imgur.com/Q19Zd1y.jpg)
+
