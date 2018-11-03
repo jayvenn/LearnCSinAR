@@ -1,6 +1,6 @@
 # Hi Apple
 
-**This is the Learn CS in AR app's source code.**
+**This is the Learn CS in AR source code.**
 
 **Hope you like it!**
 
