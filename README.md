@@ -1,4 +1,4 @@
-# Hi Apple
+# Hi!
 
 **This is the Learn CS in AR source code.**
 
