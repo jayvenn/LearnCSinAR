@@ -1,4 +1,4 @@
-# Hi!
+# Learn CS in AR
 
 **This is the Learn CS in AR source code.**
 
